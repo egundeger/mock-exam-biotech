@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biyoteknoloji Deneme Sınavı – KU Leuven</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky:#0ea5e9;--sky-light:#e0f2fe;--sky-dark:#0369a1;
+    --purple:#8b5cf6;--purple-light:#ede9fe;
+    --emerald:#10b981;--emerald-light:#d1fae5;
+    --amber:#f59e0b;--amber-light:#fef3c7;
+    --rose:#f43f5e;--rose-light:#ffe4e6;
+    --teal:#14b8a6;--teal-light:#ccfbf1;
+    --bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;
+    --text:#1e293b;--text-muted:#64748b;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px;}
+  .header{background:linear-gradient(135deg,#0c1a2e 0%,#0f2744 50%,#1a3a5c 100%);color:white;padding:36px 40px 28px;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(14,165,233,0.12);}
+  .header::after{content:'';position:absolute;bottom:-40px;left:30%;width:160px;height:160px;border-radius:50%;background:rgba(139,92,246,0.10);}
+  .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;position:relative;z-index:1;}
+  .header h1{font-family:'Playfair Display',serif;font-size:1.9rem;letter-spacing:-0.01em;line-height:1.2;}
+  .header h1 span{color:#38bdf8;}
+  .header-meta{text-align:right;font-size:0.82rem;color:#94a3b8;line-height:1.7;}
+  .header-meta strong{color:#e2e8f0;font-weight:600;}
+  .score-summary{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;position:relative;z-index:1;}
+  .score-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:5px 14px;font-size:0.75rem;color:#cbd5e1;display:flex;align-items:center;gap:6px;}
+  .score-pill strong{color:white;font-size:0.85rem;}
+  .tab-bar{background:white;border-bottom:2px solid var(--border);display:flex;padding:0 40px;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,0.06);}
+  .tab-btn{padding:14px 28px;border:none;background:none;cursor:pointer;font-family:'Source Sans 3',sans-serif;font-size:0.9rem;font-weight:600;color:var(--text-muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;display:flex;align-items:center;gap:8px;}
+  .tab-btn.active{color:var(--sky-dark);border-bottom-color:var(--sky);}
+  .tab-btn:hover:not(.active){color:var(--text);}
+  .tab-content{display:none;padding:32px 40px;max-width:960px;margin:0 auto;}
+  .tab-content.active{display:block;}
+  .section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:28px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
+  .section-header{padding:18px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);background:linear-gradient(to right,#f8fafc,white);}
+  .section-letter{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;flex-shrink:0;}
+  .sec-a .section-letter{background:var(--sky-light);color:var(--sky-dark);}
+  .sec-b .section-letter{background:var(--purple-light);color:var(--purple);}
+  .sec-c .section-letter{background:var(--emerald-light);color:var(--emerald);}
+  .sec-d .section-letter{background:var(--amber-light);color:var(--amber);}
+  .sec-e .section-letter{background:var(--rose-light);color:var(--rose);}
+  .sec-f .section-letter{background:var(--teal-light);color:var(--teal);}
+  .section-title{flex:1;}
+  .section-title h2{font-size:1rem;font-weight:700;color:var(--text);}
+  .section-title p{font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
+  .section-pts{font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:var(--text);color:white;padding:4px 12px;border-radius:20px;}
+  .section-body{padding:8px 0;}
+  .question{padding:20px 24px;border-bottom:1px solid var(--border);transition:background 0.15s;}
+  .question:last-child{border-bottom:none;}
+  .question:hover{background:#fafbfc;}
+  .q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+  .q-num{font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:500;color:var(--text-muted);min-width:28px;padding-top:2px;}
+  .q-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  .badge{font-size:0.68rem;font-weight:600;padding:2px 8px;border-radius:10px;letter-spacing:0.02em;text-transform:uppercase;white-space:nowrap;}
+  .bloom-1{background:#f1f5f9;color:#475569;}
+  .bloom-2{background:#dbeafe;color:#1d4ed8;}
+  .bloom-3{background:var(--emerald-light);color:#065f46;}
+  .bloom-4{background:var(--amber-light);color:#92400e;}
+  .bloom-5{background:#fce7f3;color:#9d174d;}
+  .bloom-6{background:#fdf2f8;color:#be185d;}
+  .topic-badge{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd;}
+  .pts-badge{background:var(--text);color:white;}
+  .q-text{font-size:0.93rem;line-height:1.65;color:var(--text);margin-bottom:12px;}
+  .options{display:flex;flex-direction:column;gap:6px;margin-top:10px;}
+  .option{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.15s;font-size:0.88rem;line-height:1.5;}
+  .option:hover{border-color:var(--sky);background:var(--sky-light);}
+  .option input[type="radio"]{margin-top:2px;accent-color:var(--sky);flex-shrink:0;}
+  .tf-row{display:flex;align-items:flex-start;gap:14px;padding:14px 24px;border-bottom:1px solid var(--border);font-size:0.9rem;}
+  .tf-row:last-child{border-bottom:none;}
+  .tf-num{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text-muted);min-width:28px;padding-top:3px;flex-shrink:0;}
+  .tf-text{flex:1;line-height:1.55;}
+  .tf-btns{display:flex;gap:6px;flex-shrink:0;}
+  .tf-btn{padding:4px 14px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;font-size:0.8rem;font-weight:600;background:white;transition:all 0.15s;font-family:'Source Sans 3',sans-serif;}
+  .tf-btn.true-btn:hover,.tf-btn.true-btn.selected{background:var(--emerald);color:white;border-color:var(--emerald);}
+  .tf-btn.false-btn:hover,.tf-btn.false-btn.selected{background:var(--rose);color:white;border-color:var(--rose);}
+  .match-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0 24px 16px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+  .match-header{background:var(--bg);padding:8px 16px;font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid var(--border);}
+  .match-header:first-child{border-right:1px solid var(--border);}
+  .match-row{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border);font-size:0.87rem;gap:10px;}
+  .match-row:last-child{border-bottom:none;}
+  .match-left{border-right:1px solid var(--border);}
+  .match-key{font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:600;color:var(--sky-dark);min-width:22px;}
+  .match-input{width:48px;border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;text-align:center;background:white;color:var(--text);margin-left:auto;}
+  .match-input:focus{outline:none;border-color:var(--sky);}
+  .match-right-key{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--purple);min-width:22px;}
+  .order-list{margin:4px 24px 16px;}
+  .order-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:0.88rem;background:white;}
+  .order-input{width:42px;border:1.5px solid var(--border);border-radius:6px;padding:4px 6px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;text-align:center;flex-shrink:0;}
+  .order-input:focus{outline:none;border-color:var(--amber);}
+  .order-label{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--amber);min-width:20px;flex-shrink:0;}
+  .short-answer textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'Source Sans 3',sans-serif;font-size:0.87rem;color:var(--text);resize:vertical;background:#fafbfc;margin-top:8px;transition:border-color 0.15s;line-height:1.55;}
+  .short-answer textarea:focus{outline:none;border-color:var(--rose);background:white;}
+  .case-scenario{background:linear-gradient(135deg,var(--teal-light),#f0fdfa);border:1px solid #99f6e4;border-radius:10px;padding:16px 18px;margin:16px 24px 8px;font-size:0.88rem;line-height:1.65;}
+  .case-scenario strong{color:var(--teal);}
+  .case-sub{padding:14px 24px;border-top:1px solid var(--border);}
+  .case-sub-label{font-weight:700;font-size:0.82rem;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
+  .ak-section{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:28px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.04);}
+  .ak-section-header{padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+  .ak-q{padding:18px 24px;border-bottom:1px dashed var(--border);}
+  .ak-q:last-child{border-bottom:none;}
+  .ak-q-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+  .ak-q-num{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text-muted);min-width:28px;padding-top:2px;}
+  .ak-q-text{font-size:0.9rem;font-weight:600;color:var(--text);flex:1;line-height:1.5;}
+  .correct-answer{display:inline-flex;align-items:center;gap:6px;background:var(--emerald-light);color:#064e3b;border:1px solid #a7f3d0;border-radius:8px;padding:6px 14px;font-size:0.85rem;font-weight:700;margin:6px 0 10px 38px;}
+  .correct-answer::before{content:'✓';font-size:0.9rem;}
+  .rationale{margin:8px 0 0 38px;padding:12px 14px;background:#f8fafc;border-left:3px solid var(--sky);border-radius:0 8px 8px 0;font-size:0.84rem;line-height:1.65;color:#334155;}
+  .distractor-section{margin:10px 0 0 38px;}
+  .distractor-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--rose);margin-bottom:6px;}
+  .distractor{display:flex;gap:8px;margin-bottom:5px;font-size:0.82rem;line-height:1.5;color:#475569;padding:6px 10px;background:var(--rose-light);border-radius:6px;}
+  .distractor-key{font-weight:700;color:var(--rose);flex-shrink:0;}
+  .score-table{width:100%;border-collapse:collapse;font-size:0.87rem;}
+  .score-table th{background:#0c1a2e;color:white;padding:10px 16px;text-align:left;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;}
+  .score-table td{padding:10px 16px;border-bottom:1px solid var(--border);}
+  .score-table tr:last-child td{border-bottom:none;}
+  .score-table tr:hover td{background:var(--sky-light);}
+  .score-table .grade{font-weight:700;color:var(--sky-dark);}
+  .bloom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:16px 0;}
+  .bloom-card{border-radius:10px;padding:14px;text-align:center;}
+  .bloom-card .level{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;}
+  .bloom-card .name{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;}
+  .bloom-card .count{font-size:0.8rem;margin-top:6px;color:#64748b;}
+  .info-box{background:var(--sky-light);border:1px solid #bae6fd;border-radius:10px;padding:14px 18px;margin:0 0 20px;font-size:0.85rem;color:#0c4a6e;line-height:1.6;}
+  .instr-list{padding:0 0 0 18px;}
+  .instr-list li{margin-bottom:4px;}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-top">
+    <div>
+      <h1>Biyoteknoloji <span>Deneme Sınavı</span></h1>
+      <div style="color:#94a3b8;font-size:0.85rem;margin-top:6px;">KU Leuven · Mühendislik Fakültesi Teknoloji</div>
+    </div>
+    <div class="header-meta">
+      <div><strong>Öğrenciler:</strong> Arda Berktaş / Yaman Tüzüntürk</div>
+      <div><strong>Toplam Puan:</strong> 100</div>
+      <div><strong>Süre:</strong> —</div>
+      <div><strong>Bloom:</strong> L1–L6</div>
+    </div>
+  </div>
+  <div class="score-summary">
+    <div class="score-pill">Bölüm A <strong>MCQ · 40p</strong></div>
+    <div class="score-pill">Bölüm B <strong>D/Y · 10p</strong></div>
+    <div class="score-pill">Bölüm C <strong>Eşleştirme · 10p</strong></div>
+    <div class="score-pill">Bölüm D <strong>Sıralama · 10p</strong></div>
+    <div class="score-pill">Bölüm E <strong>Kısa Cevap · 20p</strong></div>
+    <div class="score-pill">Bölüm F <strong>Vaka · 10p</strong></div>
+  </div>
+</div>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('exam',this)">📋 Deneme Sınavı</button>
+  <button class="tab-btn" onclick="showTab('key',this)">🔑 Cevap Anahtarı</button>
+</div>
+<!-- EXAM TAB -->
+<div id="tab-exam" class="tab-content active">
+<div class="info-box">
+  <strong>Genel Talimatlar:</strong>
+  <ul class="instr-list">
+    <li>Bölüm A: Her soru 2 puan. Tek doğru şık işaretleyiniz.</li>
+    <li>Bölüm B: Her ifade 1 puan. Doğru veya Yanlış seçiniz.</li>
+    <li>Bölüm C: Her set 5 puan. Sütun 1'deki terimle Sütun 2'deki ifadeyi eşleştiriniz.</li>
+    <li>Bölüm D: Her set 5 puan. Adımları doğru biyolojik sıraya koyunuz (1 = ilk adım).</li>
+    <li>Bölüm E: Her soru 4 puan. Kavramsal ve mekanistik açıklama yapınız.</li>
+    <li>Bölüm F: Vaka analizi 10 puan. Alt sorular ayrı puanlanacaktır.</li>
+  </ul>
+</div>
+
+<!-- SECTION A -->
+<div class="section sec-a">
+  <div class="section-header">
+    <div class="section-letter">A</div>
+    <div class="section-title"><h2>Çoktan Seçmeli Sorular</h2><p>20 soru × 2 puan — Yalnızca bir şık doğrudur</p></div>
+    <div class="section-pts">40 puan</div>
+  </div>
+  <div class="section-body">
+
+    <div class="question"><div class="q-header"><div class="q-num">S1</div><div class="q-badges"><span class="badge bloom-1">L1 · Hatırlama</span><span class="badge topic-badge">Karbonhidratlar</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Glikozun moleküler formülü hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q1"> C₁₂H₂₂O₁₁</label><label class="option"><input type="radio" name="q1"> C₆H₁₂O₆</label><label class="option"><input type="radio" name="q1"> C₅H₁₀O₅</label><label class="option"><input type="radio" name="q1"> C₆H₁₄O₆</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S2</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Karbonhidratlar</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Glikojen ile nişastanın yapısal açıdan temel farkı nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q2"> Glikojen yalnızca α-1,4 bağ içerirken nişasta hem α-1,4 hem de β-1,6 bağ içerir.</label><label class="option"><input type="radio" name="q2"> Glikojen nişastaya kıyasla çok daha sık dallara sahiptir (her ~8–12 glikozda bir dal).</label><label class="option"><input type="radio" name="q2"> Nişastanın dallanma sıklığı glikojenden fazladır; bu nedenle hayvanlarda depolanır.</label><label class="option"><input type="radio" name="q2"> Glikojen amiloz ve amilopektinden oluşurken nişasta yalnızca amilopektinden ibarettir.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S3</div><div class="q-badges"><span class="badge bloom-1">L1 · Hatırlama</span><span class="badge topic-badge">Lipidler</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Hayvan hücre zarının temel bileşeni aşağıdakilerden hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q3"> Trigliserit</label><label class="option"><input type="radio" name="q3"> Fosfolipid çift tabakası</label><label class="option"><input type="radio" name="q3"> Glikoprotein</label><label class="option"><input type="radio" name="q3"> Kolesterol</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S4</div><div class="q-badges"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">Lipidler</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Arktik deniz balıklarının hücre zarları soğuk sularda bile akışkanlığını koruyor. Bu adaptasyonun temel biyokimyasal mekanizması hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q4"> Kolesterol oranının artırılması ve uzun zincirli doymuş yağ asitlerinin tercih edilmesi.</label><label class="option"><input type="radio" name="q4"> Membrandaki cis çift bağlı doymamış yağ asitlerinin oranının artırılması; bu bağlar zincir paketlenmesini engelleyerek akışkanlığı korur.</label><label class="option"><input type="radio" name="q4"> Membran proteinlerinin doymuş lipidlerle ikame edilmesi ve lipit raftların çözülmesi.</label><label class="option"><input type="radio" name="q4"> Fosfolipitlerin trans konfigürasyonlu yağ asitleri ile değiştirilmesi.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S5</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Hücre Yapısı</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Lizozomların asidik pH'ını (~4.5–5.0) koruyan temel mekanizma nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q5"> Sitozolik H⁺ iyonlarının pasif difüzyonla lizozoma geçmesi.</label><label class="option"><input type="radio" name="q5"> F-tipi ATP sentazın H⁺ pompalamasını tersine çevirmesi.</label><label class="option"><input type="radio" name="q5"> V-tipi H⁺-ATPaz'ın ATP hidrolizini kullanarak H⁺ iyonlarını lümen içine aktif olarak pompalaması.</label><label class="option"><input type="radio" name="q5"> Na⁺/H⁺ değiştirici kanallar aracılığıyla sodyum gradyanının H⁺ birikimini zorlaması.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S6</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Dinamik Hücre</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Fagositoz ile makropinositoz arasındaki temel fark hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q6"> Fagositoz büyük katı partikülleri alırken makropinositoz büyük hacimli sıvıyı özgül reseptörsüz alır.</label><label class="option"><input type="radio" name="q6"> Her ikisi de reseptör bağımlıdır; aradaki tek fark klathrin kafes kullanımındadır.</label><label class="option"><input type="radio" name="q6"> Makropinositoz yalnızca bitkilerde gözlemlenir.</label><label class="option"><input type="radio" name="q6"> Fagositoz lizozomla birleşmezken makropinositoz lizozomal sindirim gerektirir.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S7</div><div class="q-badges"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">Hücre Enerjisi</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Modern biyokimyasal ölçümlere göre, bir glikoz molekülünün tam aerobik oksidasyonu kaç ATP üretir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q7"> 36–38 ATP (klasik textbook değeri)</label><label class="option"><input type="radio" name="q7"> 30–32 ATP (güncel P/O oranlarına dayanan revize değer)</label><label class="option"><input type="radio" name="q7"> 24 ATP (yalnızca ETS katkısı)</label><label class="option"><input type="radio" name="q7"> 40 ATP (mitokondri içi ve dışı üretim toplamı)</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S8</div><div class="q-badges"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">Hücre Enerjisi</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Elektron Taşıma Zinciri'nde elektronlar hangi sırayla iletilir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q8"> Kompleks I → Sitokrom c → Ko-enzim Q → Kompleks III → Kompleks IV → O₂</label><label class="option"><input type="radio" name="q8"> Kompleks I → Ko-enzim Q → Kompleks III → Sitokrom c → Kompleks IV → O₂</label><label class="option"><input type="radio" name="q8"> NADH → ATP sentaz → Ko-enzim Q → Kompleks I → O₂</label><label class="option"><input type="radio" name="q8"> Kompleks II → Kompleks I → Ko-enzim Q → Sitokrom c → O₂</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S9</div><div class="q-badges"><span class="badge bloom-1">L1 · Hatırlama</span><span class="badge topic-badge">Proteinler</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">280 nm dalga boyunda UV ışığını en güçlü absorbe eden amino asit hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q9"> Fenilalanin</label><label class="option"><input type="radio" name="q9"> Triptofan</label><label class="option"><input type="radio" name="q9"> Serin</label><label class="option"><input type="radio" name="q9"> Metiyonin</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S10</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Proteinler</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Chaperone proteinlerin hücredeki temel işlevi nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q10"> Ribozomda amino asit dizilimini kataliz etmek.</label><label class="option"><input type="radio" name="q10"> Yanlış katlanmış proteinleri ubikuitin yoluyla işaretleyip yıkmak.</label><label class="option"><input type="radio" name="q10"> Yeni sentezlenen ya da stres altındaki proteinlerin doğru üç boyutlu yapıya kavuşmasına yardımcı olmak ve agregasyonu önlemek.</label><label class="option"><input type="radio" name="q10"> Proteinleri Golgi aygıtı yoluyla hücre zarına taşımak.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S11</div><div class="q-badges"><span class="badge bloom-1">L1 · Hatırlama</span><span class="badge topic-badge">DNA Biyolojisi</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">DNA replikasyonu sırasında Okazaki fragmentlerini birbirine bağlayan enzim hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q11"> DNA Polimeraz III</label><label class="option"><input type="radio" name="q11"> Primaz</label><label class="option"><input type="radio" name="q11"> DNA Ligaz</label><label class="option"><input type="radio" name="q11"> Topoizomeraz II</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S12</div><div class="q-badges"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">DNA Biyolojisi</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">DNA kalıp zinciri 3'-ATCGTATCGA-5' ise buna karşılık gelen mRNA dizisi (5'→3') hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q12"> 3'-ATCGTATCGA-5'</label><label class="option"><input type="radio" name="q12"> 5'-TAGCATAGCT-3'</label><label class="option"><input type="radio" name="q12"> 5'-UAGCAUAGCU-3'</label><label class="option"><input type="radio" name="q12"> 5'-AUCGUAUCGA-3'</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S13</div><div class="q-badges"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">Rekombinant DNA</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Bakteri sisteminde rekombinant protein ekspresyonu için tasarlanan bir vektörde <em>mutlaka</em> bulunması gereken unsur hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q13"> İnsan kaynaklı enhancer dizisi</label><label class="option"><input type="radio" name="q13"> Ökaryotik replikasyon başlangıç noktası (ori)</label><label class="option"><input type="radio" name="q13"> Prokaryotik promotör (örn. T7 veya lac promotörü)</label><label class="option"><input type="radio" name="q13"> Poliadenilasyon (polyA) sinyali</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S14</div><div class="q-badges"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">Rekombinant DNA</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">CRISPR-Cas9 sisteminin klasik restriksiyon enzimleriyle karşılaştırıldığında en kritik avantajı nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q14"> CRISPR yalnızca memeli hücrelerinde çalışır; bu klinik güvenliği artırır.</label><label class="option"><input type="radio" name="q14"> CRISPR, sgRNA dizisi aracılığıyla herhangi bir genomik lokusa programlanabilir; restriksiyon enzimleri yalnızca kısa palindromik dizileri tanır.</label><label class="option"><input type="radio" name="q14"> CRISPR çift sarmal DNA kesmezken restriksiyon enzimleri çift kırık oluşturur.</label><label class="option"><input type="radio" name="q14"> CRISPR-Cas9 hiçbir kofaktör gerektirmez; restriksiyon enzimleri Mg²⁺ gerektirir.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S15</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Kırmızı Biyoteknoloji</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Hibridoma teknolojisinin temel prensibi nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q15"> B lenfositlerini viral enfeksiyonla sonsuz hale getirmek.</label><label class="option"><input type="radio" name="q15"> Antijen spesifik B lenfositini miyeloma hücresiyle füze edip hem özgün antikor üreten hem de sonsuz çoğalan hibridoma hücreleri elde etmek.</label><label class="option"><input type="radio" name="q15"> T lenfositlerini klonlayıp antikor benzeri moleküller üretmek için genetik mühendislik uygulamak.</label><label class="option"><input type="radio" name="q15"> Antijen enjeksiyonu ile hayvan kan serumundan poliklonal antikor izole etmek.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S16</div><div class="q-badges"><span class="badge bloom-5">L5 · Değerlendirme</span><span class="badge topic-badge">Kırmızı Biyoteknoloji</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Yeni bir gen tedavisi adayının klinik değerlendirmesinde <em>ilk öncelik</em> verilmesi gereken etken hangisidir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q16"> Vektör başına maliyet ve üretim ölçeklenebilirliği.</label><label class="option"><input type="radio" name="q16"> Hedef dışı (off-target) etkiler, immünojenisite ve uzun vadeli genomik güvenlik profili.</label><label class="option"><input type="radio" name="q16"> Tedavinin tek doz uygulanabilirliği ve hasta uyumu.</label><label class="option"><input type="radio" name="q16"> Rekombinant vektörün patent süresi ve ticari rakipler.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S17</div><div class="q-badges"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">Beyaz Biyoteknoloji</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Eş Zamanlı Sakarifikasyon ve Fermentasyon (SSF) yönteminin Ardışık Hidroliz ve Fermentasyon'a (SHF) kıyasla temel üstünlüğü nedir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q17"> SSF, sakarifikasyon ve fermentasyonu farklı reaktörlerde ve farklı sıcaklıklarda optimize eder.</label><label class="option"><input type="radio" name="q17"> SSF'de oluşan glikoz hemen fermente edildiği için birikip seluaz enzimlerini inhibe edemez; bu da hidroliz verimini artırır.</label><label class="option"><input type="radio" name="q17"> SHF'de her iki işlem aynı reaktörde gerçekleştiğinden ekipman maliyeti daha düşüktür.</label><label class="option"><input type="radio" name="q17"> SSF'de mantar ve maya ayrı reaktörlerde tutulur; bu kontaminasyon riskini artırır.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S18</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Mavi Biyoteknoloji</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Deniz kaynaklı biyoaktif bileşiklerin ilaç geliştirme açısından önemi neden bu kadar yüksektir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q18"> Deniz organizmaları; aşırı koşullara adaptasyon nedeniyle karasal organizmalardan farklı kimyasal çeşitlilik ve biyolojik aktiviteye sahip özgün metabolitler üretir.</label><label class="option"><input type="radio" name="q18"> Deniz bileşikleri ham halde kullanılabilir ve hiç yan etki taşımaz.</label><label class="option"><input type="radio" name="q18"> Deniz bileşikleri yalnızca antibiyotik geliştirmede kullanılır.</label><label class="option"><input type="radio" name="q18"> Deniz bileşiklerinin yüksek stabilitesi formülasyon geliştirmeyi gereksiz kılar.</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S19</div><div class="q-badges"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">İnşaat Biyoteknolojisi</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Mikrobiyolojik İndüklenmiş Kalsiyum Karbonat Çökelimi (MICP) mekanizması doğru sırayla hangisinde verilmiştir?</div>
+    <div class="options"><label class="option"><input type="radio" name="q19"> Bakteri sporları → CaCO₃ → ureaz aktivasyonu → üre hidrolizi</label><label class="option"><input type="radio" name="q19"> Ureaz enzimi üreyi hidrolize eder → NH₄⁺ ve CO₃²⁻ açığa çıkar → Ca²⁺ varlığında CaCO₃ çökelir → çatlak boşlukları doldurulur</label><label class="option"><input type="radio" name="q19"> Bakteri Ca²⁺ absorbe eder → hücre duvarında CaCO₃ sentezler → pasif difüzyonla çatlağa taşınır</label><label class="option"><input type="radio" name="q19"> Üre çözeltisi çatlağa enjekte edilir → abiyotik CO₂ açığa çıkar → CaCO₃ yavaş çökelir</label></div></div>
+
+    <div class="question"><div class="q-header"><div class="q-num">S20</div><div class="q-badges"><span class="badge bloom-6">L6 · Yaratma</span><span class="badge topic-badge">Entegre Biyoteknoloji</span><span class="badge pts-badge">2p</span></div></div>
+    <div class="q-text">Hem atık su arıtımı hem de yenilenebilir enerji üretimi gerçekleştirmek isteyen bir mühendis aşağıdaki sistemlerden hangisini tasarlamalıdır?</div>
+    <div class="options"><label class="option"><input type="radio" name="q20"> Yalnızca aktif çamur sistemi kullanarak organik maddeyi aerobik bakterilerle parçalamak.</label><label class="option"><input type="radio" name="q20"> Açık havuz mikroalg kültürü kurarak atık sudaki azot-fosfor ile büyüyen algleri biyodizel/biyogaz üretimine yönlendiren kapalı döngü biyorafineri.</label><label class="option"><input type="radio" name="q20"> Tüm organik atığı yakarak enerji kazanmak ve kül kalıntısını araziye gömmek.</label><label class="option"><input type="radio" name="q20"> Atık suyu yalnızca UV sterilizasyonuna tabi tutup deşarj etmek.</label></div></div>
+
+  </div>
+</div><!-- /sec A -->
+
+<!-- SECTION B -->
+<div class="section sec-b">
+  <div class="section-header">
+    <div class="section-letter">B</div>
+    <div class="section-title"><h2>Doğru / Yanlış</h2><p>10 ifade × 1 puan</p></div>
+    <div class="section-pts">10 puan</div>
+  </div>
+  <div class="section-body">
+    <div style="padding:12px 24px 4px;font-size:0.8rem;color:var(--text-muted);">Her ifade için Doğru (D) veya Yanlış (Y) seçiniz.</div>
+    <div class="tf-row"><div class="tf-num">1</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Hücre Enerjisi</span> Glikoliz sürecinde substrat düzeyinde fosforilasyon ile net olarak 4 ATP üretilir.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">2</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Hücre Enerjisi</span> Elektron taşıma zincirinde NADH ve FADH₂ eşit sayıda ATP üretir.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">3</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Rekombinant DNA</span> CRISPR-Cas9 sisteminde Cas9 proteini, hedef DNA'yı kesmek için sgRNA rehberliğine ihtiyaç duyar.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">4</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Proteinler</span> Translasyon sonrası modifikasyonlar (PTM) yalnızca ökaryotik hücrelerde gerçekleşir; prokaryotlarda gözlenmez.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">5</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Kırmızı Biyoteknoloji</span> Monoklonal antikorlar tek bir epitopa karşı yüksek özgüllük gösterir.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">6</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Mavi Biyoteknoloji</span> Trabectedin (Yondelis) Ecteinascidia turbinata'dan izole edilmiş olup günümüzde yalnızca karasal kimyasal sentezle üretilmektedir.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">7</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">İnşaat Biyoteknolojisi</span> MICP sürecinde Bacillus pasteurii'nin ürettiği ureaz enzimi üreyi hidrolize ederek karbonat iyonları açığa çıkarır ve Ca²⁺ ile CaCO₃ çökelir.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">8</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Kırmızı Biyoteknoloji</span> Gen tedavisinde yalnızca plazmit vektörler kullanılır; viral vektörlerin klinik kullanımı tamamen yasaklanmıştır.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">9</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">Beyaz Biyoteknoloji</span> Endüstriyel biyoteknolojide "fermentasyon" terimi yalnızca anaerobik süreçleri kapsar.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+    <div class="tf-row"><div class="tf-num">10</div><div class="tf-text"><span class="badge topic-badge" style="margin-right:6px;">DNA Biyolojisi</span> İnsan genomu yaklaşık 3 milyar baz çifti içermekte olup bu dizinin yalnızca ~%1.5–2'si protein kodlayan egzonu temsil eder.</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>
+  </div>
+</div>
+
+<!-- SECTION C -->
+<div class="section sec-c">
+  <div class="section-header">
+    <div class="section-letter">C</div>
+    <div class="section-title"><h2>Eşleştirme</h2><p>2 set × 5 puan</p></div>
+    <div class="section-pts">10 puan</div>
+  </div>
+  <div class="section-body">
+    <div style="padding:16px 24px 4px;"><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">DNA Biyolojisi · Rekombinant DNA</span><span class="badge pts-badge">5p</span></div><div style="font-size:0.88rem;font-weight:600;margin-bottom:12px;">C1 — DNA Replikasyonu Enzimleri</div></div>
+    <div class="match-grid">
+      <div class="match-header match-left">Sütun 1 — Enzim</div><div class="match-header">Sütun 2 — İşlev</div>
+      <div class="match-row match-left"><span class="match-key">1.</span><span>DNA Ligaz</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">a.</span><span>RNA primer sentezi</span></div>
+      <div class="match-row match-left"><span class="match-key">2.</span><span>Primaz</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">b.</span><span>Çift sarmal açılması</span></div>
+      <div class="match-row match-left"><span class="match-key">3.</span><span>Topoizomeraz II</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">c.</span><span>Okazaki fragmentlerinin uç uca bağlanması</span></div>
+      <div class="match-row match-left"><span class="match-key">4.</span><span>DNA Helikaz</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">d.</span><span>Süpersarmal gerimin giderilmesi</span></div>
+      <div class="match-row match-left"><span class="match-key">5.</span><span>Ters Transkriptaz</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">e.</span><span>RNA kalıptan cDNA sentezi</span></div>
+    </div>
+    <div style="padding:16px 24px 4px;margin-top:8px;"><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">Tüm Biyoteknoloji Alanları</span><span class="badge pts-badge">5p</span></div><div style="font-size:0.88rem;font-weight:600;margin-bottom:12px;">C2 — Biyoteknoloji Ürünleri ve Alanları</div></div>
+    <div class="match-grid">
+      <div class="match-header match-left">Sütun 1 — Ürün / Teknoloji</div><div class="match-header">Sütun 2 — Alan</div>
+      <div class="match-row match-left"><span class="match-key">1.</span><span>Trabectedin (Yondelis)</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">a.</span><span>Kırmızı Biyoteknoloji</span></div>
+      <div class="match-row match-left"><span class="match-key">2.</span><span>Rekombinant insülin (E. coli)</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">b.</span><span>Beyaz (Endüstriyel) Biyoteknoloji</span></div>
+      <div class="match-row match-left"><span class="match-key">3.</span><span>MICP ile beton onarımı</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">c.</span><span>Mavi (Deniz) Biyoteknoloji</span></div>
+      <div class="match-row match-left"><span class="match-key">4.</span><span>SSF ile biyoetanol üretimi</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">d.</span><span>İnşaat Biyoteknolojisi</span></div>
+      <div class="match-row match-left"><span class="match-key">5.</span><span>pBR322 klonlama vektörü</span><input class="match-input" type="text" maxlength="1" placeholder="?"></div><div class="match-row"><span class="match-right-key">e.</span><span>Rekombinant DNA Teknolojisi</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION D -->
+<div class="section sec-d">
+  <div class="section-header">
+    <div class="section-letter">D</div>
+    <div class="section-title"><h2>Sıralama</h2><p>2 set × 5 puan — Adımları sıra numarasıyla giriniz (1 = ilk adım)</p></div>
+    <div class="section-pts">10 puan</div>
+  </div>
+  <div class="section-body">
+    <div style="padding:16px 24px 4px;"><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">DNA Biyolojisi</span><span class="badge pts-badge">5p</span></div><div style="font-size:0.88rem;font-weight:600;margin-bottom:4px;">D1 — Ökaryotik Gen İfadesi</div><div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;">Adımları doğru biyolojik sıraya göre numaralandırınız.</div></div>
+    <div class="order-list">
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">A</span><span>Ribozomun mRNA'ya bağlanması ve translasyonun başlaması</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">B</span><span>RNA polimeraz promotöre bağlanır; transkripsiyon başlar</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">C</span><span>pre-mRNA'nın olgunlaşması (5'-cap, polyA kuyruğu, splaising)</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">D</span><span>Elongasyon — ribozomun mRNA boyunca ilerleyip polipeptidi uzatması</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">E</span><span>Olgun mRNA'nın nükleer por kompleksi aracılığıyla sitoplazmaya ihraç edilmesi</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">F</span><span>Stop kodonun tanınması ve ribozomun ayrılması (terminasyon)</span></div>
+    </div>
+    <div style="padding:16px 24px 4px;border-top:1px solid var(--border);"><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">Rekombinant DNA</span><span class="badge pts-badge">5p</span></div><div style="font-size:0.88rem;font-weight:600;margin-bottom:4px;">D2 — Rekombinant Protein Üretimi</div><div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:12px;">Hedef proteini kodlayan genden rekombinant protein üretimine kadar geçen adımları sıralayınız.</div></div>
+    <div class="order-list">
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">A</span><span>Restriksiyon enzimleriyle hedef gen ve vektörün kesilerek uyumlu uçların oluşturulması</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">B</span><span>Rekombinant vektörün konakçı bakteriye transformasyonu</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">C</span><span>Rekombinant proteinin saflaştırılması (kromatografi vb.)</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">D</span><span>PCR ile hedef genin amplifiye edilmesi</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">E</span><span>Gen ve vektörün DNA Ligaz ile birleştirilerek rekombinant plazmid oluşturulması</span></div>
+      <div class="order-item"><input class="order-input" type="number" min="1" max="6" placeholder="#"><span class="order-label">F</span><span>Transformant kolonilerin seçimi ve doğrulanması</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION E -->
+<div class="section sec-e">
+  <div class="section-header">
+    <div class="section-letter">E</div>
+    <div class="section-title"><h2>Kısa Cevap</h2><p>5 soru × 4 puan</p></div>
+    <div class="section-pts">20 puan</div>
+  </div>
+  <div class="section-body">
+    <div class="question short-answer"><div class="q-header"><div class="q-num">E1</div><div class="q-badges"><span class="badge bloom-4">L4 · Analiz</span><span class="badge topic-badge">Proteinler / Enzimoloji</span><span class="badge pts-badge">4p</span></div></div><div class="q-text">Michaelis sabiti (Km) ne anlama gelir? Km değerinin yüksek veya düşük olması enzim-substrat affinitesi hakkında ne söyler? Endüstriyel biyoreaktör optimizasyonundaki önemi nedir?</div><textarea rows="5" placeholder="Cevabınızı buraya yazınız..."></textarea></div>
+    <div class="question short-answer"><div class="q-header"><div class="q-num">E2</div><div class="q-badges"><span class="badge bloom-3">L3 · Uygulama</span><span class="badge topic-badge">DNA Biyolojisi / Rekombinant DNA</span><span class="badge pts-badge">4p</span></div></div><div class="q-text">PCR'nin üç termal döngü aşamasını (denatürasyon, primer bağlanması, uzama) ve her aşamadaki sıcaklık gerekçesini açıklayınız. PCR ürünlerinin rekombinant DNA teknolojisindeki rolü nedir?</div><textarea rows="5" placeholder="Cevabınızı buraya yazınız..."></textarea></div>
+    <div class="question short-answer"><div class="q-header"><div class="q-num">E3</div><div class="q-badges"><span class="badge bloom-5">L5 · Değerlendirme</span><span class="badge topic-badge">İnşaat Biyoteknolojisi</span><span class="badge pts-badge">4p</span></div></div><div class="q-text">Kendini iyileştiren beton kavramını açıklayınız. Bu uygulamada hangi mikroorganizma ve hangi mekanizma kullanılır? Geleneksel onarım yöntemlerine kıyasla avantajlarını değerlendiriniz.</div><textarea rows="5" placeholder="Cevabınızı buraya yazınız..."></textarea></div>
+    <div class="question short-answer"><div class="q-header"><div class="q-num">E4</div><div class="q-badges"><span class="badge bloom-6">L6 · Yaratma</span><span class="badge topic-badge">Kırmızı Biyoteknoloji</span><span class="badge pts-badge">4p</span></div></div><div class="q-text">Monoklonal antikor (mAb) ile küçük moleküllü ilaç arasındaki temel farklılıkları karşılaştırınız: farmakokinetik, hedef özgüllüğü, üretim süreci ve klinik avantaj/dezavantajlar açısından değerlendiriniz.</div><textarea rows="5" placeholder="Cevabınızı buraya yazınız..."></textarea></div>
+    <div class="question short-answer"><div class="q-header"><div class="q-num">E5</div><div class="q-badges"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Mavi Biyoteknoloji</span><span class="badge pts-badge">4p</span></div></div><div class="q-text">Ekstremofil deniz organizmalarının ilaç geliştirme açısından neden benzersiz bir kaynak olduğunu açıklayınız. Deniz kaynaklı en az üç onaylı ilaç örneği veriniz ve hangi terapötik alanda kullanıldığını belirtiniz.</div><textarea rows="5" placeholder="Cevabınızı buraya yazınız..."></textarea></div>
+  </div>
+</div>
+
+<!-- SECTION F -->
+<div class="section sec-f">
+  <div class="section-header">
+    <div class="section-letter">F</div>
+    <div class="section-title"><h2>Vaka Analizi</h2><p>1 vaka × 10 puan</p></div>
+    <div class="section-pts">10 puan</div>
+  </div>
+  <div class="section-body">
+    <div class="case-scenario"><strong>📋 Senaryo:</strong> Belçika'daki bir biyoyakıt şirketi, buğday samanından ikinci nesil biyoetanol üretmeyi planlamaktadır. <em>Trichoderma reesei</em> kaynaklı selülaz kokteyli ile enzimatik hidroliz ve hem glikozu hem de ksilozu fermente edebilen metabolik olarak mühendislik yapılmış <em>Saccharomyces cerevisiae</em> suşu kullanılacaktır. Şirket, Eş Zamanlı Sakarifikasyon ve Fermentasyon (SSF) stratejisini değerlendirmektedir.</div>
+    <div class="case-sub"><div class="case-sub-label">F1a — 2 puan</div><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-2">L2 · Anlama</span><span class="badge topic-badge">Beyaz Biyoteknoloji</span></div><div class="q-text">Buğday samanının lignoselülozik yapısını oluşturan üç ana bileşeni ve ön işlemin neden zorunlu olduğunu açıklayınız.</div><div class="short-answer"><textarea rows="4" placeholder="F1a cevabınızı buraya yazınız..."></textarea></div></div>
+    <div class="case-sub"><div class="case-sub-label">F1b — 4 puan</div><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-5">L5 · Değerlendirme</span><span class="badge topic-badge">Beyaz Biyoteknoloji</span></div><div class="q-text">SSF tasarımını savununuz: SSF'nin SHF'ye kıyasla ürün inhibisyonu açısından sağladığı avantajı mekanistik olarak açıklayınız. Mühendislik yapılmış S. cerevisiae suşunda ksiloz fermentasyonu için hangi metabolik yol modifikasyonları gereklidir?</div><div class="short-answer"><textarea rows="5" placeholder="F1b cevabınızı buraya yazınız..."></textarea></div></div>
+    <div class="case-sub" style="border-bottom:none;"><div class="case-sub-label">F1c — 4 puan</div><div class="q-badges" style="margin-bottom:8px;"><span class="badge bloom-6">L6 · Yaratma</span><span class="badge topic-badge">Beyaz Biyoteknoloji</span></div><div class="q-text">Bu sürecin endüstriyel ölçeğe taşınmasında karşılaşılacak teknik zorlukları (ısı transferi, enzim maliyeti, inhibitör birikimi) analiz ediniz ve her zorluk için somut bir çözüm önerisi getiriniz.</div><div class="short-answer"><textarea rows="5" placeholder="F1c cevabınızı buraya yazınız..."></textarea></div></div>
+  </div>
+</div>
+
+</div><!-- /tab-exam -->
+<!-- ANSWER KEY TAB -->
+<div id="tab-key" class="tab-content">
+<div class="info-box"><strong>Cevap Anahtarı:</strong> Her doğru şık açıklanmış; tüm yanlış şıklar (distractors) neden çürütüldüğü gerekçesiyle ayrıca belirtilmiştir.</div>
+
+<!-- BLOOM DAĞILIMI -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:#f0f9ff;color:#0369a1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📊</div><div><div style="font-weight:700;font-size:1rem;">Bloom Taksonomisi Dağılımı</div><div style="font-size:0.8rem;color:var(--text-muted);">Tüm sınav genelinde</div></div></div>
+  <div style="padding:16px 24px;">
+    <div class="bloom-grid">
+      <div class="bloom-card" style="background:#f1f5f9;"><div class="level" style="color:#475569;">L1</div><div class="name" style="color:#475569;">Hatırlama</div><div class="count">S1,S3,S9,S11</div></div>
+      <div class="bloom-card" style="background:#dbeafe;"><div class="level" style="color:#1d4ed8;">L2</div><div class="name" style="color:#1d4ed8;">Anlama</div><div class="count">S2,S5,S6,S10,S15,S18,B×10,E5,F1a</div></div>
+      <div class="bloom-card" style="background:var(--emerald-light);"><div class="level" style="color:#065f46;">L3</div><div class="name" style="color:#065f46;">Uygulama</div><div class="count">S7,S12,S13,S17,C1,C2,E2</div></div>
+      <div class="bloom-card" style="background:var(--amber-light);"><div class="level" style="color:#92400e;">L4</div><div class="name" style="color:#92400e;">Analiz</div><div class="count">S4,S8,S14,S19,D1,D2,E1</div></div>
+      <div class="bloom-card" style="background:#fce7f3;"><div class="level" style="color:#9d174d;">L5</div><div class="name" style="color:#9d174d;">Değerlendirme</div><div class="count">S16,E3,F1b</div></div>
+      <div class="bloom-card" style="background:#fdf2f8;"><div class="level" style="color:#be185d;">L6</div><div class="name" style="color:#be185d;">Yaratma</div><div class="count">S20,E4,F1c</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION A KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--sky-light);color:var(--sky-dark);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">A</div><div><div style="font-weight:700;font-size:1rem;">Bölüm A — MCQ Cevapları</div><div style="font-size:0.8rem;color:var(--text-muted);">Her soru 2 puan</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S1</div><div class="ak-q-text">Glikozun moleküler formülü</div><div class="q-badges"><span class="badge bloom-1">L1</span><span class="badge topic-badge">Karbonhidratlar</span></div></div><div class="correct-answer">B — C₆H₁₂O₆</div><div class="rationale">Glikoz altı karbonlu monosakkarittir. C₆H₁₂O₆ tüm heksozların ortak formülüdür (fruktoz, galaktoz da aynı formülü taşır; izomer ilişkisi).</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> C₁₂H₂₂O₁₁ disakkarit formülüdür (sükroz, maltoz, laktoz).</div><div class="distractor"><span class="distractor-key">C:</span> C₅H₁₀O₅ pentoz şekerlerin formülüdür.</div><div class="distractor"><span class="distractor-key">D:</span> C₆H₁₄O₆ şeker alkolleri (mannitol vb.) formülüdür.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S2</div><div class="ak-q-text">Glikojen–nişasta yapısal farkı</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Karbonhidratlar</span></div></div><div class="correct-answer">B — Glikojen her ~8–12 glikozda bir dallanır</div><div class="rationale">Hem glikojen hem amilopektin α-1,4 ana zincir ve α-1,6 dal bağı içerir. Kritik fark dallanma sıklığıdır: glikojen her 8–12 rezidüde bir, amilopektin ~24–30 rezidüde bir dallanır. Glikojendeki sık dallanma, karaciğer ve kasta hızlı glikoz mobilizasyonunu sağlar.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Nişasta β-1,6 bağı içermez; her ikisi de α-1,6 dallanma bağı kullanır.</div><div class="distractor"><span class="distractor-key">C:</span> Hayvanlar glikojen depolar, nişasta değil; dallanma sıklığı da tersine çevrilmiştir.</div><div class="distractor"><span class="distractor-key">D:</span> Glikojen amiloz içermez; amiloz yalnızca nişastanın doğrusal bileşenidir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S3</div><div class="ak-q-text">Hayvan hücre zarının temel bileşeni</div><div class="q-badges"><span class="badge bloom-1">L1</span><span class="badge topic-badge">Lipidler</span></div></div><div class="correct-answer">B — Fosfolipid çift tabakası</div><div class="rationale">Amfipatik fosfolipitler sulu ortamda kendiliğinden çift tabaka oluşturur; hidrofobik kuyruklar içe, hidrofilik baş gruplar dışa dönük. Bu, zarın temel iskeletidir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Trigliseritler enerji depolama yağlarıdır; membranda bulunmazlar.</div><div class="distractor"><span class="distractor-key">C:</span> Glikoproteinler fonksiyonel bileşendir; temel yapısal iskelet değildir.</div><div class="distractor"><span class="distractor-key">D:</span> Kolesterol akışkanlık düzenleyicisidir; hayvan zarlarında önemli miktarda bulunsa da temel yapısal bileşen değildir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S4</div><div class="ak-q-text">Arktik balığı membran soğuk adaptasyonu</div><div class="q-badges"><span class="badge bloom-4">L4</span><span class="badge topic-badge">Lipidler</span></div></div><div class="correct-answer">B — cis çift bağlı doymamış yağ asidi oranının artırılması</div><div class="rationale">Cis çift bağlar zincirde bükülme yaratır; bu bükülme lipitlerin kristal düzende paketlenmesini engeller, membranı soğukta sıvı hâlde tutar. Homeovisköz adaptasyon olarak bilinen bu mekanizma, lipid bileşiminin değiştirilmesiyle akışkanlığın korunmasıdır.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Doymuş yağ asitleri ve yüksek kolesterol akışkanlığı azaltır; soğuk adaptasyonunun tersidir.</div><div class="distractor"><span class="distractor-key">C:</span> Doymuş lipidler akışkanlığı daha da düşürür.</div><div class="distractor"><span class="distractor-key">D:</span> Trans çift bağlar daha düzgün zincir yapısı oluşturur; paketlenmeyi kolaylaştırır, akışkanlığı azaltır.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S5</div><div class="ak-q-text">Lizozom asidik pH mekanizması</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Hücre Yapısı</span></div></div><div class="correct-answer">C — V-tipi H⁺-ATPaz aktif H⁺ pompalaması</div><div class="rationale">Vakuolar tip H⁺-ATPaz, ATP hidrolizinden elde ettiği enerjiyi kullanarak H⁺ iyonlarını lizozom lümenine karşı konsantrasyon gradyanına aktif pompalar. Bu asit hidrolazların optimal aktivitesi (~pH 4.5–5.0) için gereklidir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> H⁺ pasif difüzyonla lizozom içine giremez; konsantrasyon gradyanı zaten içeri yönlüdür.</div><div class="distractor"><span class="distractor-key">B:</span> F-tipi ATP sentaz mitokondri/kloroplastın ATP üretim enzimidir; H⁺ salgılamaz.</div><div class="distractor"><span class="distractor-key">D:</span> Na⁺/H⁺ değiştirici hücreyi alkalize eder; lizozomal asidifikasyonda primer rol oynamaz.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S6</div><div class="ak-q-text">Fagositoz vs. makropinositoz</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Dinamik Hücre</span></div></div><div class="correct-answer">A — Fagositoz katı partikülleri (reseptör bağımlı), makropinositoz büyük sıvı hacimlerini (reseptörsüz) alır</div><div class="rationale">Fagositoz opsonik reseptörler (Fc, kompleman) tarafından tetiklenir; büyük katı partikülleri alır. Makropinositoz membranın büyük ruffles oluşturarak kapandığı, özgün reseptör gerektirmeyen büyük sıvı + çözünmüş madde alımıdır.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">B:</span> Makropinositoz özgün reseptör gerektirmez; bu iki mekanizmanın temel farkıdır.</div><div class="distractor"><span class="distractor-key">C:</span> Makropinositoz bitkilere özgü değildir.</div><div class="distractor"><span class="distractor-key">D:</span> Fagozomlar lizozomla birleşir; bu fagositozun olağan akıbetinin tam tersidir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S7</div><div class="ak-q-text">Modern aerobik ATP verimi</div><div class="q-badges"><span class="badge bloom-3">L3</span><span class="badge topic-badge">Hücre Enerjisi</span></div></div><div class="correct-answer">B — 30–32 ATP (güncel P/O oranları)</div><div class="rationale">Güncel ölçümler NADH için P/O ≈ 2.5, FADH₂ için ≈ 1.5 göstermektedir. Mitokondri iç zarındaki taşıyıcı enerji maliyetleri de dahil edilince toplam verim 30–32 ATP'ye düşer.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> 36–38 ATP eski ders kitabı değeridir; tam sayı P/O oranı varsayımına dayanır, artık kabul görmemektedir.</div><div class="distractor"><span class="distractor-key">C:</span> 24 ATP yalnızca ETS katkısını yansıtır; substrat düzeyi fosforilasyon dahil değildir.</div><div class="distractor"><span class="distractor-key">D:</span> 40 ATP herhangi bir standart biyokimyasal değere karşılık gelmez.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S8</div><div class="ak-q-text">ETS elektron iletim sırası</div><div class="q-badges"><span class="badge bloom-4">L4</span><span class="badge topic-badge">Hücre Enerjisi</span></div></div><div class="correct-answer">B — Kompleks I → Ko-enzim Q → Kompleks III → Sitokrom c → Kompleks IV → O₂</div><div class="rationale">NADH → Kx. I → Ko-enzim Q (ubiquinon; hem Kx. I hem Kx. II'den elektron alır) → Kx. III (bc₁; Q-döngüsü) → Sitokrom c (mobile taşıyıcı) → Kx. IV (sitokrom c oksidaz) → O₂ (terminal alıcı; H₂O oluşur).</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Sitokrom c, Kx. III'ten sonra gelir; KoQ'dan önce değil.</div><div class="distractor"><span class="distractor-key">C:</span> ATP sentaz elektron taşımaz; H⁺ gradyanını kullanarak ATP sentezler.</div><div class="distractor"><span class="distractor-key">D:</span> Kx. II → Kx. I sıralaması yanlış; her ikisi de elektronları bağımsız olarak KoQ'ya aktarır.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S9</div><div class="ak-q-text">280 nm UV absorbe eden amino asit</div><div class="q-badges"><span class="badge bloom-1">L1</span><span class="badge topic-badge">Proteinler</span></div></div><div class="correct-answer">B — Triptofan (Trp, W)</div><div class="rationale">Triptofan indol yan zinciri sayesinde 280 nm'de en yüksek molar absorbans katsayısına (ε ≈ 5500 M⁻¹cm⁻¹) sahiptir. Tirozin da katkı sağlar (ε ≈ 1490) ancak birincil cevap triptofandır. A₂₈₀ ölçümünün temeli budur.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Fenilalanin 257 nm'de absorbe eder; 280 nm'de çok zayıf sinyal verir.</div><div class="distractor"><span class="distractor-key">C:</span> Serin polar/alifatik; aromatik halkası yoktur, UV absorbe etmez.</div><div class="distractor"><span class="distractor-key">D:</span> Metiyonin kükürt içerir; 280 nm'de anlamlı absorbans vermez.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S10</div><div class="ak-q-text">Chaperone işlevi</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Proteinler</span></div></div><div class="correct-answer">C — Doğru katlanmaya yardım ve agregasyonu önlemek</div><div class="rationale">Hsp70, Hsp90, GroEL/GroES yeni sentezlenen ya da stres altında açılan proteinlerin hidrofobik bölgelerini bağlar; doğru katlanmayı yönlendirir ve yanlış katlanmış proteinlerin agregasyonunu önler.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Amino asit dizilimini kataliz eden ribozom + mRNA sistemidir.</div><div class="distractor"><span class="distractor-key">B:</span> Ubikuitin-proteazom sistemi yıkım mekanizmasıdır; ayrı bir kalite kontrol yoludur.</div><div class="distractor"><span class="distractor-key">D:</span> Protein taşıması signal peptid + translokasyon kompleksiyle gerçekleşir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S11</div><div class="ak-q-text">Okazaki fragmentlerini birleştiren enzim</div><div class="q-badges"><span class="badge bloom-1">L1</span><span class="badge topic-badge">DNA Biyolojisi</span></div></div><div class="correct-answer">C — DNA Ligaz</div><div class="rationale">DNA Ligaz, NAD⁺ veya ATP kofaktörü kullanarak 3'-OH ile 5'-fosfat uçları arasında fosfodiester bağı oluşturur. Geri yönlü (lagging strand) sentezde Okazaki fragmentleri arasındaki çentikler bu enzimle kapatılır.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> DNA Pol III ana replikasyon enzimi; uzama sağlar, fragment birleştiremez.</div><div class="distractor"><span class="distractor-key">B:</span> Primaz RNA primer sentezler; ligasyon yapmaz.</div><div class="distractor"><span class="distractor-key">D:</span> Topoizomeraz II süpersarmal gerimi giderir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S12</div><div class="ak-q-text">DNA kalıptan mRNA dizisi hesabı</div><div class="q-badges"><span class="badge bloom-3">L3</span><span class="badge topic-badge">DNA Biyolojisi</span></div></div><div class="correct-answer">C — 5'-UAGCAUAGCU-3'</div><div class="rationale">Kalıp zincir 3'→5' yönünde okunur; mRNA antiparalel 5'→3' sentezlenir. A→U, T→A, C→G, G→C dönüşümleri uygulanır. 3'-ATCGTATCGA-5' kalıbından → 5'-UAGCAUAGCU-3' mRNA elde edilir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Kalıp zincirin kendisidir.</div><div class="distractor"><span class="distractor-key">B:</span> DNA sense zinciridir; T yerine U kullanılmamış.</div><div class="distractor"><span class="distractor-key">D:</span> Tamamlayıcı DNA dizisi; U dönüşümleri hatalı uygulanmış.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S13</div><div class="ak-q-text">Bakteri ekspresyon vektöründe zorunlu unsur</div><div class="q-badges"><span class="badge bloom-3">L3</span><span class="badge topic-badge">Rekombinant DNA</span></div></div><div class="correct-answer">C — Prokaryotik promotör (T7, lac vb.)</div><div class="rationale">Bakteri RNA polimerazı ökaryotik promotörleri tanıyamaz. E. coli için –10/–35 kutu motiflerini içeren prokaryotik promotör şarttır. Ayrıca Shine-Dalgarno RBS, prokaryotik ori ve seleksiyon markeri gereklidir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Enhancer dizileri ökaryotik transkripsiyon düzenleyicileridir; prokaryotlarda işlevsel değildir.</div><div class="distractor"><span class="distractor-key">B:</span> Ökaryotik ori, bakteri DNA replikasyon makinesiyle uyumsuz.</div><div class="distractor"><span class="distractor-key">D:</span> PolyA sinyali ökaryot mRNA işleme elemanıdır; prokaryotlarda kullanılmaz.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S14</div><div class="ak-q-text">CRISPR-Cas9 vs. restriksiyon enzimi avantajı</div><div class="q-badges"><span class="badge bloom-4">L4</span><span class="badge topic-badge">Rekombinant DNA</span></div></div><div class="correct-answer">B — sgRNA aracılığıyla programlanabilir hedefleme</div><div class="rationale">Restriksiyon enzimleri 4–8 bç palindromik dizileri tanır; genomda çok sayıda bulunur. CRISPR'de 20 nükleotidlik sgRNA rehber dizisi değiştirilerek herhangi bir lokus hedeflenebilir; PAM dizisi (NGG) özgüllüğü pekiştirir. Bu programlanabilirlik devrimseldir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> CRISPR çeşitli organizma türlerinde çalışır; yalnızca memelilerle sınırlı değildir.</div><div class="distractor"><span class="distractor-key">C:</span> CRISPR-Cas9 çift sarmal kırığı (DSB) oluşturur.</div><div class="distractor"><span class="distractor-key">D:</span> Hem Cas9 hem restriksiyon enzimleri Mg²⁺ gerektirir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S15</div><div class="ak-q-text">Hibridoma teknolojisi prensibi</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Kırmızı Biyoteknoloji</span></div></div><div class="correct-answer">B — B lenfosit + miyeloma hücresi füzyonu → hibridoma</div><div class="rationale">1975 Köhler–Milstein: antijen spesifik B lenfositi (antikor özgüllüğü) + miyeloma (sonsuz çoğalma). HAT ortamında yalnızca hibridoma hücreleri hayatta kalır; monoklonal antikor üretir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Viral transformasyon ayrı bir yöntemdir (EBV ile immortalizasyon).</div><div class="distractor"><span class="distractor-key">C:</span> T lenfositler antikor değil hücre aracılı immün yanıt yürütür.</div><div class="distractor"><span class="distractor-key">D:</span> Bu poliklonal antikor üretim yöntemidir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S16</div><div class="ak-q-text">Gen tedavisi klinik değerlendirme önceliği</div><div class="q-badges"><span class="badge bloom-5">L5</span><span class="badge topic-badge">Kırmızı Biyoteknoloji</span></div></div><div class="correct-answer">B — Off-target, immünojenisite ve uzun vadeli genomik güvenlik</div><div class="rationale">Güvenlik, etkinliğin ve maliyetin önünde gelir. AAV immünojenik yanıt tetikleyebilir; CRISPR off-target kesimler yapabilir; retrovirüsler onkogen aktivasyonuna yol açabilir. Klinik onay sürecinde güvenlik her zaman birincil kriterdir.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Maliyet önemli olmakla birlikte güvenliğin önüne geçmez.</div><div class="distractor"><span class="distractor-key">C:</span> Tek doz uygulanabilirlik arzu edilen; ancak güvenlik profilinin arkasında kalır.</div><div class="distractor"><span class="distractor-key">D:</span> Patent/ticari rekabet ticari değerlendirme; klinik güvenlik kriteri değildir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S17</div><div class="ak-q-text">SSF'nin SHF'ye üstünlüğü</div><div class="q-badges"><span class="badge bloom-3">L3</span><span class="badge topic-badge">Beyaz Biyoteknoloji</span></div></div><div class="correct-answer">B — Glikoz birikiminin engellenmesi → seluaz inhibisyonu önlenir</div><div class="rationale">SHF'de biriken glikoz ve sellobioz seluazları inhibe eder (ürün inhibisyonu; β-glukozidaz Ki ≈ 1–10 g/L). SSF'de oluşan glikoz anında mayanın metabolizmasına girer; ortamda birikmez → enzim aktivitesi yüksek → hidroliz sürekli verimli.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> SSF gereği sakarifikasyon ve fermentasyon aynı reaktörde ve aynı anda gerçekleşir.</div><div class="distractor"><span class="distractor-key">C:</span> SSF tek reaktör kullandığından ekipman maliyeti SHF'ye göre daha düşüktür; seçenek C ters anlatmaktadır.</div><div class="distractor"><span class="distractor-key">D:</span> SSF'de hem mantar (seluaz) hem maya birlikte çalışır.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S18</div><div class="ak-q-text">Deniz kaynaklı biyoaktif bileşiklerin önemi</div><div class="q-badges"><span class="badge bloom-2">L2</span><span class="badge topic-badge">Mavi Biyoteknoloji</span></div></div><div class="correct-answer">A — Özgün kimyasal çeşitlilik ve karasal organizmalardan farklı yapılar</div><div class="rationale">Yüksek basınç, düşük sıcaklık, hipersalinite, karanlık gibi aşırı koşullara adaptasyon; karasal türlerde eşdeğeri olmayan savunma/sinyal molekülleri üretimini zorunlu kılar. Bu metabolitler (poliketid, terpenoid, peptid) anti-kanser, antimikrobiyal ve anti-inflamatuvar etkinlik taşır.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">B:</span> Ham maddede yan etki olmaması doğru değil; klinik formülasyon zorunludur.</div><div class="distractor"><span class="distractor-key">C:</span> Onkoloji, nöroloji, inflamasyon dahil geniş terapötik alanlarda geliştirilmektedir.</div><div class="distractor"><span class="distractor-key">D:</span> Pek çok deniz bileşiği kararsızdır; formülasyon kritiktir.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S19</div><div class="ak-q-text">MICP mekanizması doğru sırası</div><div class="q-badges"><span class="badge bloom-4">L4</span><span class="badge topic-badge">İnşaat Biyoteknolojisi</span></div></div><div class="correct-answer">B — Ureaz → üre hidrolizi → NH₄⁺ + CO₃²⁻ → Ca²⁺ ile CaCO₃</div><div class="rationale">B. pasteurii ureaz enzimi: CO(NH₂)₂ + H₂O → 2NH₄⁺ + CO₃²⁻; ardından Ca²⁺ + CO₃²⁻ → CaCO₃↓; kristaller çatlak boşluklarını doldurur.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Sıralama yanlış; ureaz aktivasyonu CaCO₃ çökelmesinden önce gelir.</div><div class="distractor"><span class="distractor-key">C:</span> Biyomineralizasyon hücre dışı gerçekleşir; bakteri Ca²⁺ absorbe edip hücre içi sentez yapmaz.</div><div class="distractor"><span class="distractor-key">D:</span> MICP abiyotik değildir; bakteri ve ureaz enzimi zorunludur.</div></div></div>
+
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">S20</div><div class="ak-q-text">Atık su + enerji entegre sistemi tasarımı</div><div class="q-badges"><span class="badge bloom-6">L6</span><span class="badge topic-badge">Entegre Biyoteknoloji</span></div></div><div class="correct-answer">B — Mikroalg biyorafineri: atık su azot/fosfor → alg → biyodizel/biyogaz</div><div class="rationale">Mikroalgler hem atık sudaki N, P ve CO₂'yi asimile ederek biyoremediasyon yapar hem de yüksek lipit/biyokütle içerikleriyle biyodizel, biyogaz ve yüksek değerli metabolit (karotenoid, omega-3) üretimine olanak tanır. Kapalı döngü biyorafineri atığı girdi, çıktıyı değer olarak kullanır.</div><div class="distractor-section"><div class="distractor-label">❌ Yanlış Şıklar</div><div class="distractor"><span class="distractor-key">A:</span> Aktif çamur sistemi arıtma yapar ancak enerji üretmez.</div><div class="distractor"><span class="distractor-key">C:</span> Yakma biyoteknolojik bir çözüm değildir; sera gazı salımı yaratır.</div><div class="distractor"><span class="distractor-key">D:</span> UV sterilizasyonu yalnızca dezenfeksiyon sağlar; enerji üretimiyle entegrasyon yoktur.</div></div></div>
+
+</div><!-- /sec A key -->
+
+<!-- SECTION B KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--purple-light);color:var(--purple);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">B</div><div><div style="font-weight:700;font-size:1rem;">Bölüm B — Doğru/Yanlış Cevapları</div><div style="font-size:0.8rem;color:var(--text-muted);">Her soru 1 puan</div></div></div>
+  <div style="padding:12px 24px;">
+  <table style="width:100%;border-collapse:collapse;font-size:0.87rem;">
+    <tr style="background:#f8fafc;"><th style="padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);">#</th><th style="padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);">Cevap</th><th style="padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);">Gerekçe</th></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B1</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Glikolizde 2 ATP harcanır, 4 üretilir → net kazanç 2 ATP'dir. "Net 4 ATP" ifadesi yanlış.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B2</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">NADH ~2.5 ATP, FADH₂ ~1.5 ATP üretir (güncel P/O). FADH₂ daha az üretir; Kompleks I'i atlar.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B3</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--emerald);font-weight:700;">DOĞRU</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Cas9 nükleaz aktivitesi için sgRNA şarttır; hem hedef diziye bağlanır hem Cas9'un aktivasyonunu sağlar.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B4</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Prokaryotlarda fosforilasyon, metilasyon, asetilasyon gibi PTM'ler gerçekleşir. Glikosilasyon ökaryotlara özgüdür ancak PTM yalnızca ökaryot değildir.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B5</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--emerald);font-weight:700;">DOĞRU</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Tek B hücre klonundan türetilen monoklonal antikor yalnızca tek epitop bağlar; tanı ve tedavide yüksek spesifite sağlar.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B6</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Trabectedin günümüzde yarı sentetik (cyanosafracin B'den) üretilmektedir. "Yalnızca karasal kimyasal sentez" ifadesi yanlış.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B7</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--emerald);font-weight:700;">DOĞRU</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">CO(NH₂)₂ + H₂O →(ureaz)→ 2NH₄⁺ + CO₃²⁻; Ca²⁺ + CO₃²⁻ → CaCO₃↓. B. pasteurii en yaygın ureolitik tür.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B8</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">AAV (Luxturna, Zolgensma), lentivirüs, adenovirüs aktif olarak klinik kullanımdadır. Tamamen yasaklanmış değildir.</td></tr>
+    <tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:600;">B9</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);color:var(--rose);font-weight:700;">YANLIŞ</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Endüstriyel biyoteknolojide "fermentasyon" terimi hem aerobik (antibiyotik, enzim) hem anaerobik (etanol, laktik asit) prosesleri kapsar.</td></tr>
+    <tr><td style="padding:8px 12px;font-family:'JetBrains Mono',monospace;font-weight:600;">B10</td><td style="padding:8px 12px;color:var(--emerald);font-weight:700;">DOĞRU</td><td style="padding:8px 12px;">İnsan genomu ~3.2 Gb; protein kodlayan egzon oranı ~%1.5–2 (~20.000–25.000 gen). Geriye kalanlar intronlar, düzenleyici bölgeler, tekrarlı diziler.</td></tr>
+  </table>
+  </div>
+</div>
+
+<!-- SECTION C KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--emerald-light);color:var(--emerald);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">C</div><div><div style="font-weight:700;font-size:1rem;">Bölüm C — Eşleştirme Cevapları</div><div style="font-size:0.8rem;color:var(--text-muted);">Her set 5 puan</div></div></div>
+  <div style="padding:16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div><div style="font-weight:700;font-size:0.88rem;margin-bottom:10px;color:var(--emerald);">C1 — DNA Enzimleri</div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+      <tr><th style="padding:6px 10px;background:#f8fafc;border:1px solid var(--border);">Enzim</th><th style="padding:6px 10px;background:#f8fafc;border:1px solid var(--border);">Cevap</th></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">1. DNA Ligaz</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ c</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">2. Primaz</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ a</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">3. Topoizomeraz II</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ d</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">4. DNA Helikaz</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ b</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">5. Ters Transkriptaz</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ e</td></tr>
+    </table></div>
+    <div><div style="font-weight:700;font-size:0.88rem;margin-bottom:10px;color:var(--emerald);">C2 — Biyoteknoloji Alanları</div>
+    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+      <tr><th style="padding:6px 10px;background:#f8fafc;border:1px solid var(--border);">Ürün</th><th style="padding:6px 10px;background:#f8fafc;border:1px solid var(--border);">Cevap</th></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">1. Trabectedin</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ c (Mavi)</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">2. Rek. İnsülin</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ a (Kırmızı)</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">3. MICP Beton</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ d (İnşaat)</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">4. SSF Biyoetanol</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ b (Beyaz)</td></tr>
+      <tr><td style="padding:7px 10px;border:1px solid var(--border);">5. pBR322</td><td style="padding:7px 10px;border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);">→ e (Rek. DNA)</td></tr>
+    </table></div>
+  </div>
+</div>
+
+<!-- SECTION D KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--amber-light);color:var(--amber);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">D</div><div><div style="font-weight:700;font-size:1rem;">Bölüm D — Sıralama Cevapları</div><div style="font-size:0.8rem;color:var(--text-muted);">Her set 5 puan</div></div></div>
+  <div style="padding:16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div><div style="font-weight:700;font-size:0.88rem;margin-bottom:10px;color:var(--amber);">D1 — Ökaryotik Gen İfadesi</div>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:0.85rem;">
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">1.</span><span><strong>B</strong> — Transkripsiyon başlangıcı</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">2.</span><span><strong>C</strong> — pre-mRNA olgunlaşması</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">3.</span><span><strong>E</strong> — Nükleer ihracat</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">4.</span><span><strong>A</strong> — Ribozom bağlanması</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">5.</span><span><strong>D</strong> — Elongasyon</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">6.</span><span><strong>F</strong> — Terminasyon</span></div>
+    </div></div>
+    <div><div style="font-weight:700;font-size:0.88rem;margin-bottom:10px;color:var(--amber);">D2 — Rekombinant Protein Üretimi</div>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:0.85rem;">
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">1.</span><span><strong>D</strong> — PCR amplifikasyonu</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">2.</span><span><strong>A</strong> — Restriksiyon sindirim</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">3.</span><span><strong>E</strong> — DNA Ligaz ile ligation</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">4.</span><span><strong>B</strong> — Transformasyon</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">5.</span><span><strong>F</strong> — Seçim ve doğrulama</span></div>
+      <div style="display:flex;gap:10px;align-items:center;padding:6px 10px;background:#fef3c7;border-radius:6px;"><span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--amber);min-width:20px;">6.</span><span><strong>C</strong> — Saflaştırma</span></div>
+    </div></div>
+  </div>
+</div>
+
+<!-- SECTION E KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--rose-light);color:var(--rose);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">E</div><div><div style="font-weight:700;font-size:1rem;">Bölüm E — Kısa Cevap Model Yanıtları</div><div style="font-size:0.8rem;color:var(--text-muted);">Her soru 4 puan — Puanlama kriterleri [Xp] ile belirtilmiştir</div></div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">E1</div><div class="ak-q-text">Km değeri, enzim-substrat affinitesi ve biyoreaktör optimizasyonu</div><div class="q-badges"><span class="badge bloom-4">L4</span></div></div><div class="rationale"><strong>[1p]</strong> Km, reaksiyon hızının Vmax'ın yarısına (½ Vmax) ulaştığı substrat konsantrasyonunu ifade eder; enzim-substrat karmaşığının yarı disosiyasyon sabitidir.<br><strong>[1p]</strong> Düşük Km → yüksek affinite (enzim düşük substrat konsantrasyonunda doyar); Yüksek Km → düşük affinite (yüksek substrat gerektirir).<br><strong>[1p]</strong> Biyoreaktörde Km, operasyonel substrat konsantrasyonunu belirler; Km'nin altında çalışmak verimi düşürür, çok üstünde çalışmak ekonomik değildir.<br><strong>[1p]</strong> Çoklu enzim sistemlerinde (seluaz kokteyli, SSF) her komponentin Km'si bilinmeden hibrit prosesin optimizasyonu yapılamaz; ortak operasyonel pencere bu değerlerle belirlenir.</div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">E2</div><div class="ak-q-text">PCR termal döngü aşamaları ve rekombinant DNA rolü</div><div class="q-badges"><span class="badge bloom-3">L3</span></div></div><div class="rationale"><strong>[1p]</strong> Denatürasyon (~95°C): çift sarmal DNA hidrojen bağları kırılır, tekli zincirler ayrılır.<br><strong>[1p]</strong> Annealing (~50–65°C, Tm'ye bağlı): spesifik primerler kalıp zincire bağlanır; primer uzunluğu ve GC içeriği Tm'yi belirler.<br><strong>[1p]</strong> Uzama (~72°C): Taq DNA polimeraz 5'→3' yönünde nükleotid ekler; bu sıcaklık termokararlı polimerazın optimal aktivite noktasıdır.<br><strong>[1p]</strong> Rekombinant DNA rolü: PCR hedef geni 2ⁿ üstel amplifikasyonla milyonlarca kopyaya çoğaltır; restriksiyon sindirim ve klonlama için yeterli materyal sağlar. Primer tasarımıyla kısıtlama enzim tanıma dizileri, Kozak dizisi veya mutasyonlar eklenebilir.</div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">E3</div><div class="ak-q-text">Kendini iyileştiren beton — mekanizma ve değerlendirme</div><div class="q-badges"><span class="badge bloom-5">L5</span></div></div><div class="rationale"><strong>[1p]</strong> Kavram: beton içine dahil edilen bakteri sporları (veya kapsüller) çatlak oluşumunda aktive olarak kalsiyum karbonat çökelimi yoluyla çatlağı onarır.<br><strong>[1p]</strong> Mekanizma: Bacillus pasteurii sporları su ve üre varlığında germinate olur → ureaz enzimi CO(NH₂)₂ + H₂O → 2NH₄⁺ + CO₃²⁻; Ca²⁺ + CO₃²⁻ → CaCO₃↓ → çatlak dolumu.<br><strong>[1p]</strong> Avantaj: çimento üretimi yüksek CO₂ salımı içerir; biyolojik onarım çimento kullanımını azaltır, yapısal ömür uzar, bakım maliyeti düşer.<br><strong>[1p]</strong> Sınırlamalar: yüksek pH (>12) ortamında bakteri canlılığı; geniş çatlaklar (>0.8 mm) için yetersizlik. Enkapsülasyon (silika jel, poliüretan kapsüller) bu sorunlara çözüm sunar.</div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">E4</div><div class="ak-q-text">mAb vs. küçük moleküllü ilaç karşılaştırması</div><div class="q-badges"><span class="badge bloom-6">L6</span></div></div><div class="rationale"><strong>[1p]</strong> Hedef özgüllüğü: mAb tek epitopa bağlanır; yüksek spesifite, düşük off-target. Küçük moleküller polifarmakoloji gösterebilir; avantaj veya toksisiteye yol açabilir.<br><strong>[1p]</strong> Farmakokinetik: mAb büyük (150 kDa), yarı ömrü uzun (~2–3 hafta; FcRn geri dönüşümü); parenteral uygulama zorunlu. Küçük molekül oral biyoyararlanım, geniş doku dağılımı, BBB geçişi mümkün.<br><strong>[1p]</strong> Üretim: mAb CHO hücrelerinde eksprese edilir; yüksek maliyet, komplex kalite kontrolü, glikosilasyon kritik. Küçük moleküller kimyasal sentezle üretilir; daha ucuz ve kolay standardize.<br><strong>[1p]</strong> Klinik: mAb intrasellüler hedeflere ulaşamaz (hücre zarını geçemez) — ancak ADC ve bispesifik antikor teknolojileri bu sınırı zorlamaktadır. Küçük moleküller hücre içi enzimleri (kinaz inhibitörleri) hedefleyebilir.</div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">E5</div><div class="ak-q-text">Ekstremofil deniz organizmaları ve onaylı ilaç örnekleri</div><div class="q-badges"><span class="badge bloom-2">L2</span></div></div><div class="rationale"><strong>[1p]</strong> Özgün kaynak: Aşırı koşullara (yüksek basınç, düşük/yüksek sıcaklık, hipersalinite, karanlık) adaptasyon; karasal organizmalar için letaldır. Sonuç: evrimsel baskıyla şekillenmiş eşsiz kimyasal çeşitlilik ve biyolojik aktivite.<br><strong>[1p]</strong> Trabectedin (Yondelis): Ecteinascidia turbinata kaynaklı; DNA minör oluk bağlayıcı alkilleyici ajan; yumuşak doku sarkoması ve over kanseri (FDA/EMA onaylı).<br><strong>[1p]</strong> Sitarabin (Cytarabine): Cryptotethya crypta (deniz süngeri) kaynaklı arabinonükleozid analogu; AML ve hematolojik malignitelerde kullanılır; DNA pol inhibisyonu.<br><strong>[1p]</strong> Eribulin (Halaven): Halichondria okadai kaynaklı halichondrin B analogu; meme kanseri ve liposarkomda; mikrotübül dinamiklerini inhibe eder. (Ziconotide, omega-3 yağ asitleri de kabul edilir.)</div></div>
+</div>
+
+<!-- SECTION F KEY -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:var(--teal-light);color:var(--teal);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;">F</div><div><div style="font-weight:700;font-size:1rem;">Bölüm F — Vaka Analizi Model Yanıtı</div><div style="font-size:0.8rem;color:var(--text-muted);">F1a: 2p · F1b: 4p · F1c: 4p</div></div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">F1a</div><div class="ak-q-text">Lignoselülozik bileşenler ve ön işlem (2p)</div></div><div class="rationale"><strong>[1p]</strong> Selüloz (%35–50): β-1,4 bağlı kristalin mikrofibril; hemiselüloz (%20–35): dallanmış heteropolisakkarit (ksilan; ksiloz içerir); lignin (%15–25): fenolik polimer; selüloz/hemiselülozu sarar.<br><strong>[1p]</strong> Ön işlem zorunluluğu: kristalin selüloz ve lignin kalkını seluaz enzimlerinin substrata erişimini engeller. Termal (buhar patlatma), kimyasal (dilüt asit, alkali) veya biyolojik ön işlem lignini çözer/uzaklaştırır; enzimatik hidroliz verimini 5–10 kat artırır.</div></div>
+  <div class="ak-q"><div class="ak-q-top"><div class="ak-q-num">F1b</div><div class="ak-q-text">SSF savunması ve ksiloz fermentasyonu metabolik mühendislik (4p)</div></div><div class="rationale"><strong>[1p]</strong> SSF mekanistik avantajı: SHF'de glikoz/sellobioz birikimi seluazları inhibe eder (ürün inhibisyonu). SSF'de S. cerevisiae üretilen glikozu anında tüketir; enzim aktivitesi yüksek kalır.<br><strong>[1p]</strong> Ek SSF avantajları: tek reaktörde iki adım → ekipman maliyeti azalır; proses süresi kısalır; kontaminasyon riski düşer.<br><strong>[1p]</strong> Ksiloz mühendisliği — engel: doğal S. cerevisiae ksilozu fermente edemez. Yaklaşımlar: (a) Bakteri yolu: xylose isomerase (XI; Piromyces kaynaklı) ekspresyonu → ksiloz → ksilulose. (b) Mantar yolu: XR + XDH ekspresyonu → ksilitol aracılığıyla ksilulose → PPP.<br><strong>[1p]</strong> Ek: PPP genlerinin (TAL1, TKL1) aşırı ekspresyonu; glikoz baskılamasını (CCR) azaltmak için ksiloz spesifik taşıyıcı ekspresyonu veya HXT mühendisliği.</div></div>
+  <div class="ak-q" style="border-bottom:none;"><div class="ak-q-top"><div class="ak-q-num">F1c</div><div class="ak-q-text">Scale-up zorlukları ve çözümler (4p)</div></div><div class="rationale"><strong>[1p]</strong> Isı/sıcaklık uyumsuzluğu: T(seluaz ~50°C) ≠ T(S. cerevisiae ~30–37°C). Çözüm: ısıya toleranslı maya suşları mühendisliği; reaktör soğutma sistemi optimizasyonu; fed-batch strateji.<br><strong>[1p]</strong> Enzim maliyeti: T. reesei seluaz kokteyli pahalıdır. Çözüm: Konsolide Biyoproses (CBP) — seluaz eksprese eden + fermentasyon yapabilen tek mikroorganizma (Clostridium thermocellum). Enzim geri dönüşümü (ultrafiltrasyon).<br><strong>[1p]</strong> İnhibitör birikimi: ön işlemde oluşan furfural, HMF, asetat, fenolikler S. cerevisiae fermentasyonunu inhibe eder. Çözüm: detoksifikasyon (aktif kömür, Ca(OH)₂ overliming); inhibitöre toleranslı suş gelişimi (ALE — adaptive laboratory evolution).<br><strong>[1p]</strong> Entegrasyon: ISEP (in-situ etanol uzaklaştırma; vakum veya pervaporasyon) ile ürün inhibisyonu engellenir; sürekli fermentasyon ve biyorafineri yaklaşımı (lignin → enerji; ksiloz → ayrı proses hattı) ekonomik fizibiliteyi artırır.</div></div>
+</div>
+
+<!-- SCORE TABLE -->
+<div class="ak-section">
+  <div class="ak-section-header"><div style="width:36px;height:36px;background:#f0f9ff;color:#0369a1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🎯</div><div><div style="font-weight:700;font-size:1rem;">Not Dönüşüm Tablosu</div><div style="font-size:0.8rem;color:var(--text-muted);">100 puan üzerinden KU Leuven 20'lik not sistemi</div></div></div>
+  <div style="padding:12px 24px;">
+  <table class="score-table">
+    <tr><th>Puan Aralığı</th><th>Yüzde (%)</th><th>Değerlendirme</th><th>20'lik Sistem</th></tr>
+    <tr><td>90–100</td><td>90–100</td><td>Mükemmel</td><td class="grade">18–20</td></tr>
+    <tr><td>80–89</td><td>80–89</td><td>Çok İyi</td><td class="grade">16–17</td></tr>
+    <tr><td>70–79</td><td>70–79</td><td>İyi</td><td class="grade">14–15</td></tr>
+    <tr><td>60–69</td><td>60–69</td><td>Yeterli</td><td class="grade">12–13</td></tr>
+    <tr><td>50–59</td><td>50–59</td><td>Geçer Sınırı</td><td class="grade">10–11</td></tr>
+    <tr><td>&lt;50</td><td>&lt;50</td><td>Yetersiz</td><td class="grade">&lt;10</td></tr>
+  </table>
+  </div>
+</div>
+
+</div><!-- /tab-key -->
+
+<script>
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+function selectTF(btn) {
+  const row = btn.closest('.tf-btns');
+  row.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+</script>
+</body>
+</html>
