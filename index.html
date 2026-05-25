@@ -126,9 +126,64 @@
   .info-box{background:var(--sky-light);border:1px solid #bae6fd;border-radius:10px;padding:14px 18px;margin:0 0 20px;font-size:0.85rem;color:#0c4a6e;line-height:1.6;}
   .instr-list{padding:0 0 0 18px;}
   .instr-list li{margin-bottom:4px;}
+  /* Start Screen */
+  #start-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#0c1a2e 0%,#0f2744 50%,#1a3a5c 100%);z-index:2000;display:flex;align-items:center;justify-content:center;}
+  .start-card{text-align:center;color:white;max-width:560px;padding:40px 32px;width:90%;}
+  .start-card h1{font-family:'Playfair Display',serif;font-size:2.2rem;line-height:1.2;margin-bottom:10px;}
+  .start-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-radius:16px;padding:22px;margin:22px 0;text-align:left;}
+  .start-info-item .lbl{color:#94a3b8;font-size:0.8rem;margin-bottom:3px;}
+  .start-info-item .val{color:white;font-size:1.1rem;font-weight:700;}
+  .start-note{background:rgba(14,165,233,0.12);border:1px solid rgba(14,165,233,0.25);border-radius:10px;padding:13px 16px;margin-bottom:22px;font-size:0.82rem;color:#bae6fd;text-align:left;line-height:1.55;}
+  .btn-start{background:linear-gradient(135deg,#0ea5e9,#0369a1);color:white;border:none;padding:15px 52px;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;letter-spacing:0.03em;box-shadow:0 8px 32px rgba(14,165,233,0.35);transition:transform 0.15s,box-shadow 0.15s;}
+  .btn-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(14,165,233,0.5);}
+  /* Timer */
+  #timer-display{font-family:'JetBrains Mono',monospace;color:#38bdf8;font-size:0.95rem;font-weight:600;letter-spacing:0.05em;}
+  /* Submit */
+  .submit-zone{text-align:center;padding:36px 0 16px;}
+  .btn-submit{background:linear-gradient(135deg,#10b981,#065f46);color:white;border:none;padding:15px 52px;border-radius:50px;font-size:1rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;letter-spacing:0.03em;box-shadow:0 8px 32px rgba(16,185,129,0.35);transition:transform 0.15s,box-shadow 0.15s;}
+  .btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 40px rgba(16,185,129,0.5);}
+  .btn-submit:disabled{opacity:0.45;cursor:not-allowed;}
+  /* Results */
+  #results-panel{display:none;background:var(--card);border:2px solid var(--emerald);border-radius:16px;margin-bottom:40px;box-shadow:0 4px 24px rgba(16,185,129,0.15);overflow:hidden;}
+  .results-header{background:linear-gradient(135deg,#064e3b,#065f46);color:white;padding:22px 28px;}
+  .results-header h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:4px;}
+  .results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;padding:22px 28px;}
+  .res-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+  .res-card .sec-name{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:5px;}
+  .res-card .res-score{font-family:'JetBrains Mono',monospace;font-size:1.55rem;font-weight:700;color:var(--emerald);}
+  .res-card .res-max{font-size:0.78rem;color:var(--text-muted);}
+  .results-note{margin:0 28px 20px;padding:13px 16px;background:var(--amber-light);border:1px solid var(--amber);border-radius:10px;font-size:0.83rem;color:#92400e;line-height:1.55;}
+  .results-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;background:#f0fdf4;border-top:1px solid #a7f3d0;padding:20px 28px;}
+  .total-score-block .lbl{font-size:0.8rem;color:#065f46;font-weight:600;margin-bottom:2px;}
+  .total-score-num{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:700;color:var(--emerald);}
+  .grade-badge{background:var(--emerald);color:white;padding:8px 22px;border-radius:20px;font-weight:700;font-size:0.88rem;}
+  .btn-retry{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:10px 24px;border-radius:50px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .btn-retry:hover{background:var(--sky-light);border-color:var(--sky);}
+  /* Answer feedback */
+  .option.is-correct{background:#d1fae5 !important;border-color:#10b981 !important;}
+  .option.is-wrong{background:#ffe4e6 !important;border-color:#f43f5e !important;}
 </style>
 </head>
 <body>
+<!-- START SCREEN -->
+<div id="start-screen">
+  <div class="start-card">
+    <div style="font-size:0.82rem;color:#94a3b8;margin-bottom:8px;letter-spacing:0.05em;text-transform:uppercase;">KU Leuven · Mühendislik Fakültesi Teknoloji</div>
+    <h1>Biyoteknoloji <span style="color:#38bdf8;">Deneme Sınavı</span></h1>
+    <p style="color:#64748b;font-size:0.88rem;margin-bottom:0;">Öğrenciler: Arda Berktaş / Yaman Tüzüntürk</p>
+    <div class="start-info-grid">
+      <div class="start-info-item"><div class="lbl">Toplam Puan</div><div class="val">100 puan</div></div>
+      <div class="start-info-item"><div class="lbl">Bölüm Sayısı</div><div class="val">6 bölüm</div></div>
+      <div class="start-info-item"><div class="lbl">Soru Sayısı</div><div class="val">20 MCQ + çeşitli</div></div>
+      <div class="start-info-item"><div class="lbl">Süre</div><div class="val" style="color:#38bdf8;">Serbest ⏱</div></div>
+    </div>
+    <div class="start-note">
+      <strong style="color:#38bdf8;">Otomatik Puanlama:</strong> Bölüm A (MCQ), B (D/Y), C (Eşleştirme) ve D (Sıralama) tamamlandıktan sonra otomatik puanlanır. Bölüm E ve F (açık uçlu) manuel değerlendirme gerektirir.<br><br>
+      Başla butonuna tıkladığınızda süre sayacı başlayacak ve sınav görüntülenecektir.
+    </div>
+    <button class="btn-start" onclick="startExam()">Sınava Başla →</button>
+  </div>
+</div>
 <div class="header">
   <div class="header-top">
     <div>
@@ -138,7 +193,7 @@
     <div class="header-meta">
       <div><strong>Öğrenciler:</strong> Arda Berktaş / Yaman Tüzüntürk</div>
       <div><strong>Toplam Puan:</strong> 100</div>
-      <div><strong>Süre:</strong> —</div>
+      <div><strong>Süre:</strong> <span id="timer-display">00:00</span></div>
       <div><strong>Bloom:</strong> L1–L6</div>
     </div>
   </div>
@@ -372,6 +427,39 @@
   </div>
 </div>
 
+<!-- SUBMIT BUTTON -->
+<div class="submit-zone">
+  <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:14px;">Tüm soruları tamamladıktan sonra sınavı bitirin.</p>
+  <button class="btn-submit" id="submit-btn" onclick="submitExam()">✓ Sınavı Tamamla ve Puanla</button>
+</div>
+
+<!-- RESULTS PANEL -->
+<div id="results-panel">
+  <div class="results-header">
+    <h2>Sınav Sonuçları</h2>
+    <div style="font-size:0.85rem;color:#a7f3d0;margin-top:4px;">Geçen Süre: <span id="res-time" style="font-family:'JetBrains Mono',monospace;font-weight:600;">—</span></div>
+  </div>
+  <div class="results-grid">
+    <div class="res-card"><div class="sec-name">Bölüm A — MCQ</div><div class="res-score" id="res-a">—</div><div class="res-max">/ 40 puan</div></div>
+    <div class="res-card"><div class="sec-name">Bölüm B — D/Y</div><div class="res-score" id="res-b">—</div><div class="res-max">/ 10 puan</div></div>
+    <div class="res-card"><div class="sec-name">Bölüm C — Eşleştirme</div><div class="res-score" id="res-c">—</div><div class="res-max">/ 10 puan</div></div>
+    <div class="res-card"><div class="sec-name">Bölüm D — Sıralama</div><div class="res-score" id="res-d">—</div><div class="res-max">/ 10 puan</div></div>
+  </div>
+  <div class="results-note">
+    <strong>Bölüm E ve F</strong> açık uçlu sorular içerdiğinden otomatik puanlanamaz. Bu bölümler için cevap anahtarı sekmesini kullanarak kendi değerlendirmenizi yapınız (toplam 30 puan).
+  </div>
+  <div class="results-footer">
+    <div class="total-score-block">
+      <div class="lbl">Otomatik Puanlanan Toplam (A+B+C+D)</div>
+      <div class="total-score-num"><span id="res-auto">—</span><span style="font-size:1rem;color:#6ee7b7;">/70</span></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div class="grade-badge" id="res-grade">—</div>
+      <button class="btn-retry" onclick="location.reload()">↺ Yeni Sınav</button>
+    </div>
+  </div>
+</div>
+
 </div><!-- /tab-exam -->
 <!-- ANSWER KEY TAB -->
 <div id="tab-key" class="tab-content">
@@ -545,16 +633,166 @@
 </div><!-- /tab-key -->
 
 <script>
+// ── Tab navigation ──────────────────────────────────────────
 function showTab(tab, btn) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   btn.classList.add('active');
 }
+
+// ── True/False selection ────────────────────────────────────
 function selectTF(btn) {
   const row = btn.closest('.tf-btns');
   row.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
+}
+
+// ── Timer ───────────────────────────────────────────────────
+let timerInterval = null;
+let secondsElapsed = 0;
+
+function startExam() {
+  document.getElementById('start-screen').style.display = 'none';
+  timerInterval = setInterval(function() {
+    secondsElapsed++;
+    const h = Math.floor(secondsElapsed / 3600);
+    const m = Math.floor((secondsElapsed % 3600) / 60);
+    const s = secondsElapsed % 60;
+    const display = (h > 0 ? String(h).padStart(2,'0') + ':' : '') +
+      String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    document.getElementById('timer-display').textContent = display;
+  }, 1000);
+}
+
+// ── Answer Keys ─────────────────────────────────────────────
+const CORRECT_A = [1,1,1,1,2,0,1,1,1,2,2,2,2,1,1,1,1,0,1,1]; // 0-based option index
+const CORRECT_B = ['Y','Y','D','Y','D','Y','D','Y','Y','D'];
+const CORRECT_C1 = ['c','a','d','b','e'];
+const CORRECT_C2 = ['c','a','d','b','e'];
+const CORRECT_D1 = [4,1,2,5,3,6]; // items A-F
+const CORRECT_D2 = [2,4,6,1,3,5];
+
+// ── Submit & Grade ───────────────────────────────────────────
+function submitExam() {
+  if (timerInterval) clearInterval(timerInterval);
+
+  // — Section A (MCQ, 2p each) —
+  let scoreA = 0;
+  for (let i = 1; i <= 20; i++) {
+    const opts = document.querySelectorAll('input[name="q' + i + '"]');
+    const selected = Array.from(opts).findIndex(o => o.checked);
+    const correct = CORRECT_A[i - 1];
+    opts.forEach(function(opt, idx) {
+      const lbl = opt.closest('.option');
+      if (idx === correct) {
+        lbl.classList.add('is-correct');
+      } else if (opt.checked) {
+        lbl.classList.add('is-wrong');
+      }
+    });
+    if (selected === correct) scoreA += 2;
+  }
+
+  // — Section B (T/F, 1p each) —
+  let scoreB = 0;
+  const tfRows = document.querySelectorAll('.tf-row');
+  tfRows.forEach(function(row, idx) {
+    const correctIsTrue = CORRECT_B[idx] === 'D';
+    const trueBtn = row.querySelector('.true-btn');
+    const falseBtn = row.querySelector('.false-btn');
+    const selected = row.querySelector('.tf-btn.selected');
+    const selectedIsTrue = selected && selected.classList.contains('true-btn');
+    const isCorrect = selected && ((selectedIsTrue && correctIsTrue) || (!selectedIsTrue && !correctIsTrue));
+    if (isCorrect) scoreB += 1;
+    // Show correct answer in green regardless
+    const correctBtn = correctIsTrue ? trueBtn : falseBtn;
+    correctBtn.style.background = '#10b981';
+    correctBtn.style.color = 'white';
+    correctBtn.style.borderColor = '#10b981';
+    // Mark wrong selection in red
+    if (selected && !isCorrect) {
+      selected.style.background = '#f43f5e';
+      selected.style.color = 'white';
+      selected.style.borderColor = '#f43f5e';
+    }
+  });
+
+  // — Section C (Matching, 1p per correct match) —
+  let scoreC = 0;
+  const matchGrids = document.querySelectorAll('.match-grid');
+  [CORRECT_C1, CORRECT_C2].forEach(function(key, gi) {
+    const inputs = matchGrids[gi].querySelectorAll('.match-input');
+    inputs.forEach(function(inp, idx) {
+      const val = inp.value.trim().toLowerCase();
+      if (val === key[idx]) {
+        scoreC += 1;
+        inp.style.borderColor = '#10b981';
+        inp.style.background = '#d1fae5';
+        inp.style.color = '#065f46';
+      } else {
+        inp.style.borderColor = '#f43f5e';
+        inp.style.background = '#ffe4e6';
+        inp.style.color = '#9f1239';
+        inp.value = '';
+        inp.placeholder = key[idx].toUpperCase() + ' ✓';
+      }
+    });
+  });
+
+  // — Section D (Ordering, proportional 5p per set) —
+  let scoreD = 0;
+  const orderLists = document.querySelectorAll('.order-list');
+  [CORRECT_D1, CORRECT_D2].forEach(function(key, li) {
+    const inputs = orderLists[li].querySelectorAll('.order-input');
+    let correct = 0;
+    inputs.forEach(function(inp, idx) {
+      const val = parseInt(inp.value);
+      if (val === key[idx]) {
+        correct++;
+        inp.style.borderColor = '#10b981';
+        inp.style.background = '#d1fae5';
+        inp.style.color = '#065f46';
+      } else {
+        inp.style.borderColor = '#f43f5e';
+        inp.style.background = '#ffe4e6';
+        inp.style.color = '#9f1239';
+        inp.placeholder = key[idx] + ' ✓';
+        inp.value = '';
+      }
+    });
+    scoreD += Math.round((correct / 6) * 5 * 10) / 10;
+  });
+  scoreD = Math.round(scoreD * 10) / 10;
+
+  // — Show results —
+  const autoTotal = Math.round((scoreA + scoreB + scoreC + scoreD) * 10) / 10;
+  const elapsed = document.getElementById('timer-display').textContent;
+
+  document.getElementById('res-a').textContent = scoreA;
+  document.getElementById('res-b').textContent = scoreB;
+  document.getElementById('res-c').textContent = scoreC;
+  document.getElementById('res-d').textContent = scoreD;
+  document.getElementById('res-auto').textContent = autoTotal;
+  document.getElementById('res-time').textContent = elapsed;
+
+  const pct = (autoTotal / 70) * 100;
+  let grade;
+  if (pct >= 90) grade = 'Mükemmel (18–20)';
+  else if (pct >= 80) grade = 'Çok İyi (16–17)';
+  else if (pct >= 70) grade = 'İyi (14–15)';
+  else if (pct >= 60) grade = 'Yeterli (12–13)';
+  else if (pct >= 50) grade = 'Geçer Sınırı (10–11)';
+  else grade = 'Yetersiz (<10)';
+  document.getElementById('res-grade').textContent = grade;
+
+  const panel = document.getElementById('results-panel');
+  panel.style.display = 'block';
+  setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth' }); }, 100);
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '✓ Sınav Tamamlandı';
 }
 </script>
 </body>
