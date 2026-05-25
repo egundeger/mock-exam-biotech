@@ -159,12 +159,23 @@
   .grade-badge{background:var(--emerald);color:white;padding:8px 22px;border-radius:20px;font-weight:700;font-size:0.88rem;}
   .btn-retry{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:10px 24px;border-radius:50px;font-size:0.88rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
   .btn-retry:hover{background:var(--sky-light);border-color:var(--sky);}
+  /* Floating timer badge */
+  #float-timer{position:fixed;top:14px;right:18px;background:rgba(10,22,40,0.92);border:1px solid rgba(56,189,248,0.35);border-radius:40px;padding:7px 18px;display:none;align-items:center;gap:9px;z-index:500;backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(0,0,0,0.35);transition:opacity 0.3s;}
+  #float-timer .ft-icon{font-size:0.85rem;}
+  #float-timer .ft-label{font-size:0.68rem;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;}
+  #float-timer .ft-val{font-family:'JetBrains Mono',monospace;color:#38bdf8;font-size:0.97rem;font-weight:700;letter-spacing:0.04em;}
   /* Answer feedback */
   .option.is-correct{background:#d1fae5 !important;border-color:#10b981 !important;}
   .option.is-wrong{background:#ffe4e6 !important;border-color:#f43f5e !important;}
 </style>
 </head>
 <body>
+<!-- FLOATING TIMER BADGE -->
+<div id="float-timer">
+  <span class="ft-icon">⏱</span>
+  <span class="ft-label">Süre</span>
+  <span class="ft-val" id="float-timer-val">00:00</span>
+</div>
 <!-- START SCREEN -->
 <div id="start-screen">
   <div class="start-card">
@@ -444,6 +455,7 @@
     <div class="res-card"><div class="sec-name">Bölüm B — D/Y</div><div class="res-score" id="res-b">—</div><div class="res-max">/ 10 puan</div></div>
     <div class="res-card"><div class="sec-name">Bölüm C — Eşleştirme</div><div class="res-score" id="res-c">—</div><div class="res-max">/ 10 puan</div></div>
     <div class="res-card"><div class="sec-name">Bölüm D — Sıralama</div><div class="res-score" id="res-d">—</div><div class="res-max">/ 10 puan</div></div>
+    <div class="res-card" style="border-color:#bae6fd;background:#f0f9ff;"><div class="sec-name" style="color:#0369a1;">Tamamlama Süresi</div><div class="res-score" id="res-time" style="color:#0ea5e9;font-size:1.3rem;">—</div><div class="res-max">mm:ss</div></div>
   </div>
   <div class="results-note">
     <strong>Bölüm E ve F</strong> açık uçlu sorular içerdiğinden otomatik puanlanamaz. Bu bölümler için cevap anahtarı sekmesini kullanarak kendi değerlendirmenizi yapınız (toplam 30 puan).
@@ -654,6 +666,8 @@ let secondsElapsed = 0;
 
 function startExam() {
   document.getElementById('start-screen').style.display = 'none';
+  var floatTimer = document.getElementById('float-timer');
+  floatTimer.style.display = 'flex';
   timerInterval = setInterval(function() {
     secondsElapsed++;
     const h = Math.floor(secondsElapsed / 3600);
@@ -662,6 +676,7 @@ function startExam() {
     const display = (h > 0 ? String(h).padStart(2,'0') + ':' : '') +
       String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
     document.getElementById('timer-display').textContent = display;
+    document.getElementById('float-timer-val').textContent = display;
   }, 1000);
 }
 
@@ -790,6 +805,7 @@ function submitExam() {
   panel.style.display = 'block';
   setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth' }); }, 100);
 
+  document.getElementById('float-timer').style.display = 'none';
   const btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.textContent = '✓ Sınav Tamamlandı';
