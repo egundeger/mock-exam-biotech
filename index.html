@@ -167,9 +167,95 @@
   /* Answer feedback */
   .option.is-correct{background:#d1fae5 !important;border-color:#10b981 !important;}
   .option.is-wrong{background:#ffe4e6 !important;border-color:#f43f5e !important;}
+  /* ── Question Navigator ── */
+  #q-nav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:400;display:none;}
+  #q-nav.visible{display:block;}
+  #q-nav-toggle{background:#0c1a2e;color:white;border:none;border-radius:10px 0 0 10px;padding:13px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;box-shadow:-2px 0 12px rgba(0,0,0,0.2);}
+  #q-nav-toggle .nt-icon{font-size:0.9rem;}
+  #q-nav-toggle .nt-label{font-size:0.62rem;writing-mode:vertical-lr;letter-spacing:0.08em;font-weight:700;color:#94a3b8;text-transform:uppercase;}
+  #q-nav-toggle .nt-progress{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:#38bdf8;font-weight:700;}
+  #q-nav-panel{position:absolute;right:100%;top:50%;transform:translateY(-50%);background:white;border:1px solid var(--border);border-radius:12px 0 0 12px;box-shadow:-4px 0 24px rgba(0,0,0,0.1);padding:14px 12px;width:210px;display:none;max-height:80vh;overflow-y:auto;}
+  #q-nav.open #q-nav-panel{display:block;}
+  .np-sec-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);margin:10px 0 5px;padding-bottom:3px;border-bottom:1px solid var(--border);}
+  .np-sec-title:first-child{margin-top:0;}
+  .np-dots{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
+  .np-dot{width:24px;height:24px;border-radius:6px;background:#e2e8f0;border:1.5px solid #cbd5e1;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:700;color:#64748b;display:flex;align-items:center;justify-content:center;transition:all 0.12s;}
+  .np-dot:hover{border-color:var(--sky);background:var(--sky-light);}
+  .np-dot.answered{background:var(--sky-light);border-color:var(--sky);color:var(--sky-dark);}
+  .np-dot.flagged{background:var(--amber-light);border-color:var(--amber);color:#92400e;}
+  .np-dot.answered.flagged{background:#fef3c7;border-color:#f59e0b;}
+  .np-legend{display:flex;flex-direction:column;gap:3px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:0.7rem;color:var(--text-muted);}
+  .np-leg-row{display:flex;align-items:center;gap:5px;}
+  .np-leg-dot{width:10px;height:10px;border-radius:3px;border:1.5px solid;}
+  /* ── Flag button ── */
+  .flag-btn{background:none;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;font-size:0.8rem;opacity:0.35;transition:opacity 0.15s;line-height:1;}
+  .flag-btn:hover,.flag-btn.flagged{opacity:1;}
+  .flag-btn.flagged{color:var(--amber);}
+  /* ── Countdown ── */
+  .timer-limit-row{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:18px;flex-wrap:wrap;}
+  .timer-limit-row .tl-label{font-size:0.8rem;color:#94a3b8;}
+  .tlimit-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);color:#cbd5e1;padding:5px 13px;border-radius:20px;cursor:pointer;font-size:0.78rem;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .tlimit-btn.active,.tlimit-btn:hover{background:rgba(14,165,233,0.25);border-color:#38bdf8;color:white;}
+  #float-timer.countdown .ft-val{color:#f59e0b;}
+  #float-timer.danger .ft-val{color:#f43f5e;animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+  /* ── Accuracy bars ── */
+  .accuracy-section{padding:14px 28px 18px;border-top:1px solid var(--border);}
+  .accuracy-section h3{font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+  .acc-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+  .acc-label{font-size:0.78rem;font-weight:600;color:var(--text);min-width:85px;flex-shrink:0;}
+  .acc-bar-wrap{flex:1;background:#e2e8f0;border-radius:20px;height:7px;overflow:hidden;}
+  .acc-bar-fill{height:100%;border-radius:20px;transition:width 0.7s ease;}
+  .acc-pct{font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;min-width:36px;text-align:right;}
+  /* ── Print ── */
+  @media print{#float-timer,#q-nav,#start-screen,.tab-bar,#submit-btn,.btn-retry,.btn-print,#accuracy-section,#results-panel .results-note{display:none!important;}.tab-content{display:block!important;}#tab-ai,#tab-key{display:none!important;}#results-panel{display:block!important;border:none!important;box-shadow:none!important;}.header{background:#0c1a2e!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+  .btn-print{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:9px 20px;border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;display:inline-flex;align-items:center;gap:6px;transition:all 0.15s;}
+  .btn-print:hover{background:var(--sky-light);border-color:var(--sky);}
+  /* ── AI Generator ── */
+  .ai-gen-wrap{max-width:680px;margin:0 auto;padding:32px 40px 40px;}
+  .ai-gen-wrap h2{font-family:'Playfair Display',serif;font-size:1.55rem;color:var(--text);margin-bottom:5px;}
+  .ai-subtitle{color:var(--text-muted);font-size:0.87rem;margin-bottom:26px;line-height:1.6;}
+  .ai-field{margin-bottom:18px;}
+  .ai-field>label{display:block;font-weight:700;font-size:0.83rem;color:var(--text);margin-bottom:7px;}
+  .ai-field input[type=password],.ai-field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 13px;font-family:'Source Sans 3',sans-serif;font-size:0.87rem;color:var(--text);background:white;transition:border-color 0.15s;}
+  .ai-field input:focus,.ai-field select:focus{outline:none;border-color:var(--purple);}
+  .ai-field .fnote{font-size:0.77rem;color:var(--text-muted);margin-top:5px;line-height:1.5;}
+  .diff-row{display:flex;gap:7px;flex-wrap:wrap;}
+  .diff-btn{background:#f1f5f9;border:1.5px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:0.8rem;font-weight:600;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .diff-btn.active{background:var(--purple-light);border-color:var(--purple);color:var(--purple);}
+  .qtype-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .qtype-card{border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;cursor:pointer;transition:all 0.15s;user-select:none;}
+  .qtype-card.active{border-color:var(--sky);background:var(--sky-light);}
+  .qtype-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .qtype-name{font-weight:700;font-size:0.83rem;}
+  .qtype-cnt{display:flex;align-items:center;gap:5px;font-size:0.78rem;color:var(--text-muted);}
+  .qtype-cnt input{width:44px;border:1.5px solid var(--border);border-radius:6px;padding:3px 5px;font-family:'JetBrains Mono',monospace;font-size:0.82rem;text-align:center;background:white;}
+  .qtype-cnt input:focus{outline:none;border-color:var(--sky);}
+  .btn-generate{background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:white;border:none;padding:13px 44px;border-radius:50px;font-size:0.97rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;box-shadow:0 6px 24px rgba(139,92,246,0.35);transition:transform 0.15s,box-shadow 0.15s;display:inline-flex;align-items:center;gap:8px;margin-top:6px;}
+  .btn-generate:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 32px rgba(139,92,246,0.45);}
+  .btn-generate:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+  .ai-status{margin-top:14px;padding:13px 16px;border-radius:10px;font-size:0.86rem;line-height:1.55;}
+  .ai-loading{color:#0369a1;background:#f0f9ff;border:1px solid #bae6fd;padding:13px 16px;border-radius:10px;}
+  .ai-error{color:#be123c;background:var(--rose-light);border:1px solid #fecdd3;padding:13px 16px;border-radius:10px;}
+  .gen-exam-header{background:linear-gradient(135deg,#4c1d95,#6d28d9);color:white;padding:22px 28px;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:28px;}
+  .gen-exam-header h2{font-family:'Playfair Display',serif;font-size:1.25rem;margin:0;}
+  .btn-sm{background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.28);padding:6px 16px;border-radius:20px;cursor:pointer;font-size:0.8rem;font-weight:600;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .btn-sm:hover{background:rgba(255,255,255,0.25);}
+  /* ── Fill-in-blank ── */
+  .fill-input{border:none;border-bottom:2px solid var(--sky);padding:2px 8px;font-family:'Source Sans 3',sans-serif;font-size:0.92rem;color:var(--text);background:transparent;min-width:130px;outline:none;transition:border-color 0.15s;}
+  .fill-input:focus{border-bottom-color:var(--sky-dark);}
 </style>
 </head>
 <body>
+<!-- QUESTION NAVIGATOR -->
+<div id="q-nav">
+  <button id="q-nav-toggle" onclick="toggleNav()">
+    <span class="nt-icon">📍</span>
+    <span class="nt-label">Sorular</span>
+    <span class="nt-progress" id="nav-progress">0</span>
+  </button>
+  <div id="q-nav-panel"></div>
+</div>
 <!-- FLOATING TIMER BADGE -->
 <div id="float-timer">
   <span class="ft-icon">⏱</span>
@@ -191,6 +277,13 @@
     <div class="start-note">
       <strong style="color:#38bdf8;">Otomatik Puanlama:</strong> Bölüm A (MCQ), B (D/Y), C (Eşleştirme) ve D (Sıralama) tamamlandıktan sonra otomatik puanlanır. Bölüm E ve F (açık uçlu) manuel değerlendirme gerektirir.<br><br>
       Başla butonuna tıkladığınızda süre sayacı başlayacak ve sınav görüntülenecektir.
+    </div>
+    <div class="timer-limit-row">
+      <span class="tl-label">⏱ Süre Limiti:</span>
+      <button class="tlimit-btn active" onclick="setTimerLimit(0,this)">Serbest</button>
+      <button class="tlimit-btn" onclick="setTimerLimit(30,this)">30 dk</button>
+      <button class="tlimit-btn" onclick="setTimerLimit(60,this)">60 dk</button>
+      <button class="tlimit-btn" onclick="setTimerLimit(90,this)">90 dk</button>
     </div>
     <button class="btn-start" onclick="startExam()">Sınava Başla →</button>
   </div>
@@ -220,6 +313,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="showTab('exam',this)">📋 Deneme Sınavı</button>
   <button class="tab-btn" onclick="showTab('key',this)">🔑 Cevap Anahtarı</button>
+  <button class="tab-btn" onclick="showTab('ai',this)">🤖 Sınav Oluştur</button>
 </div>
 <!-- EXAM TAB -->
 <div id="tab-exam" class="tab-content active">
@@ -448,7 +542,7 @@
 <div id="results-panel">
   <div class="results-header">
     <h2>Sınav Sonuçları</h2>
-    <div style="font-size:0.85rem;color:#a7f3d0;margin-top:4px;">Geçen Süre: <span id="res-time" style="font-family:'JetBrains Mono',monospace;font-weight:600;">—</span></div>
+    <div style="font-size:0.85rem;color:#a7f3d0;margin-top:4px;">Tamamlanma zamanı ve bölüm puanları aşağıda gösterilmektedir.</div>
   </div>
   <div class="results-grid">
     <div class="res-card"><div class="sec-name">Bölüm A — MCQ</div><div class="res-score" id="res-a">—</div><div class="res-max">/ 40 puan</div></div>
@@ -456,6 +550,14 @@
     <div class="res-card"><div class="sec-name">Bölüm C — Eşleştirme</div><div class="res-score" id="res-c">—</div><div class="res-max">/ 10 puan</div></div>
     <div class="res-card"><div class="sec-name">Bölüm D — Sıralama</div><div class="res-score" id="res-d">—</div><div class="res-max">/ 10 puan</div></div>
     <div class="res-card" style="border-color:#bae6fd;background:#f0f9ff;"><div class="sec-name" style="color:#0369a1;">Tamamlama Süresi</div><div class="res-score" id="res-time" style="color:#0ea5e9;font-size:1.3rem;">—</div><div class="res-max">mm:ss</div></div>
+  </div>
+  <!-- Accuracy Bars -->
+  <div class="accuracy-section" id="accuracy-section" style="display:none;">
+    <h3>Bölüm Doğruluk Oranları</h3>
+    <div class="acc-row"><span class="acc-label">A — MCQ</span><div class="acc-bar-wrap"><div class="acc-bar-fill" id="acc-a" style="width:0%;background:var(--sky)"></div></div><span class="acc-pct" id="acc-a-pct" style="color:var(--sky-dark)">—</span></div>
+    <div class="acc-row"><span class="acc-label">B — D/Y</span><div class="acc-bar-wrap"><div class="acc-bar-fill" id="acc-b" style="width:0%;background:var(--purple)"></div></div><span class="acc-pct" id="acc-b-pct" style="color:var(--purple)">—</span></div>
+    <div class="acc-row"><span class="acc-label">C — Eşleştirme</span><div class="acc-bar-wrap"><div class="acc-bar-fill" id="acc-c" style="width:0%;background:var(--emerald)"></div></div><span class="acc-pct" id="acc-c-pct" style="color:var(--emerald)">—</span></div>
+    <div class="acc-row"><span class="acc-label">D — Sıralama</span><div class="acc-bar-wrap"><div class="acc-bar-fill" id="acc-d" style="width:0%;background:var(--amber)"></div></div><span class="acc-pct" id="acc-d-pct" style="color:var(--amber)">—</span></div>
   </div>
   <div class="results-note">
     <strong>Bölüm E ve F</strong> açık uçlu sorular içerdiğinden otomatik puanlanamaz. Bu bölümler için cevap anahtarı sekmesini kullanarak kendi değerlendirmenizi yapınız (toplam 30 puan).
@@ -467,6 +569,7 @@
     </div>
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <div class="grade-badge" id="res-grade">—</div>
+      <button class="btn-print" onclick="window.print()">🖨 Yazdır / PDF</button>
       <button class="btn-retry" onclick="location.reload()">↺ Yeni Sınav</button>
     </div>
   </div>
@@ -644,145 +747,433 @@
 
 </div><!-- /tab-key -->
 
+<!-- AI GENERATOR TAB -->
+<div id="tab-ai" class="tab-content">
+<div class="ai-gen-wrap">
+  <h2>🤖 AI Sınav Oluşturucu</h2>
+  <p class="ai-subtitle">Claude AI ile KU Leuven Biyoteknoloji dersi için tamamen kişiselleştirilmiş sınav oluşturun. Anthropic API anahtarı gereklidir — <a href="https://console.anthropic.com" target="_blank" style="color:var(--sky-dark);">buradan ücretsiz alabilirsiniz</a>.</p>
+
+  <div class="ai-field">
+    <label>🔑 Anthropic API Anahtarı</label>
+    <input type="password" id="ai-api-key" placeholder="sk-ant-api03-...">
+    <p class="fnote">Anahtarınız yalnızca tarayıcınızda (localStorage) saklanır, hiçbir sunucuya gönderilmez.</p>
+  </div>
+
+  <div class="ai-field">
+    <label>📚 Konu Alanı</label>
+    <select id="ai-topic">
+      <option value="genel" selected>🔬 Genel — Tüm Konular Karışık</option>
+      <option value="karbonhidratlar">🍬 Karbonhidratlar ve Lipidler</option>
+      <option value="hucre">🦠 Hücre Yapısı ve Organeller</option>
+      <option value="enerji">⚡ Hücre Enerjisi (ATP, Glikoliz, ETS)</option>
+      <option value="protein">🔗 Proteinler ve Enzimoloji</option>
+      <option value="dna">🧬 DNA Biyolojisi ve Replikasyon</option>
+      <option value="rekombinant">🔧 Rekombinant DNA ve CRISPR</option>
+      <option value="kirmizi">💊 Kırmızı Biyoteknoloji (İlaç, Gen Tedavisi)</option>
+      <option value="beyaz">🏭 Beyaz / Endüstriyel Biyoteknoloji</option>
+      <option value="mavi">🌊 Mavi / Deniz Biyoteknoloji</option>
+      <option value="insaat">🏗️ İnşaat Biyoteknolojisi (MICP)</option>
+    </select>
+  </div>
+
+  <div class="ai-field">
+    <label>🎯 Zorluk Seviyesi (Bloom Taksonomisi)</label>
+    <div class="diff-row">
+      <button class="diff-btn" onclick="setDiff(this,'kolay')">L1–L2 Kolay</button>
+      <button class="diff-btn active" onclick="setDiff(this,'orta')">L3–L4 Orta</button>
+      <button class="diff-btn" onclick="setDiff(this,'zor')">L5–L6 Zor</button>
+      <button class="diff-btn" onclick="setDiff(this,'karma')">🎲 Karma</button>
+    </div>
+  </div>
+
+  <div class="ai-field">
+    <label>📝 Soru Türleri <span style="font-weight:400;color:var(--text-muted);">(aktif olanlar oluşturulur)</span></label>
+    <div class="qtype-grid">
+      <div class="qtype-card active" id="qcard-mcq" onclick="toggleQType('mcq')">
+        <div class="qtype-card-top"><span class="qtype-name">📝 Çoktan Seçmeli</span></div>
+        <div class="qtype-cnt">Adet: <input type="number" id="qn-mcq" value="10" min="3" max="20" onclick="event.stopPropagation()"></div>
+      </div>
+      <div class="qtype-card active" id="qcard-tf" onclick="toggleQType('tf')">
+        <div class="qtype-card-top"><span class="qtype-name">✅ Doğru / Yanlış</span></div>
+        <div class="qtype-cnt">Adet: <input type="number" id="qn-tf" value="5" min="3" max="15" onclick="event.stopPropagation()"></div>
+      </div>
+      <div class="qtype-card" id="qcard-fill" onclick="toggleQType('fill')">
+        <div class="qtype-card-top"><span class="qtype-name">___ Boşluk Doldurma</span></div>
+        <div class="qtype-cnt">Adet: <input type="number" id="qn-fill" value="5" min="3" max="10" onclick="event.stopPropagation()"></div>
+      </div>
+      <div class="qtype-card active" id="qcard-open" onclick="toggleQType('open')">
+        <div class="qtype-card-top"><span class="qtype-name">📖 Açık Uçlu</span></div>
+        <div class="qtype-cnt">Adet: <input type="number" id="qn-open" value="3" min="1" max="5" onclick="event.stopPropagation()"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-field">
+    <label>🌐 Sınav Dili</label>
+    <select id="ai-lang">
+      <option value="tr" selected>🇹🇷 Türkçe</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="nl">🇧🇪 Nederlands</option>
+    </select>
+  </div>
+
+  <button class="btn-generate" id="btn-generate" onclick="generateAIExam()"><span>✨</span> Sınav Oluştur</button>
+  <div id="ai-status" style="display:none;"></div>
+</div>
+
+<!-- Generated exam output -->
+<div id="generated-exam" style="display:none;padding:0 40px 40px;max-width:960px;margin:0 auto;">
+  <div class="gen-exam-header">
+    <div>
+      <h2 id="gen-exam-title">AI Tarafından Oluşturulan Sınav</h2>
+      <div style="font-size:0.8rem;color:rgba(255,255,255,0.65);margin-top:3px;">KU Leuven · Biyoteknoloji · AI Destekli</div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-sm" onclick="window.print()">🖨 Yazdır</button>
+    </div>
+  </div>
+  <div id="gen-exam-content" style="border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;overflow:hidden;"></div>
+  <div class="submit-zone">
+    <button class="btn-submit" id="gen-submit-btn" onclick="submitGeneratedExam()">✓ AI Sınavını Tamamla ve Puanla</button>
+  </div>
+  <div id="gen-results"></div>
+</div>
+</div><!-- /tab-ai -->
+
 <script>
-// ── Tab navigation ──────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+var timerInterval = null;
+var secondsElapsed = 0;
+var timerLimitSecs = 0; // 0 = unlimited
+var flaggedSet = new Set();
+var navOpen = false;
+var examDone = false;
+
+// ═══════════════════════════════════════════════════════
+// TABS
+// ═══════════════════════════════════════════════════════
 function showTab(tab, btn) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('tab-' + tab).classList.add('active');
   btn.classList.add('active');
 }
 
-// ── True/False selection ────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// TRUE/FALSE
+// ═══════════════════════════════════════════════════════
 function selectTF(btn) {
-  const row = btn.closest('.tf-btns');
-  row.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  var row = btn.closest('.tf-btns');
+  row.querySelectorAll('.tf-btn').forEach(function(b){b.classList.remove('selected');});
   btn.classList.add('selected');
+  updateTracking();
 }
 
-// ── Timer ───────────────────────────────────────────────────
-let timerInterval = null;
-let secondsElapsed = 0;
+// ═══════════════════════════════════════════════════════
+// TIMER LIMIT (start screen)
+// ═══════════════════════════════════════════════════════
+function setTimerLimit(mins, el) {
+  timerLimitSecs = mins * 60;
+  document.querySelectorAll('.tlimit-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+}
 
+// ═══════════════════════════════════════════════════════
+// START EXAM
+// ═══════════════════════════════════════════════════════
 function startExam() {
+  var key = document.getElementById('ai-api-key') && localStorage.getItem('anthropic_key');
   document.getElementById('start-screen').style.display = 'none';
-  var floatTimer = document.getElementById('float-timer');
-  floatTimer.style.display = 'flex';
-  timerInterval = setInterval(function() {
-    secondsElapsed++;
-    const h = Math.floor(secondsElapsed / 3600);
-    const m = Math.floor((secondsElapsed % 3600) / 60);
-    const s = secondsElapsed % 60;
-    const display = (h > 0 ? String(h).padStart(2,'0') + ':' : '') +
-      String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-    document.getElementById('timer-display').textContent = display;
-    document.getElementById('float-timer-val').textContent = display;
-  }, 1000);
+  document.getElementById('float-timer').style.display = 'flex';
+  document.getElementById('q-nav').classList.add('visible');
+  buildNavigator();
+  initFlags();
+  initTracking();
+  timerInterval = setInterval(tickTimer, 1000);
 }
 
-// ── Answer Keys ─────────────────────────────────────────────
-const CORRECT_A = [1,1,1,1,2,0,1,1,1,2,2,2,2,1,1,1,1,0,1,1]; // 0-based option index
-const CORRECT_B = ['Y','Y','D','Y','D','Y','D','Y','Y','D'];
-const CORRECT_C1 = ['c','a','d','b','e'];
-const CORRECT_C2 = ['c','a','d','b','e'];
-const CORRECT_D1 = [4,1,2,5,3,6]; // items A-F
-const CORRECT_D2 = [2,4,6,1,3,5];
+function tickTimer() {
+  secondsElapsed++;
+  var remaining = timerLimitSecs > 0 ? timerLimitSecs - secondsElapsed : -1;
+  var displaySecs = remaining >= 0 ? remaining : secondsElapsed;
+  var h = Math.floor(displaySecs / 3600);
+  var m = Math.floor((displaySecs % 3600) / 60);
+  var s = displaySecs % 60;
+  var display = (h > 0 ? String(h).padStart(2,'0') + ':' : '') +
+    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  document.getElementById('timer-display').textContent = (remaining >= 0 ? '⏳ ' : '') + display;
+  document.getElementById('float-timer-val').textContent = display;
+  var ft = document.getElementById('float-timer');
+  if (remaining >= 0) {
+    ft.classList.add('countdown');
+    ft.classList.toggle('danger', remaining <= 300);
+    if (remaining === 0 && !examDone) { submitExam(); }
+  }
+  updateTracking();
+}
 
-// ── Submit & Grade ───────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// QUESTION NAVIGATOR
+// ═══════════════════════════════════════════════════════
+var navSections = [
+  {key:'A', label:'Bölüm A — MCQ', type:'mcq', count:20},
+  {key:'B', label:'Bölüm B — D/Y', type:'tf', count:10},
+  {key:'C', label:'Bölüm C — Eşleştirme', type:'match', count:2, labels:['C1','C2']},
+  {key:'D', label:'Bölüm D — Sıralama', type:'order', count:2, labels:['D1','D2']},
+  {key:'E', label:'Bölüm E — Kısa Cevap', type:'open', count:5},
+  {key:'F', label:'Bölüm F — Vaka', type:'open', count:3, labels:['F1a','F1b','F1c']}
+];
+
+function buildNavigator() {
+  var panel = document.getElementById('q-nav-panel');
+  var html = '';
+  navSections.forEach(function(sec) {
+    html += '<div class="np-sec-title">' + sec.label + '</div><div class="np-dots" id="nav-sec-' + sec.key + '">';
+    for (var i = 0; i < sec.count; i++) {
+      var lbl = sec.labels ? sec.labels[i] : (sec.key + (i+1));
+      html += '<div class="np-dot" id="ndot-' + sec.key + i + '" onclick="scrollToNavQ(\'' + sec.key + '\',' + i + ')" title="' + lbl + '">' + (i+1) + '</div>';
+    }
+    html += '</div>';
+  });
+  html += '<div class="np-legend">';
+  html += '<div class="np-leg-row"><div class="np-leg-dot" style="background:var(--sky-light);border-color:var(--sky);"></div> Cevaplanmış</div>';
+  html += '<div class="np-leg-row"><div class="np-leg-dot" style="background:var(--amber-light);border-color:var(--amber);"></div> İşaretli</div>';
+  html += '<div class="np-leg-row"><div class="np-leg-dot" style="background:#e2e8f0;border-color:#cbd5e1;"></div> Boş</div>';
+  html += '</div>';
+  panel.innerHTML = html;
+}
+
+function toggleNav() {
+  navOpen = !navOpen;
+  document.getElementById('q-nav').classList.toggle('open', navOpen);
+}
+
+function scrollToNavQ(secKey, idx) {
+  var target = null;
+  if (secKey === 'A') {
+    var qs = document.querySelectorAll('#tab-exam .question');
+    if (qs[idx]) target = qs[idx];
+  } else if (secKey === 'B') {
+    var rows = document.querySelectorAll('#tab-exam .tf-row');
+    if (rows[idx]) target = rows[idx];
+  } else if (secKey === 'C') {
+    var grids = document.querySelectorAll('#tab-exam .match-grid');
+    if (grids[idx]) target = grids[idx];
+  } else if (secKey === 'D') {
+    var lists = document.querySelectorAll('#tab-exam .order-list');
+    if (lists[idx]) target = lists[idx];
+  } else if (secKey === 'E') {
+    var eqs = document.querySelectorAll('#tab-exam .section.sec-e .question');
+    if (eqs[idx]) target = eqs[idx];
+  } else if (secKey === 'F') {
+    var fsubs = document.querySelectorAll('#tab-exam .case-sub');
+    if (fsubs[idx]) target = fsubs[idx];
+  }
+  if (target) { target.scrollIntoView({behavior:'smooth', block:'center'}); }
+  if (navOpen) toggleNav();
+}
+
+function updateNavDot(secKey, idx, answered, flagged) {
+  var dot = document.getElementById('ndot-' + secKey + idx);
+  if (!dot) return;
+  dot.classList.toggle('answered', answered);
+  dot.classList.toggle('flagged', flagged);
+}
+
+// ═══════════════════════════════════════════════════════
+// FLAG BUTTONS
+// ═══════════════════════════════════════════════════════
+function initFlags() {
+  // MCQ questions
+  var qNums = document.querySelectorAll('#tab-exam .sec-a .q-num');
+  qNums.forEach(function(el, i) {
+    var btn = document.createElement('button');
+    btn.className = 'flag-btn';
+    btn.title = 'İşaretle';
+    btn.innerHTML = '🚩';
+    btn.setAttribute('data-sec','A');
+    btn.setAttribute('data-idx', i);
+    btn.onclick = function(e) { e.stopPropagation(); toggleFlag('A', i, this); };
+    el.appendChild(btn);
+  });
+  // TF rows
+  var tfNums = document.querySelectorAll('#tab-exam .tf-num');
+  tfNums.forEach(function(el, i) {
+    var btn = document.createElement('button');
+    btn.className = 'flag-btn';
+    btn.innerHTML = '🚩';
+    btn.setAttribute('data-sec','B');
+    btn.setAttribute('data-idx', i);
+    btn.onclick = function(e) { e.stopPropagation(); toggleFlag('B', i, this); };
+    el.appendChild(btn);
+  });
+  // Section E short answers
+  var eNums = document.querySelectorAll('#tab-exam .sec-e .q-num');
+  eNums.forEach(function(el, i) {
+    var btn = document.createElement('button');
+    btn.className = 'flag-btn';
+    btn.innerHTML = '🚩';
+    btn.onclick = function(e) { e.stopPropagation(); toggleFlag('E', i, this); };
+    el.appendChild(btn);
+  });
+  // Section F sub labels
+  var fLabels = document.querySelectorAll('#tab-exam .case-sub-label');
+  fLabels.forEach(function(el, i) {
+    var btn = document.createElement('button');
+    btn.className = 'flag-btn';
+    btn.innerHTML = '🚩';
+    btn.onclick = function(e) { e.stopPropagation(); toggleFlag('F', i, this); };
+    el.appendChild(btn);
+  });
+}
+
+function toggleFlag(sec, idx, btnEl) {
+  var id = sec + idx;
+  if (flaggedSet.has(id)) { flaggedSet.delete(id); btnEl.classList.remove('flagged'); }
+  else { flaggedSet.add(id); btnEl.classList.add('flagged'); }
+  updateTracking();
+}
+
+// ═══════════════════════════════════════════════════════
+// TRACKING & NAVIGATOR UPDATE
+// ═══════════════════════════════════════════════════════
+function initTracking() {
+  // MCQ radios
+  document.querySelectorAll('#tab-exam .sec-a input[type=radio]').forEach(function(r) {
+    r.addEventListener('change', updateTracking);
+  });
+  // Match inputs
+  document.querySelectorAll('#tab-exam .match-input').forEach(function(inp) {
+    inp.addEventListener('input', updateTracking);
+  });
+  // Order inputs
+  document.querySelectorAll('#tab-exam .order-input').forEach(function(inp) {
+    inp.addEventListener('input', updateTracking);
+  });
+  // Short answer textareas
+  document.querySelectorAll('#tab-exam textarea').forEach(function(ta) {
+    ta.addEventListener('input', updateTracking);
+  });
+}
+
+function updateTracking() {
+  var totalAnswered = 0;
+  var totalQ = 42; // 20+10+2+2+5+3
+
+  // A - MCQ
+  for (var i = 1; i <= 20; i++) {
+    var checked = document.querySelector('input[name="q' + i + '"]:checked');
+    var answered = !!checked;
+    if (answered) totalAnswered++;
+    updateNavDot('A', i-1, answered, flaggedSet.has('A'+(i-1)));
+  }
+  // B - TF
+  document.querySelectorAll('#tab-exam .tf-row').forEach(function(row, i) {
+    var answered = !!row.querySelector('.tf-btn.selected');
+    if (answered) totalAnswered++;
+    updateNavDot('B', i, answered, flaggedSet.has('B'+i));
+  });
+  // C - Match sets
+  document.querySelectorAll('#tab-exam .match-grid').forEach(function(grid, i) {
+    var inputs = grid.querySelectorAll('.match-input');
+    var answered = Array.from(inputs).some(function(inp){return inp.value.trim().length>0;});
+    if (answered) totalAnswered++;
+    updateNavDot('C', i, answered, flaggedSet.has('C'+i));
+  });
+  // D - Order sets
+  document.querySelectorAll('#tab-exam .order-list').forEach(function(list, i) {
+    var inputs = list.querySelectorAll('.order-input');
+    var answered = Array.from(inputs).some(function(inp){return inp.value.trim().length>0;});
+    if (answered) totalAnswered++;
+    updateNavDot('D', i, answered, flaggedSet.has('D'+i));
+  });
+  // E - Short answers
+  document.querySelectorAll('#tab-exam .sec-e textarea').forEach(function(ta, i) {
+    var answered = ta.value.trim().length > 5;
+    if (answered) totalAnswered++;
+    updateNavDot('E', i, answered, flaggedSet.has('E'+i));
+  });
+  // F - Case sub-questions
+  document.querySelectorAll('#tab-exam .case-sub textarea').forEach(function(ta, i) {
+    var answered = ta.value.trim().length > 5;
+    if (answered) totalAnswered++;
+    updateNavDot('F', i, answered, flaggedSet.has('F'+i));
+  });
+
+  document.getElementById('nav-progress').textContent = totalAnswered + '/' + totalQ;
+}
+
+// ═══════════════════════════════════════════════════════
+// ANSWER KEYS
+// ═══════════════════════════════════════════════════════
+var CORRECT_A = [1,1,1,1,2,0,1,1,1,2,2,2,2,1,1,1,1,0,1,1];
+var CORRECT_B = ['Y','Y','D','Y','D','Y','D','Y','Y','D'];
+var CORRECT_C1 = ['c','a','d','b','e'];
+var CORRECT_C2 = ['c','a','d','b','e'];
+var CORRECT_D1 = [4,1,2,5,3,6];
+var CORRECT_D2 = [2,4,6,1,3,5];
+
+// ═══════════════════════════════════════════════════════
+// SUBMIT & GRADE
+// ═══════════════════════════════════════════════════════
 function submitExam() {
+  if (examDone) return;
+  examDone = true;
   if (timerInterval) clearInterval(timerInterval);
 
-  // — Section A (MCQ, 2p each) —
-  let scoreA = 0;
-  for (let i = 1; i <= 20; i++) {
-    const opts = document.querySelectorAll('input[name="q' + i + '"]');
-    const selected = Array.from(opts).findIndex(o => o.checked);
-    const correct = CORRECT_A[i - 1];
+  var scoreA = 0;
+  for (var i = 1; i <= 20; i++) {
+    var opts = document.querySelectorAll('input[name="q' + i + '"]');
+    var selected = Array.from(opts).findIndex(function(o){return o.checked;});
+    var correct = CORRECT_A[i-1];
     opts.forEach(function(opt, idx) {
-      const lbl = opt.closest('.option');
-      if (idx === correct) {
-        lbl.classList.add('is-correct');
-      } else if (opt.checked) {
-        lbl.classList.add('is-wrong');
-      }
+      var lbl = opt.closest('.option');
+      if (idx === correct) lbl.classList.add('is-correct');
+      else if (opt.checked) lbl.classList.add('is-wrong');
     });
     if (selected === correct) scoreA += 2;
   }
 
-  // — Section B (T/F, 1p each) —
-  let scoreB = 0;
-  const tfRows = document.querySelectorAll('.tf-row');
-  tfRows.forEach(function(row, idx) {
-    const correctIsTrue = CORRECT_B[idx] === 'D';
-    const trueBtn = row.querySelector('.true-btn');
-    const falseBtn = row.querySelector('.false-btn');
-    const selected = row.querySelector('.tf-btn.selected');
-    const selectedIsTrue = selected && selected.classList.contains('true-btn');
-    const isCorrect = selected && ((selectedIsTrue && correctIsTrue) || (!selectedIsTrue && !correctIsTrue));
-    if (isCorrect) scoreB += 1;
-    // Show correct answer in green regardless
-    const correctBtn = correctIsTrue ? trueBtn : falseBtn;
-    correctBtn.style.background = '#10b981';
-    correctBtn.style.color = 'white';
-    correctBtn.style.borderColor = '#10b981';
-    // Mark wrong selection in red
-    if (selected && !isCorrect) {
-      selected.style.background = '#f43f5e';
-      selected.style.color = 'white';
-      selected.style.borderColor = '#f43f5e';
-    }
+  var scoreB = 0;
+  document.querySelectorAll('#tab-exam .tf-row').forEach(function(row, idx) {
+    var correctIsTrue = CORRECT_B[idx] === 'D';
+    var trueBtn = row.querySelector('.true-btn');
+    var falseBtn = row.querySelector('.false-btn');
+    var sel = row.querySelector('.tf-btn.selected');
+    var selTrue = sel && sel.classList.contains('true-btn');
+    var ok = sel && ((selTrue && correctIsTrue) || (!selTrue && !correctIsTrue));
+    if (ok) scoreB++;
+    var correctBtn = correctIsTrue ? trueBtn : falseBtn;
+    correctBtn.style.cssText += 'background:#10b981;color:white;border-color:#10b981;';
+    if (sel && !ok) sel.style.cssText += 'background:#f43f5e;color:white;border-color:#f43f5e;';
   });
 
-  // — Section C (Matching, 1p per correct match) —
-  let scoreC = 0;
-  const matchGrids = document.querySelectorAll('.match-grid');
+  var scoreC = 0;
+  var matchGrids = document.querySelectorAll('#tab-exam .match-grid');
   [CORRECT_C1, CORRECT_C2].forEach(function(key, gi) {
-    const inputs = matchGrids[gi].querySelectorAll('.match-input');
-    inputs.forEach(function(inp, idx) {
-      const val = inp.value.trim().toLowerCase();
-      if (val === key[idx]) {
-        scoreC += 1;
-        inp.style.borderColor = '#10b981';
-        inp.style.background = '#d1fae5';
-        inp.style.color = '#065f46';
-      } else {
-        inp.style.borderColor = '#f43f5e';
-        inp.style.background = '#ffe4e6';
-        inp.style.color = '#9f1239';
-        inp.value = '';
-        inp.placeholder = key[idx].toUpperCase() + ' ✓';
-      }
+    matchGrids[gi].querySelectorAll('.match-input').forEach(function(inp, idx) {
+      var val = inp.value.trim().toLowerCase();
+      if (val === key[idx]) { scoreC++; inp.style.cssText += 'border-color:#10b981;background:#d1fae5;color:#065f46;'; }
+      else { inp.style.cssText += 'border-color:#f43f5e;background:#ffe4e6;color:#9f1239;'; inp.value=''; inp.placeholder=key[idx].toUpperCase()+' ✓'; }
     });
   });
 
-  // — Section D (Ordering, proportional 5p per set) —
-  let scoreD = 0;
-  const orderLists = document.querySelectorAll('.order-list');
+  var scoreD = 0;
+  var orderLists = document.querySelectorAll('#tab-exam .order-list');
   [CORRECT_D1, CORRECT_D2].forEach(function(key, li) {
-    const inputs = orderLists[li].querySelectorAll('.order-input');
-    let correct = 0;
-    inputs.forEach(function(inp, idx) {
-      const val = parseInt(inp.value);
-      if (val === key[idx]) {
-        correct++;
-        inp.style.borderColor = '#10b981';
-        inp.style.background = '#d1fae5';
-        inp.style.color = '#065f46';
-      } else {
-        inp.style.borderColor = '#f43f5e';
-        inp.style.background = '#ffe4e6';
-        inp.style.color = '#9f1239';
-        inp.placeholder = key[idx] + ' ✓';
-        inp.value = '';
-      }
+    var correct = 0;
+    orderLists[li].querySelectorAll('.order-input').forEach(function(inp, idx) {
+      if (parseInt(inp.value) === key[idx]) { correct++; inp.style.cssText += 'border-color:#10b981;background:#d1fae5;color:#065f46;'; }
+      else { inp.style.cssText += 'border-color:#f43f5e;background:#ffe4e6;color:#9f1239;'; inp.placeholder=key[idx]+' ✓'; inp.value=''; }
     });
-    scoreD += Math.round((correct / 6) * 5 * 10) / 10;
+    scoreD += Math.round((correct/6)*5*10)/10;
   });
-  scoreD = Math.round(scoreD * 10) / 10;
+  scoreD = Math.round(scoreD*10)/10;
 
-  // — Show results —
-  const autoTotal = Math.round((scoreA + scoreB + scoreC + scoreD) * 10) / 10;
-  const elapsed = document.getElementById('timer-display').textContent;
+  var autoTotal = Math.round((scoreA+scoreB+scoreC+scoreD)*10)/10;
+  var elapsed = document.getElementById('timer-display').textContent.replace('⏳ ','');
 
   document.getElementById('res-a').textContent = scoreA;
   document.getElementById('res-b').textContent = scoreB;
@@ -791,25 +1182,225 @@ function submitExam() {
   document.getElementById('res-auto').textContent = autoTotal;
   document.getElementById('res-time').textContent = elapsed;
 
-  const pct = (autoTotal / 70) * 100;
-  let grade;
-  if (pct >= 90) grade = 'Mükemmel (18–20)';
-  else if (pct >= 80) grade = 'Çok İyi (16–17)';
-  else if (pct >= 70) grade = 'İyi (14–15)';
-  else if (pct >= 60) grade = 'Yeterli (12–13)';
-  else if (pct >= 50) grade = 'Geçer Sınırı (10–11)';
-  else grade = 'Yetersiz (<10)';
+  var pct = (autoTotal/70)*100;
+  var grade = pct>=90?'Mükemmel (18–20)':pct>=80?'Çok İyi (16–17)':pct>=70?'İyi (14–15)':pct>=60?'Yeterli (12–13)':pct>=50?'Geçer Sınırı (10–11)':'Yetersiz (<10)';
   document.getElementById('res-grade').textContent = grade;
 
-  const panel = document.getElementById('results-panel');
+  // Accuracy bars
+  var accs = [{id:'a',score:scoreA,max:40,color:'var(--sky)'},{id:'b',score:scoreB,max:10,color:'var(--purple)'},{id:'c',score:scoreC,max:10,color:'var(--emerald)'},{id:'d',score:scoreD,max:10,color:'var(--amber)'}];
+  accs.forEach(function(a) {
+    var p = Math.round((a.score/a.max)*100);
+    setTimeout(function(){ document.getElementById('acc-'+a.id).style.width = p+'%'; }, 200);
+    document.getElementById('acc-'+a.id+'-pct').textContent = p+'%';
+  });
+  document.getElementById('accuracy-section').style.display = 'block';
+
+  var panel = document.getElementById('results-panel');
   panel.style.display = 'block';
-  setTimeout(function() { panel.scrollIntoView({ behavior: 'smooth' }); }, 100);
+  setTimeout(function(){ panel.scrollIntoView({behavior:'smooth'}); }, 100);
 
   document.getElementById('float-timer').style.display = 'none';
-  const btn = document.getElementById('submit-btn');
+  document.getElementById('q-nav').classList.remove('visible');
+  var btn = document.getElementById('submit-btn');
   btn.disabled = true;
   btn.textContent = '✓ Sınav Tamamlandı';
 }
+
+// ═══════════════════════════════════════════════════════
+// AI GENERATOR
+// ═══════════════════════════════════════════════════════
+var selectedDiff = 'orta';
+var activeQTypes = {mcq:true, tf:true, fill:false, open:true};
+
+function setDiff(el, val) {
+  selectedDiff = val;
+  document.querySelectorAll('.diff-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+}
+
+function toggleQType(type) {
+  activeQTypes[type] = !activeQTypes[type];
+  document.getElementById('qcard-' + type).classList.toggle('active', activeQTypes[type]);
+}
+
+function buildAIPrompt(topicName, diff, types, lang) {
+  var diffMap = {kolay:'easy recall and understanding (Bloom L1-L2)',orta:'application and analysis (Bloom L3-L4)',zor:'evaluation and creation (Bloom L5-L6)',karma:'mixed difficulty across all Bloom levels L1-L6'};
+  var langMap = {tr:'Turkish (Türkçe)',en:'English',nl:'Dutch (Nederlands)'};
+  var typesDesc = types.map(function(t){
+    var names = {mcq:'Multiple Choice Questions with exactly 4 options (1 correct)',tf:'True/False statements',fill:'Fill-in-the-blank sentences (use _______ for the blank)',open:'Open-ended short answer questions'};
+    return '- ' + t.count + ' ' + names[t.type];
+  }).join('\n');
+  return 'You are an exam question generator for KU Leuven Engineering Faculty, Biotechnology course.\n\nGenerate a mock exam:\nTopic: ' + topicName + '\nDifficulty: ' + diffMap[diff] + '\nLanguage: ' + langMap[lang] + '\nQuestion types:\n' + typesDesc + '\n\nIMPORTANT: Return ONLY valid JSON, no markdown, no explanation. Use this exact structure:\n{"title":"exam title","sections":[{"type":"mcq","title":"section title","questions":[{"text":"question","options":["A","B","C","D"],"correct":1,"explanation":"why correct","topic":"subtopic","bloom":"L2"}]},{"type":"tf","title":"section title","questions":[{"text":"statement","correct":true,"explanation":"why"}]},{"type":"fill","title":"section title","questions":[{"text":"sentence with _______ blank","answer":"correct word","explanation":"brief note"}]},{"type":"open","title":"section title","questions":[{"text":"question","sampleAnswer":"model answer","keyPoints":["point1","point2"]}]}]}\n\nOnly include sections for the requested question types. Make questions scientifically accurate for university biotechnology level.';
+}
+
+async function generateAIExam() {
+  var apiKey = document.getElementById('ai-api-key').value.trim();
+  if (!apiKey) { showAIStatus('error','Lütfen API anahtarı giriniz.'); return; }
+
+  var types = Object.keys(activeQTypes).filter(function(k){return activeQTypes[k];}).map(function(k){
+    return {type:k, count:parseInt(document.getElementById('qn-'+k).value)||5};
+  });
+  if (types.length === 0) { showAIStatus('error','En az bir soru türü seçiniz.'); return; }
+
+  var topicSel = document.getElementById('ai-topic');
+  var topicName = topicSel.options[topicSel.selectedIndex].text;
+  var lang = document.getElementById('ai-lang').value;
+  var prompt = buildAIPrompt(topicName, selectedDiff, types, lang);
+
+  localStorage.setItem('anthropic_key', apiKey);
+  var btn = document.getElementById('btn-generate');
+  btn.disabled = true;
+  showAIStatus('loading','🤖 Claude AI sınav oluşturuyor… Bu işlem 15-30 saniye sürebilir.');
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 4096,
+        messages: [{role:'user', content: prompt}]
+      })
+    });
+    if (!resp.ok) { var err = await resp.json(); throw new Error(err.error?.message || 'API Hatası: ' + resp.status); }
+    var data = await resp.json();
+    var text = data.content[0].text;
+    var match = text.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('Geçersiz JSON yanıtı');
+    var examData = JSON.parse(match[0]);
+    document.getElementById('ai-status').style.display = 'none';
+    renderGeneratedExam(examData);
+  } catch(e) {
+    showAIStatus('error', '❌ Hata: ' + e.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function showAIStatus(type, msg) {
+  var el = document.getElementById('ai-status');
+  el.style.display = 'block';
+  el.className = 'ai-' + type;
+  el.innerHTML = msg;
+}
+
+var genAnswerKey = {};
+
+function renderGeneratedExam(examData) {
+  genAnswerKey = {};
+  var container = document.getElementById('gen-exam-content');
+  container.innerHTML = '';
+  document.getElementById('gen-exam-title').textContent = examData.title;
+  var sectionColors = [{bg:'#e0f2fe',color:'#0369a1'},{bg:'#ede9fe',color:'#6d28d9'},{bg:'#d1fae5',color:'#065f46'},{bg:'#ffe4e6',color:'#be123c'}];
+
+  examData.sections.forEach(function(sec, si) {
+    var col = sectionColors[si % sectionColors.length];
+    var secEl = document.createElement('div');
+    secEl.style.cssText = 'border-bottom:1px solid var(--border);';
+    var letter = String.fromCharCode(65+si);
+    var headerHtml = '<div class="section-header"><div class="section-letter" style="background:'+col.bg+';color:'+col.color+';">'+letter+'</div><div class="section-title"><h2>'+sec.title+'</h2></div></div><div class="section-body">';
+
+    if (sec.type === 'mcq') {
+      var body = headerHtml;
+      sec.questions.forEach(function(q, qi) {
+        var qId = 'gen_'+si+'_'+qi;
+        genAnswerKey[qId] = {type:'mcq', correct:q.correct, explanation:q.explanation};
+        body += '<div class="question" id="q_'+qId+'"><div class="q-header"><div class="q-num">S'+(qi+1)+'</div>';
+        if (q.bloom) body += '<div class="q-badges"><span class="badge bloom-2">'+q.bloom+'</span>';
+        if (q.topic) body += '<span class="badge topic-badge">'+q.topic+'</span>';
+        if (q.bloom||q.topic) body += '</div>';
+        body += '</div><div class="q-text">'+q.text+'</div><div class="options">';
+        q.options.forEach(function(opt,oi){body+='<label class="option"><input type="radio" name="'+qId+'" value="'+oi+'"> '+opt+'</label>';});
+        body += '</div></div>';
+      });
+      secEl.innerHTML = body + '</div>';
+    } else if (sec.type === 'tf') {
+      var body = headerHtml;
+      sec.questions.forEach(function(q, qi) {
+        var qId = 'gen_'+si+'_'+qi;
+        genAnswerKey[qId] = {type:'tf', correct:q.correct, explanation:q.explanation};
+        body += '<div class="tf-row" id="q_'+qId+'"><div class="tf-num">'+(qi+1)+'</div><div class="tf-text">'+q.text+'</div><div class="tf-btns"><button class="tf-btn true-btn" onclick="selectTF(this)">D</button><button class="tf-btn false-btn" onclick="selectTF(this)">Y</button></div></div>';
+      });
+      secEl.innerHTML = body + '</div>';
+    } else if (sec.type === 'fill') {
+      var body = headerHtml;
+      sec.questions.forEach(function(q, qi) {
+        var qId = 'gen_'+si+'_'+qi;
+        genAnswerKey[qId] = {type:'fill', answer:q.answer, explanation:q.explanation};
+        var textWithInput = q.text.replace(/_+/, '<input type="text" class="fill-input" id="fill_'+qId+'" placeholder="...">');
+        body += '<div class="question" id="q_'+qId+'"><div class="q-header"><div class="q-num">D'+(qi+1)+'</div></div><div class="q-text">'+textWithInput+'</div></div>';
+      });
+      secEl.innerHTML = body + '</div>';
+    } else if (sec.type === 'open') {
+      var body = headerHtml;
+      sec.questions.forEach(function(q, qi) {
+        var qId = 'gen_'+si+'_'+qi;
+        genAnswerKey[qId] = {type:'open', sampleAnswer:q.sampleAnswer, keyPoints:q.keyPoints};
+        body += '<div class="question short-answer" id="q_'+qId+'"><div class="q-header"><div class="q-num">A'+(qi+1)+'</div></div><div class="q-text">'+q.text+'</div><textarea rows="4" placeholder="Cevabınızı buraya yazınız..."></textarea></div>';
+      });
+      secEl.innerHTML = body + '</div>';
+    }
+    container.appendChild(secEl);
+  });
+
+  document.getElementById('generated-exam').style.display = 'block';
+  setTimeout(function(){document.getElementById('generated-exam').scrollIntoView({behavior:'smooth'});},100);
+}
+
+function submitGeneratedExam() {
+  var totalScore = 0, maxScore = 0;
+  Object.keys(genAnswerKey).forEach(function(qId) {
+    var ak = genAnswerKey[qId];
+    var qEl = document.getElementById('q_'+qId);
+    if (!qEl) return;
+    if (ak.type === 'mcq') {
+      maxScore += 2;
+      var radios = document.querySelectorAll('input[name="'+qId+'"]');
+      var sel = Array.from(radios).findIndex(function(r){return r.checked;});
+      if (sel === ak.correct) totalScore += 2;
+      radios.forEach(function(r,i){var l=r.closest('.option');if(i===ak.correct)l.classList.add('is-correct');else if(r.checked&&i!==ak.correct)l.classList.add('is-wrong');});
+      var exp=document.createElement('div'); exp.className='rationale'; exp.style.marginTop='8px';
+      exp.innerHTML='<strong>Açıklama:</strong> '+ak.explanation; qEl.appendChild(exp);
+    } else if (ak.type === 'tf') {
+      maxScore += 1;
+      var sel2=qEl.querySelector('.tf-btn.selected');
+      var selTrue=sel2&&sel2.classList.contains('true-btn');
+      if(sel2&&((selTrue&&ak.correct)||(!selTrue&&!ak.correct))) totalScore++;
+      (ak.correct?qEl.querySelector('.true-btn'):qEl.querySelector('.false-btn')).style.cssText+='background:#10b981;color:white;border-color:#10b981;';
+      if(sel2&&!((selTrue&&ak.correct)||(!selTrue&&!ak.correct))) sel2.style.cssText+='background:#f43f5e;color:white;border-color:#f43f5e;';
+    } else if (ak.type === 'fill') {
+      maxScore += 2;
+      var inp = document.getElementById('fill_'+qId);
+      if (inp) {
+        var uv=inp.value.trim().toLowerCase(); var cv=ak.answer.toLowerCase();
+        var ok=uv===cv||uv.includes(cv)||cv.includes(uv);
+        if(ok){totalScore+=2;inp.style.cssText+='border-bottom-color:#10b981;color:#065f46;';}
+        else{inp.style.cssText+='border-bottom-color:#f43f5e;color:#9f1239;'; var h=document.createElement('div');h.style.cssText='font-size:0.78rem;color:#065f46;margin-top:4px;';h.textContent='✓ Doğru: '+ak.answer;inp.parentNode.insertBefore(h,inp.nextSibling);}
+      }
+    } else if (ak.type === 'open') {
+      var exp2=document.createElement('div'); exp2.className='rationale'; exp2.style.marginTop='8px';
+      var kp=ak.keyPoints?'<ul style="margin-top:5px;padding-left:16px;">'+ak.keyPoints.map(function(p){return'<li>'+p+'</li>';}).join('')+'</ul>':'';
+      exp2.innerHTML='<strong>Model Cevap:</strong> '+ak.sampleAnswer+kp; qEl.appendChild(exp2);
+    }
+  });
+  var pct2=maxScore>0?Math.round((totalScore/maxScore)*100):0;
+  var gr=document.getElementById('gen-results');
+  gr.innerHTML='<div style="background:var(--emerald-light);border:2px solid var(--emerald);border-radius:16px;padding:24px;margin-top:20px;text-align:center;"><div style="font-family:\'Playfair Display\',serif;font-size:1.2rem;color:#064e3b;margin-bottom:6px;">AI Sınav Sonucu</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:2.4rem;font-weight:700;color:var(--emerald);">'+totalScore+'/'+maxScore+'</div><div style="color:#065f46;margin-top:4px;font-size:0.9rem;">%'+pct2+' · Açık uçlu sorular manuel değerlendirme gerektirir</div></div>';
+  gr.style.display='block';
+  setTimeout(function(){gr.scrollIntoView({behavior:'smooth'});},100);
+  document.getElementById('gen-submit-btn').disabled=true;
+}
+
+// Load saved API key
+window.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('anthropic_key');
+  if (saved) document.getElementById('ai-api-key').value = saved;
+});
 </script>
 </body>
 </html>
