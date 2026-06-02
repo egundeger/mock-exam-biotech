@@ -244,6 +244,29 @@
   /* ── Fill-in-blank ── */
   .fill-input{border:none;border-bottom:2px solid var(--sky);padding:2px 8px;font-family:'Source Sans 3',sans-serif;font-size:0.92rem;color:var(--text);background:transparent;min-width:130px;outline:none;transition:border-color 0.15s;}
   .fill-input:focus{border-bottom-color:var(--sky-dark);}
+  /* ── AI Steps ── */
+  .ai-step-card{display:flex;gap:14px;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:12px;}
+  .ai-step-num{width:26px;height:26px;border-radius:50%;background:var(--purple);color:white;font-weight:700;font-size:0.82rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .ai-step-card h3{font-size:0.9rem;font-weight:700;margin-bottom:2px;color:var(--text);}
+  .ai-step-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.5;margin:0;}
+  .prompt-box{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.65;color:#334155;background:#f8fafc;resize:vertical;min-height:140px;}
+  .response-box{width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;line-height:1.65;color:var(--text);background:white;resize:vertical;min-height:180px;transition:border-color 0.15s;}
+  .response-box:focus,.prompt-box:focus{outline:none;border-color:var(--purple);}
+  .ai-service-row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:11px 0 20px;}
+  .btn-copy{background:var(--text);color:white;border:none;padding:9px 20px;border-radius:20px;cursor:pointer;font-size:0.83rem;font-weight:600;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;}
+  .btn-copy:hover{background:#334155;}
+  .btn-copy.copied{background:var(--emerald);}
+  .ai-services{display:flex;gap:6px;flex-wrap:wrap;}
+  .ai-svc-btn{padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all 0.15s;border:2px solid;font-family:'Source Sans 3',sans-serif;display:inline-flex;align-items:center;gap:5px;}
+  .ai-svc-btn.claude{background:#f5f3ff;color:#6d28d9;border-color:#8b5cf6;}
+  .ai-svc-btn.claude:hover{background:#8b5cf6;color:white;}
+  .ai-svc-btn.chatgpt{background:#f0fdf4;color:#16a34a;border-color:#22c55e;}
+  .ai-svc-btn.chatgpt:hover{background:#22c55e;color:white;}
+  .ai-svc-btn.gemini{background:#fff7ed;color:#c2410c;border-color:#f97316;}
+  .ai-svc-btn.gemini:hover{background:#f97316;color:white;}
+  .ai-svc-sep{color:var(--text-muted);font-size:0.78rem;align-self:center;}
+  .btn-back{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:12px 24px;border-radius:50px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .btn-back:hover{background:var(--border);}
 </style>
 </head>
 <body>
@@ -751,13 +774,7 @@
 <div id="tab-ai" class="tab-content">
 <div class="ai-gen-wrap">
   <h2>🤖 AI Sınav Oluşturucu</h2>
-  <p class="ai-subtitle">Claude AI ile KU Leuven Biyoteknoloji dersi için tamamen kişiselleştirilmiş sınav oluşturun. Anthropic API anahtarı gereklidir — <a href="https://console.anthropic.com" target="_blank" style="color:var(--sky-dark);">buradan ücretsiz alabilirsiniz</a>.</p>
-
-  <div class="ai-field">
-    <label>🔑 Anthropic API Anahtarı</label>
-    <input type="password" id="ai-api-key" placeholder="sk-ant-api03-...">
-    <p class="fnote">Anahtarınız yalnızca tarayıcınızda (localStorage) saklanır, hiçbir sunucuya gönderilmez.</p>
-  </div>
+  <p class="ai-subtitle"><strong>API anahtarı gerekmez.</strong> Sınav parametrelerini seçin → promptu kopyalayın → Claude.ai, ChatGPT veya Gemini'ye gönderin → JSON yanıtı buraya yapıştırın → sınav hazır!</p>
 
   <div class="ai-field">
     <label>📚 Konu Alanı</label>
@@ -817,8 +834,45 @@
     </select>
   </div>
 
-  <button class="btn-generate" id="btn-generate" onclick="generateAIExam()"><span>✨</span> Sınav Oluştur</button>
-  <div id="ai-status" style="display:none;"></div>
+  <button class="btn-generate" id="btn-generate" onclick="generatePrompt()"><span>📋</span> Prompt Oluştur</button>
+</div>
+
+<!-- Step 2: Copy prompt → paste response -->
+<div class="ai-gen-wrap" id="ai-step2" style="display:none;">
+
+  <div class="ai-step-card">
+    <div class="ai-step-num">1</div>
+    <div>
+      <h3>Promptu kopyalayın ve bir AI servisine gönderin</h3>
+      <p>Aşağıdaki hazır promptu kopyalayın, ücretsiz herhangi bir AI sohbet servisini açın ve yapıştırıp gönderin.</p>
+    </div>
+  </div>
+  <textarea class="prompt-box" id="prompt-display" readonly></textarea>
+  <div class="ai-service-row">
+    <button class="btn-copy" id="btn-copy" onclick="copyPrompt()">📋 Kopyala</button>
+    <span class="ai-svc-sep">veya doğrudan aç:</span>
+    <div class="ai-services">
+      <a class="ai-svc-btn claude" onclick="return openAISvc('claude')" href="#" target="_blank">✦ Claude.ai</a>
+      <a class="ai-svc-btn chatgpt" onclick="return openAISvc('chatgpt')" href="#" target="_blank">ChatGPT</a>
+      <a class="ai-svc-btn gemini" onclick="return openAISvc('gemini')" href="#" target="_blank">Gemini</a>
+    </div>
+  </div>
+
+  <div class="ai-step-card">
+    <div class="ai-step-num">2</div>
+    <div>
+      <h3>AI'ın JSON yanıtını buraya yapıştırın</h3>
+      <p>AI size <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:0.78rem;">{&quot;title&quot;:...,&quot;sections&quot;:[...]}</code> formatında yanıt verecektir. Tamamını kopyalayıp aşağıya yapıştırın.</p>
+    </div>
+  </div>
+  <textarea class="response-box" id="response-paste" placeholder='{"title": "Biyoteknoloji Sınavı", "sections": [...]}
+
+← AI yanıtını buraya yapıştırın'></textarea>
+  <div id="load-status" style="display:none;margin-top:10px;" class="ai-error"></div>
+  <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+    <button class="btn-generate" style="margin-top:0;" onclick="loadGeneratedExam()"><span>✨</span> Sınavı Yükle</button>
+    <button class="btn-back" onclick="backToConfig()">← Geri</button>
+  </div>
 </div>
 
 <!-- Generated exam output -->
@@ -1233,60 +1287,73 @@ function buildAIPrompt(topicName, diff, types, lang) {
   return 'You are an exam question generator for KU Leuven Engineering Faculty, Biotechnology course.\n\nGenerate a mock exam:\nTopic: ' + topicName + '\nDifficulty: ' + diffMap[diff] + '\nLanguage: ' + langMap[lang] + '\nQuestion types:\n' + typesDesc + '\n\nIMPORTANT: Return ONLY valid JSON, no markdown, no explanation. Use this exact structure:\n{"title":"exam title","sections":[{"type":"mcq","title":"section title","questions":[{"text":"question","options":["A","B","C","D"],"correct":1,"explanation":"why correct","topic":"subtopic","bloom":"L2"}]},{"type":"tf","title":"section title","questions":[{"text":"statement","correct":true,"explanation":"why"}]},{"type":"fill","title":"section title","questions":[{"text":"sentence with _______ blank","answer":"correct word","explanation":"brief note"}]},{"type":"open","title":"section title","questions":[{"text":"question","sampleAnswer":"model answer","keyPoints":["point1","point2"]}]}]}\n\nOnly include sections for the requested question types. Make questions scientifically accurate for university biotechnology level.';
 }
 
-async function generateAIExam() {
-  var apiKey = document.getElementById('ai-api-key').value.trim();
-  if (!apiKey) { showAIStatus('error','Lütfen API anahtarı giriniz.'); return; }
-
+function generatePrompt() {
   var types = Object.keys(activeQTypes).filter(function(k){return activeQTypes[k];}).map(function(k){
     return {type:k, count:parseInt(document.getElementById('qn-'+k).value)||5};
   });
-  if (types.length === 0) { showAIStatus('error','En az bir soru türü seçiniz.'); return; }
-
+  if (types.length === 0) { alert('En az bir soru türü seçiniz.'); return; }
   var topicSel = document.getElementById('ai-topic');
   var topicName = topicSel.options[topicSel.selectedIndex].text;
   var lang = document.getElementById('ai-lang').value;
   var prompt = buildAIPrompt(topicName, selectedDiff, types, lang);
+  document.getElementById('prompt-display').value = prompt;
+  document.getElementById('ai-step1').style.display = 'none';
+  document.getElementById('ai-step2').style.display = 'block';
+  setTimeout(function(){ document.getElementById('ai-step2').scrollIntoView({behavior:'smooth'}); }, 100);
+}
 
-  localStorage.setItem('anthropic_key', apiKey);
-  var btn = document.getElementById('btn-generate');
-  btn.disabled = true;
-  showAIStatus('loading','🤖 Claude AI sınav oluşturuyor… Bu işlem 15-30 saniye sürebilir.');
-
-  try {
-    var resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 4096,
-        messages: [{role:'user', content: prompt}]
-      })
+function copyPrompt() {
+  var text = document.getElementById('prompt-display').value;
+  var btn = document.getElementById('btn-copy');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '✓ Kopyalandı!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.innerHTML='📋 Kopyala'; btn.classList.remove('copied'); }, 2200);
     });
-    if (!resp.ok) { var err = await resp.json(); throw new Error(err.error?.message || 'API Hatası: ' + resp.status); }
-    var data = await resp.json();
-    var text = data.content[0].text;
-    var match = text.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('Geçersiz JSON yanıtı');
-    var examData = JSON.parse(match[0]);
-    document.getElementById('ai-status').style.display = 'none';
-    renderGeneratedExam(examData);
-  } catch(e) {
-    showAIStatus('error', '❌ Hata: ' + e.message);
-  } finally {
-    btn.disabled = false;
+  } else {
+    var ta = document.getElementById('prompt-display');
+    ta.select(); document.execCommand('copy');
+    btn.textContent = '✓ Kopyalandı!';
+    setTimeout(function(){ btn.innerHTML='📋 Kopyala'; }, 2200);
   }
 }
 
-function showAIStatus(type, msg) {
-  var el = document.getElementById('ai-status');
-  el.style.display = 'block';
-  el.className = 'ai-' + type;
-  el.innerHTML = msg;
+function openAISvc(svc) {
+  var prompt = document.getElementById('prompt-display').value;
+  var encoded = encodeURIComponent(prompt);
+  var urls = {
+    claude: 'https://claude.ai/new?q=' + encoded,
+    chatgpt: 'https://chatgpt.com/?q=' + encoded,
+    gemini: 'https://gemini.google.com/app?q=' + encoded
+  };
+  window.open(urls[svc], '_blank');
+  return false;
+}
+
+function loadGeneratedExam() {
+  var raw = document.getElementById('response-paste').value.trim();
+  var status = document.getElementById('load-status');
+  if (!raw) {
+    status.style.display='block'; status.innerHTML='❌ Lütfen AI yanıtını yapıştırın.'; return;
+  }
+  try {
+    var match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('JSON bloğu bulunamadı — AI yanıtının tamamını kopyaladığınızdan emin olun.');
+    var data = JSON.parse(match[0]);
+    if (!data.sections || !Array.isArray(data.sections)) throw new Error('"sections" dizisi bulunamadı.');
+    status.style.display = 'none';
+    renderGeneratedExam(data);
+  } catch(e) {
+    status.style.display = 'block';
+    status.innerHTML = '❌ ' + e.message;
+  }
+}
+
+function backToConfig() {
+  document.getElementById('ai-step2').style.display = 'none';
+  document.getElementById('ai-step1').style.display = 'block';
+  document.getElementById('load-status').style.display = 'none';
+  document.getElementById('response-paste').value = '';
 }
 
 var genAnswerKey = {};
@@ -1396,10 +1463,10 @@ function submitGeneratedExam() {
   document.getElementById('gen-submit-btn').disabled=true;
 }
 
-// Load saved API key
+// Rename ai-step1 wrapper on load
 window.addEventListener('DOMContentLoaded', function() {
-  var saved = localStorage.getItem('anthropic_key');
-  if (saved) document.getElementById('ai-api-key').value = saved;
+  var wrap = document.querySelector('#tab-ai .ai-gen-wrap');
+  if (wrap) wrap.id = 'ai-step1';
 });
 </script>
 </body>
