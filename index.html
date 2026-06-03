@@ -267,6 +267,84 @@
   .ai-svc-sep{color:var(--text-muted);font-size:0.78rem;align-self:center;}
   .btn-back{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:12px 24px;border-radius:50px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
   .btn-back:hover{background:var(--border);}
+  /* ── Flashcards ── */
+  .fc-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+  .fc-filter-btn{background:#f1f5f9;border:1.5px solid var(--border);color:var(--text);padding:5px 12px;border-radius:20px;cursor:pointer;font-size:0.78rem;font-weight:600;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .fc-filter-btn.active{background:var(--sky-light);border-color:var(--sky);color:var(--sky-dark);}
+  .fc-stats{font-size:0.82rem;color:var(--text-muted);margin-left:auto;white-space:nowrap;}
+  .fc-arena{display:flex;justify-content:center;align-items:center;min-height:300px;padding:16px 0;}
+  .fc-card-wrap{width:100%;max-width:560px;perspective:1000px;cursor:pointer;user-select:none;}
+  .fc-card{position:relative;width:100%;min-height:240px;transform-style:preserve-3d;transition:transform 0.5s;border-radius:20px;}
+  .fc-card.flipped{transform:rotateY(180deg);}
+  .fc-face{position:absolute;width:100%;min-height:240px;backface-visibility:hidden;border-radius:20px;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+  .fc-front{background:linear-gradient(135deg,#0c1a2e,#1a3a5c);color:white;border:1px solid rgba(56,189,248,0.2);box-shadow:0 8px 32px rgba(0,0,0,0.2);}
+  .fc-back{background:white;border:2px solid var(--sky);transform:rotateY(180deg);box-shadow:0 8px 32px rgba(14,165,233,0.12);}
+  .fc-topic-tag{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#94a3b8;margin-bottom:12px;}
+  .fc-term{font-family:'Playfair Display',serif;font-size:1.5rem;line-height:1.3;color:white;}
+  .fc-hint{font-size:0.73rem;color:#64748b;margin-top:14px;}
+  .fc-back .fc-topic-tag{color:var(--sky-dark);}
+  .fc-def{font-size:0.9rem;line-height:1.7;color:var(--text);}
+  .fc-actions{display:flex;justify-content:center;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .fc-btn-know{background:var(--emerald);color:white;border:none;padding:11px 32px;border-radius:50px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .fc-btn-know:hover{background:#059669;}
+  .fc-btn-skip{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:11px 24px;border-radius:50px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .fc-btn-skip:hover{background:var(--border);}
+  .fc-prog-bar{background:#e2e8f0;border-radius:20px;height:5px;margin-bottom:16px;overflow:hidden;}
+  .fc-prog-fill{height:100%;background:linear-gradient(90deg,var(--sky),var(--emerald));border-radius:20px;transition:width 0.4s;}
+  .fc-done{text-align:center;background:var(--card);border:2px solid var(--emerald);border-radius:20px;padding:40px;max-width:480px;margin:0 auto;}
+  .fc-card-idx{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#64748b;margin-bottom:10px;}
+  /* ── Accordion (Konu Özetleri) ── */
+  .acc-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+  .acc-header{display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;user-select:none;transition:background 0.15s;}
+  .acc-header:hover{background:#f8fafc;}
+  .acc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;}
+  .acc-title{flex:1;font-weight:700;font-size:0.95rem;}
+  .acc-arrow{font-size:0.85rem;color:var(--text-muted);transition:transform 0.25s;margin-left:auto;}
+  .acc-item.open .acc-arrow{transform:rotate(90deg);}
+  .acc-body{display:none;padding:4px 20px 20px 20px;}
+  .acc-item.open .acc-body{display:block;}
+  .acc-sub{margin-bottom:10px;}
+  .acc-sub h4{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin:12px 0 5px;}
+  .acc-sub p,.acc-sub li{font-size:0.87rem;line-height:1.7;color:var(--text);}
+  .acc-sub ul{padding-left:18px;}
+  .kc{display:inline-block;background:var(--sky-light);color:var(--sky-dark);padding:1px 8px;border-radius:10px;font-size:0.75rem;font-weight:600;margin:1px 2px;}
+  /* ── Hata Defteri ── */
+  .hd-empty{text-align:center;padding:60px 20px;color:var(--text-muted);}
+  .hd-empty-icon{font-size:3rem;margin-bottom:14px;}
+  .hd-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--rose);border-radius:12px;padding:16px 18px;margin-bottom:12px;transition:box-shadow 0.15s;}
+  .hd-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.08);}
+  .hd-card-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+  .hd-badge{font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:10px;background:var(--rose-light);color:var(--rose);flex-shrink:0;white-space:nowrap;}
+  .hd-q-text{font-size:0.88rem;font-weight:600;color:var(--text);line-height:1.5;flex:1;}
+  .hd-ans-row{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;align-items:center;}
+  .hd-ans{font-size:0.78rem;padding:3px 10px;border-radius:8px;}
+  .hd-ans.wrong{background:var(--rose-light);color:#9f1239;border:1px solid #fecdd3;}
+  .hd-ans.correct{background:var(--emerald-light);color:#064e3b;border:1px solid #a7f3d0;}
+  .hd-del-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:0.73rem;padding:3px 7px;border-radius:6px;transition:all 0.15s;margin-left:auto;}
+  .hd-del-btn:hover{background:var(--rose-light);color:var(--rose);}
+  .hd-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .hd-count{background:var(--rose-light);color:var(--rose);padding:5px 14px;border-radius:20px;font-size:0.82rem;font-weight:700;}
+  .btn-hd-clear{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:7px 16px;border-radius:20px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .btn-hd-clear:hover{background:var(--rose-light);border-color:var(--rose);color:var(--rose);}
+  /* ── Progress Dashboard ── */
+  .pd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:24px;}
+  .pd-stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.04);}
+  .pd-stat .pd-val{font-family:'JetBrains Mono',monospace;font-size:1.9rem;font-weight:700;color:var(--sky-dark);}
+  .pd-stat .pd-lbl{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);margin-top:4px;}
+  .pd-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px;}
+  .pd-table-header{padding:14px 20px;border-bottom:1px solid var(--border);font-weight:700;font-size:0.88rem;display:flex;align-items:center;justify-content:space-between;}
+  .pd-row{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--border);font-size:0.84rem;}
+  .pd-row:last-child{border-bottom:none;}
+  .pd-row:hover{background:#fafbfc;}
+  .pd-row-n{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text-muted);min-width:24px;}
+  .pd-row-score{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--emerald);min-width:60px;}
+  .pd-row-bar{flex:1;background:#e2e8f0;border-radius:20px;height:5px;overflow:hidden;}
+  .pd-row-bar-fill{height:100%;border-radius:20px;background:var(--emerald);}
+  .pd-row-date{color:var(--text-muted);font-size:0.75rem;white-space:nowrap;}
+  .pd-empty{text-align:center;padding:50px 20px;color:var(--text-muted);}
+  .pd-sec-title{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);margin:0 0 12px;}
+  .btn-pd-clear{background:#f1f5f9;color:var(--text);border:1.5px solid var(--border);padding:7px 14px;border-radius:20px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:'Source Sans 3',sans-serif;transition:all 0.15s;}
+  .btn-pd-clear:hover{background:var(--rose-light);border-color:var(--rose);color:var(--rose);}
 </style>
 </head>
 <body>
@@ -337,6 +415,10 @@
   <button class="tab-btn active" onclick="showTab('exam',this)">📋 Deneme Sınavı</button>
   <button class="tab-btn" onclick="showTab('key',this)">🔑 Cevap Anahtarı</button>
   <button class="tab-btn" onclick="showTab('ai',this)">🤖 Sınav Oluştur</button>
+  <button class="tab-btn" onclick="showTab('flash',this)">📇 Flashcards</button>
+  <button class="tab-btn" onclick="showTab('konu',this)">📖 Konu Özetleri</button>
+  <button class="tab-btn" onclick="showTab('hata',this);renderHataDef()">📕 Hata Defteri</button>
+  <button class="tab-btn" onclick="showTab('stats',this);renderStats()">📊 İstatistikler</button>
 </div>
 <!-- EXAM TAB -->
 <div id="tab-exam" class="tab-content active">
@@ -894,6 +976,242 @@
 </div>
 </div><!-- /tab-ai -->
 
+<!-- FLASHCARD TAB -->
+<div id="tab-flash" class="tab-content">
+<div style="max-width:680px;margin:0 auto;padding:8px 0 48px;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+    <div style="width:44px;height:44px;background:linear-gradient(135deg,#0ea5e9,#8b5cf6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">📇</div>
+    <div><h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:2px;">Flashcard Sistemi</h2><p style="color:var(--text-muted);font-size:0.83rem;">Tüm konularda anahtar kavramlar · Kartı çevirmek için tıklayın</p></div>
+  </div>
+  <div class="fc-toolbar">
+    <button class="fc-filter-btn active" onclick="fcFilter('Tümü',this)">Tümü</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Karbonhidratlar',this)">Karbonhidratlar</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Lipidler',this)">Lipidler</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Hücre Yapısı',this)">Hücre Yapısı</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Hücre Enerjisi',this)">Hücre Enerjisi</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Proteinler',this)">Proteinler</button>
+    <button class="fc-filter-btn" onclick="fcFilter('DNA Biyolojisi',this)">DNA</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Rekombinant DNA',this)">Rek. DNA</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Kırmızı Biyoteknoloji',this)">Kırmızı Bio</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Beyaz Biyoteknoloji',this)">Beyaz Bio</button>
+    <button class="fc-filter-btn" onclick="fcFilter('Mavi-İnşaat Bio',this)">Mavi/İnşaat</button>
+    <span class="fc-stats" id="fc-stats">0/0</span>
+  </div>
+  <div class="fc-prog-bar"><div class="fc-prog-fill" id="fc-prog" style="width:0%"></div></div>
+  <div class="fc-arena" id="fc-arena"></div>
+  <div class="fc-actions" id="fc-actions" style="display:none;">
+    <button class="fc-btn-skip" onclick="fcNext(false)">↓ Atla</button>
+    <button class="fc-btn-know" onclick="fcNext(true)">✓ Bildim</button>
+  </div>
+</div>
+</div><!-- /tab-flash -->
+
+<!-- KONU ÖZETLERİ TAB -->
+<div id="tab-konu" class="tab-content">
+<div style="max-width:760px;margin:0 auto;padding:8px 0 48px;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+    <div style="width:44px;height:44px;background:linear-gradient(135deg,#10b981,#0369a1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">📖</div>
+    <div><h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:2px;">Konu Özetleri</h2><p style="color:var(--text-muted);font-size:0.83rem;">Her konunun temel kavramlarını kapsayan hızlı tekrar notları</p></div>
+  </div>
+
+  <div class="acc-item open">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#e0f2fe;color:#0369a1;">🍬</div>
+      <div class="acc-title">Karbonhidratlar</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Monosakkaritler</h4><p>Glikoz <span class="kc">C₆H₁₂O₆</span>, fruktoz, galaktoz temel heksozlardır. Glikoz; α (glikojen, nişasta) ve β (selüloz) anomerlerine sahiptir. Riboz <span class="kc">C₅H₁₀O₅</span> RNA bileşenidir.</p></div>
+      <div class="acc-sub"><h4>Polisakkaritler</h4><ul>
+        <li><strong>Glikojen</strong>: Hayvan depolama polisakkariti. α-1,4 + α-1,6 (her ~8–12 rezidüde bir dal). Karaciğer ve kasta bulunur.</li>
+        <li><strong>Nişasta</strong>: Bitki depolama. Amiloz (doğrusal, α-1,4) + amilopektin (dallı, α-1,6; ~24–30 rezidüde).</li>
+        <li><strong>Selüloz</strong>: β-1,4 bağlı, yapısal. Memeli sindirim enzimleriyle hidrolize edilemez.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Glikoproteinler &amp; Glikolipidler</h4><p>Hücre yüzey tanıma, kan grubu antijenleri, hücre–hücre adezyonunda kritik rol oynar. N-bağlı glikosilasyon ER'de, O-bağlı ise Golgi'de gerçekleşir.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#fef3c7;color:#92400e;">🧈</div>
+      <div class="acc-title">Lipidler ve Biyomembranlar</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Membran Yapısı</h4><p>Fosfolipid çift tabakası amfipatik lipitlerin sulu ortamda kendiliğinden oluşturduğu yapıdır. Hidrofobik kuyruklar içe, hidrofilik baş gruplar dışa dönüktür. Akışkan mozaik modeli (Singer-Nicolson, 1972).</p></div>
+      <div class="acc-sub"><h4>Akışkanlık Düzenlemesi</h4><ul>
+        <li><strong>Soğuğa uyum</strong>: cis doymamış yağ asidi oranı artar → zincir paketlenmesi bozulur → akışkanlık korunur (homeovisköz adaptasyon).</li>
+        <li><strong>Kolesterol</strong>: Ara sıcaklıklarda tampon; yüksek sıcaklıkta azaltır, düşük sıcaklıkta artırır.</li>
+        <li><strong>trans yağ asitleri</strong>: Düz zincir → sıkı paketlenme → akışkanlığı azaltır.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Yağ Asidi Sınıfları</h4><p>Doymuş: palmitik, stearik asit. Tekli doymamış: oleik asit (cis-Δ9). Çoklu doymamış: linoleik, EPA, DHA (omega-3). Trigliseritler depo; fosfolipidler membran bileşenidir.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#ede9fe;color:#6d28d9;">🔬</div>
+      <div class="acc-title">Hücre Yapısı ve Organeller</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Endomembran Sistemi</h4><ul>
+        <li><strong>Granüllü ER</strong>: Ribozom taşır; sekretuar ve membran proteinleri sentezler; N-glikosilasyon başlar.</li>
+        <li><strong>Granülsüz ER</strong>: Lipid sentezi, Ca²⁺ deposu, sitokrom P450 detoksifikasyonu.</li>
+        <li><strong>Golgi</strong>: cis→medial→trans. Glikosilasyon tamamlanır; lizozom/plazma zarı/sekresyon yönlendirmesi yapılır.</li>
+        <li><strong>Lizozom</strong>: pH ~4.5–5; V-tipi H⁺-ATPaz ile asidifiye. Asit hidrolazlar (proteaz, lipaz, nükleaz) içerir.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Endositoz Yolları</h4><ul>
+        <li><strong>Fagositoz</strong>: Reseptör bağımlı (Fc, kompleman); büyük katı partiküller; fagozom → lizozom.</li>
+        <li><strong>Klathrin-aracılıklı endositoz</strong>: LDL, transferrin, büyüme faktörü reseptörleri.</li>
+        <li><strong>Makropinositoz</strong>: Reseptörsüz; büyük hacimli sıvı alımı; membran ruffles oluşturur.</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#d1fae5;color:#065f46;">⚡</div>
+      <div class="acc-title">Hücre Enerjisi — Metabolizma</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Glikoliz (Sitozol)</h4><p>Glikoz → 2 piruvat. <span class="kc">Net 2 ATP</span> (4 üretilir – 2 harcanır). 2 NADH üretilir. Oksijen gerekmez.</p></div>
+      <div class="acc-sub"><h4>ETS ve Oksidatif Fosforilasyon (Mitokondri)</h4><ul>
+        <li>Elektron akışı: <span class="kc">Kx.I → KoQ → Kx.III → Sit.c → Kx.IV → O₂</span></li>
+        <li>Kemiozmotik teori (Mitchell): proton gradyanı → ATP sentaz.</li>
+        <li>NADH → ~2.5 ATP; FADH₂ → ~1.5 ATP (güncel P/O oranları).</li>
+        <li>Tam glikoz oksidasyonu: <span class="kc">~30–32 ATP</span> (eski: 36–38).</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Krebs Döngüsü Çıktısı (2 asetil-CoA)</h4><p>6 NADH + 2 FADH₂ + 2 GTP + 4 CO₂. İzosirat dehidrojenaz ve α-ketoglutarat dehidrojenaz önemli düzenleme noktalarıdır.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#fce7f3;color:#9d174d;">🔩</div>
+      <div class="acc-title">Proteinler ve Enzimler</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Protein Katlanması</h4><ul>
+        <li>1°: Amino asit dizisi (peptid bağları).</li>
+        <li>2°: α-sarmal ve β-tabakası (H-bağları).</li>
+        <li>3°: Hidrofobik etkileşim, disülfit köprüsü, iyon bağları.</li>
+        <li>4°: Alt birim biraraya gelişi.</li>
+        <li><strong>Chaperonlar</strong>: Hsp70/Hsp90/GroEL — agregasyonu önler, doğru katlanmayı yönlendirir.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Enzim Kinetik</h4><p>Michaelis-Menten: <span class="kc">v = Vmax[S]/(Km+[S])</span>. Km = ½Vmax'taki substrat konsantrasyonu. Düşük Km → yüksek affinite. Rekabetçi inhibisyon Km'yi artırır, Vmax'ı değiştirmez.</p></div>
+      <div class="acc-sub"><h4>Protein Analizi</h4><p>A₂₈₀: Trp (ε≈5500) ve Tyr absorbe eder. SDS-PAGE: denatüre, MW bazında ayırma. Western blot: özgün antikor ile tespit. Mass spec: dizi ve PTM analizi.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#dbeafe;color:#1d4ed8;">🧬</div>
+      <div class="acc-title">DNA Biyolojisi</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Replikasyon Enzimleri</h4><ul>
+        <li><strong>Helikaz</strong>: Sarmalı açar.</li>
+        <li><strong>Primaz</strong>: RNA primer sentezler.</li>
+        <li><strong>DNA Pol III</strong>: 5'→3' uzama.</li>
+        <li><strong>DNA Pol I</strong>: Primer çıkarma + doldurma.</li>
+        <li><strong>DNA Ligaz</strong>: Okazaki fragmentlerini birleştirir.</li>
+        <li><strong>Topoizomeraz II</strong>: Süpersarmal gerimi giderir.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Transkripsiyon &amp; Translasyon</h4><p>Kalıp zincir 3'→5' okunur; mRNA 5'→3' sentezlenir. Pre-mRNA → 5'-cap, polyA kuyruğu, splaising → olgun mRNA → nükleer ihracat → ribozom → polipeptit.</p></div>
+      <div class="acc-sub"><h4>İnsan Genomu</h4><p>~3.2 Gb; ~20.000–25.000 gen. Protein kodlayan egzon oranı <span class="kc">~%1.5–2</span>. Gerisi: intronlar, düzenleyici bölgeler, tekrarlı diziler, transpozonlar.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#d1fae5;color:#047857;">🔄</div>
+      <div class="acc-title">Rekombinant DNA Teknolojisi</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>PCR</h4><p>Denatürasyon (~95°C) → annealing (~50–65°C; Tm bağımlı) → uzama (~72°C; Taq polimeraz). n döngüde 2ⁿ kopya. Rekombinant DNA klonlaması için gen amplifikasyonu.</p></div>
+      <div class="acc-sub"><h4>Klonlama Vektörü Zorunlu Elemanları</h4><p><span class="kc">Prokaryotik promotör</span> (T7/lac), <span class="kc">Shine-Dalgarno</span>, <span class="kc">MCS</span>, <span class="kc">prokaryotik ori</span>, <span class="kc">antibiyotik direnç geni</span>. Ökaryotik promotör, enhancer veya polyA sinyali bakteri vektöründe işlevsizdir.</p></div>
+      <div class="acc-sub"><h4>CRISPR-Cas9</h4><p>sgRNA (20 nt) + Cas9 → PAM (NGG) tanıma → DSB. NHEJ: mutasyon (bozma). HDR: hassas düzenleme. Restriksiyon enzimlerine kıyasla programlanabilir hedefleme avantajı. PAM gereksinimi tek sınırlama.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#ffe4e6;color:#be123c;">❤️</div>
+      <div class="acc-title">Kırmızı Biyoteknoloji (Tıbbi)</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Monoklonal Antikor Üretimi</h4><p>Köhler-Milstein (1975): antijen-spesifik B lenfositi + miyeloma hücresi füzyonu. HAT ortamı seçimi. Hibridoma tek klonal antikor üretir. mAb: yüksek özgüllük, uzun yarı ömür (FcRn geri dönüşümü), parenteral uygulama.</p></div>
+      <div class="acc-sub"><h4>Gen Tedavisi Vektörleri</h4><ul>
+        <li><strong>AAV</strong>: Düşük immünojenisite, karaciğer/göz hedefleme (Luxturna, Zolgensma).</li>
+        <li><strong>Lentivirüs</strong>: Kalıcı genomik integrasyon; bölünen ve bölünmeyen hücreler.</li>
+        <li><strong>Adenovirüs</strong>: Geçici ekspresyon; yüksek immünojenite.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Klinik Öncelik</h4><p>Güvenlik (off-target, immünojenisite, genomik stabilite) her zaman etkinliğin ve maliyetin önünde gelir. AAV'da kapsid immün yanıtı kritik sorudur.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#fef3c7;color:#92400e;">🏭</div>
+      <div class="acc-title">Beyaz Biyoteknoloji (Endüstriyel)</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>SSF vs SHF (2. Nesil Biyoetanol)</h4><ul>
+        <li><strong>SSF</strong>: Sakarifikasyon + fermentasyon aynı reaktörde, eş zamanlı. Oluşan glikoz anında fermente edilir → seluaz ürün inhibisyonu önlenir → yüksek verim. Sıcaklık optimizasyonu zorlaşır.</li>
+        <li><strong>SHF</strong>: Ayrı aşamalar. Sıcaklık optimize edilebilir. Glikoz birikimi seluazı inhibe eder.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Lignoselülozik Biyokütle</h4><p>Selüloz (~%45, β-1,4) + Hemiselüloz (~%30, ksiloz zengin) + Lignin (~%25, fenolik, inhibe edici). Ön işlem zorunludur: asit hidroliz, alkali, buharlı patlama, AFEX.</p></div>
+    </div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-header" onclick="toggleAcc(this)">
+      <div class="acc-icon" style="background:#ccfbf1;color:#0d9488;">🌊🏗️</div>
+      <div class="acc-title">Mavi Biyoteknoloji &amp; İnşaat Biyoteknolojisi</div>
+      <div class="acc-arrow">▶</div>
+    </div>
+    <div class="acc-body">
+      <div class="acc-sub"><h4>Deniz Kaynaklı İlaçlar</h4><ul>
+        <li><strong>Trabectedin</strong> (Yondelis): Ecteinascidia turbinata; sarkom, over Ca; DNA minör oluk bağlayıcı.</li>
+        <li><strong>Sitarabin</strong>: Deniz süngeri Cryptotethya crypta; AML; DNA pol inhibitörü.</li>
+        <li><strong>Eribulin</strong> (Halaven): Halichondria okadai; meme Ca; mikrotübül inhibitörü.</li>
+      </ul></div>
+      <div class="acc-sub"><h4>Neden Deniz Organizmaları?</h4><p>Aşırı koşullar (basınç, sıcaklık, karanlık, tuzluluk) karasal canlılarda eşdeğeri olmayan savunma metabolitleri (poliketid, terpenoid, peptid) üretimini tetikler. Geniş kimyasal çeşitlilik.</p></div>
+      <div class="acc-sub"><h4>MICP — Kendini İyileştiren Beton</h4><p>Bacillus pasteurii ureazı: CO(NH₂)₂ + H₂O → 2NH₄⁺ + CO₃²⁻. Ca²⁺ + CO₃²⁻ → CaCO₃↓. Kristaller çatlakları doldurur. Enkapsülasyon (silika jel) olumsuz pH'a karşı koruma sağlar.</p></div>
+    </div>
+  </div>
+</div>
+</div><!-- /tab-konu -->
+
+<!-- HATA DEFTERİ TAB -->
+<div id="tab-hata" class="tab-content">
+<div style="max-width:720px;margin:0 auto;padding:8px 0 48px;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+    <div style="width:44px;height:44px;background:var(--rose-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">📕</div>
+    <div><h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:2px;">Hata Defteri</h2><p style="color:var(--text-muted);font-size:0.83rem;">Yanlış cevapladığınız sorular — tarayıcı hafızasında saklanır</p></div>
+  </div>
+  <div id="hata-content"></div>
+</div>
+</div><!-- /tab-hata -->
+
+<!-- İSTATİSTİKLER TAB -->
+<div id="tab-stats" class="tab-content">
+<div style="max-width:720px;margin:0 auto;padding:8px 0 48px;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:24px;">
+    <div style="width:44px;height:44px;background:var(--sky-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">📊</div>
+    <div><h2 style="font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--text);margin-bottom:2px;">İstatistikler</h2><p style="color:var(--text-muted);font-size:0.83rem;">Sınav geçmişiniz ve bölüm bazlı performansınız</p></div>
+  </div>
+  <div id="stats-content"></div>
+</div>
+</div><!-- /tab-stats -->
+
 <script>
 // ═══════════════════════════════════════════════════════
 // STATE
@@ -1229,6 +1547,43 @@ function submitExam() {
   var autoTotal = Math.round((scoreA+scoreB+scoreC+scoreD)*10)/10;
   var elapsed = document.getElementById('timer-display').textContent.replace('⏳ ','');
 
+  // ── Collect wrong answers for Hata Defteri ──
+  var wrongs = [];
+  var qTexts = document.querySelectorAll('#tab-exam .sec-a .q-text');
+  for (var wi = 1; wi <= 20; wi++) {
+    var opts2 = document.querySelectorAll('input[name="q' + wi + '"]');
+    var sel2 = Array.from(opts2).findIndex(function(o){return o.checked;});
+    if (sel2 !== CORRECT_A[wi-1] && sel2 !== -1) {
+      var qEl = qTexts[wi-1];
+      var optsArr = Array.from(opts2).map(function(o){return o.parentElement.textContent.trim();});
+      wrongs.push({
+        section: 'Bölüm A · S'+wi,
+        text: qEl ? qEl.textContent.trim().substring(0,80) + '…' : 'Soru '+(wi),
+        yourAnswer: optsArr[sel2] ? optsArr[sel2].substring(0,50) : '?',
+        correct: optsArr[CORRECT_A[wi-1]] ? optsArr[CORRECT_A[wi-1]].substring(0,50) : '?',
+        date: new Date().toLocaleDateString('tr-TR')
+      });
+    }
+  }
+  document.querySelectorAll('#tab-exam .tf-row').forEach(function(row, idx) {
+    var correctIsTrue2 = CORRECT_B[idx] === 'D';
+    var sel3 = row.querySelector('.tf-btn.selected');
+    var selTrue2 = sel3 && sel3.classList.contains('true-btn');
+    var ok2 = sel3 && ((selTrue2 && correctIsTrue2) || (!selTrue2 && !correctIsTrue2));
+    if (sel3 && !ok2) {
+      var stmt = row.querySelector('.tf-text');
+      wrongs.push({
+        section: 'Bölüm B · B'+(idx+1),
+        text: stmt ? stmt.textContent.replace(/Doğru|Yanlış/g,'').trim().substring(0,80)+'…' : 'B'+(idx+1),
+        yourAnswer: selTrue2 ? 'Doğru' : 'Yanlış',
+        correct: correctIsTrue2 ? 'Doğru' : 'Yanlış',
+        date: new Date().toLocaleDateString('tr-TR')
+      });
+    }
+  });
+  if (wrongs.length > 0) saveWrongAnswers(wrongs);
+  saveExamHistory(scoreA, scoreB, scoreC, scoreD, autoTotal, elapsed);
+
   document.getElementById('res-a').textContent = scoreA;
   document.getElementById('res-b').textContent = scoreB;
   document.getElementById('res-c').textContent = scoreC;
@@ -1467,7 +1822,227 @@ function submitGeneratedExam() {
 window.addEventListener('DOMContentLoaded', function() {
   var wrap = document.querySelector('#tab-ai .ai-gen-wrap');
   if (wrap) wrap.id = 'ai-step1';
+  fcInit();
 });
+
+// ═══════════════════════════════════════════════════════
+// ACCORDION (Konu Özetleri)
+// ═══════════════════════════════════════════════════════
+function toggleAcc(headerEl) {
+  var item = headerEl.parentElement;
+  item.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════════════════
+var FLASHCARDS = [
+  {topic:'Karbonhidratlar',term:'Glikoz',def:'C₆H₁₂O₆ formüllü heksoz monosakkarit; hücrenin birincil enerji kaynağı. α-anomer glikojen/nişastada, β-anomer selülozda kullanılır. Fruktoz ve galaktoz ile izomerdir.'},
+  {topic:'Karbonhidratlar',term:'Glikojen vs. Nişasta',def:'İkisi de α-1,4 (ana zincir) + α-1,6 (dal) bağ içerir. Kritik fark: Glikojen her 8–12 rezidüde bir dallanır (hayvan); nişasta her ~24–30 rezidüde (bitki). Glikojen hızlı mobilizasyon için sık dallıdır.'},
+  {topic:'Karbonhidratlar',term:'Selüloz',def:'β-1,4 glikozidik bağ. Bitki hücre duvarı yapı iskeleti. Memeli sindirim enzimleri (α-glukozidazlar) tarafından hidrolize edilemez. Enerji kaynağı değil; lif işlevi görür.'},
+  {topic:'Karbonhidratlar',term:'Glikoprotein & Glikolipid',def:'Karbonhidrat zincirleri kovalent bağlı protein/lipid. Hücre yüzeyi tanıma (MHC, kan grubu antijenleri), hücre–hücre adezyonu, sinyal iletiminde rol oynar.'},
+  {topic:'Lipidler',term:'Fosfolipid Çift Tabakası',def:'Amfipatik fosfolipitler: hidrofobik kuyruklar içe, hidrofilik fosfat baş grupları dışa. Sulu ortamda kendiliğinden oluşur. Akışkan mozaik modeli (Singer–Nicolson, 1972) dinamik yapıyı tanımlar.'},
+  {topic:'Lipidler',term:'Homeovisköz Adaptasyon',def:'Organizmaların sıcaklık değişiminde membran akışkanlığını sabit tutma stratejisi. Soğukta: cis doymamış YA oranı artar → paketlenme bozulur. Sıcakta: doymuş YA/kolesterol oranı artar.'},
+  {topic:'Lipidler',term:'Kolesterol Rolü',def:'Hayvan zarlarında akışkanlık tamponlayıcı. Ara sıcaklıkta: yüksek sıcaklıkta akışkanlığı azaltır, düşük sıcaklıkta artırır. E. coli zarında bulunmaz; ökaryota özgüdür.'},
+  {topic:'Lipidler',term:'cis vs trans Yağ Asitleri',def:'cis: çift bağda bükülme → gevşek paketlenme → yüksek akışkanlık. trans: düz zincir → sıkı paketlenme → düşük akışkanlık. Doğal doymamış YA cis konfigürasyonludur.'},
+  {topic:'Hücre Yapısı',term:'V-tipi H⁺-ATPaz',def:'Lizozom/endozom/bitki vakuolünde proton pompası. ATP hidrolizi enerjisiyle H⁺ iyonlarını lümen içine aktif pompalar. Lizozomal asit ortam (pH ~4.5–5.0) bu enzimle sağlanır; asit hidrolazlar bu pH düzeyinde aktif.'},
+  {topic:'Hücre Yapısı',term:'Endoplazmik Retikulum',def:'Granüllü ER: ribozom taşır; sekretuar/membran protein sentezi; N-glikosilasyon başlar. Granülsüz ER: lipid sentezi; Ca²⁺ deposu; sitokrom P450 ile ilaç/toksin metabolizması.'},
+  {topic:'Hücre Yapısı',term:'Golgi Aygıtı',def:'cis → medial → trans olgunlaşma. N-glikosilasyon tamamlanır; O-glikosilasyon başlar; fosforilasyon eklenir. Proteinler lizozom, plazma zarı veya sekresyon keselerine yönlendirilir.'},
+  {topic:'Hücre Yapısı',term:'Endositoz Yolları',def:'Klathrin-aracılı: reseptör bağımlı (LDL, transferrin). Fagositoz: Fc/kompleman reseptörleri; büyük katı partiküller. Makropinositoz: reseptörsüz; büyük sıvı hacmi; membran ruffles.'},
+  {topic:'Hücre Enerjisi',term:'Glikoliz Net Kazanım',def:'Yatırım fazı: 2 ATP harcanır. Kazanım fazı: 4 ATP üretilir. Net = 2 ATP + 2 NADH + 2 piruvat. Sitoplazmada; oksijen gerektirmez. Piruvatın akıbeti: oksijen varsa → asetil-CoA; yoksa → laktat/etanol.'},
+  {topic:'Hücre Enerjisi',term:'ETS Elektron Akışı',def:'Kx.I → Ko-enzim Q → Kx.III → Sitokrom c → Kx.IV → O₂. FADH₂ direkt KoQ\'ya verir (Kx.II). Terminal alıcı: O₂ → H₂O. Proton pompalanması: Kx.I (+4H⁺), Kx.III (+4H⁺), Kx.IV (+2H⁺).'},
+  {topic:'Hücre Enerjisi',term:'Kemiozmotik Teori',def:'Mitchell (1961 Nobel): ETS protonları iç zarın IMS tarafına pompalayarak elektrokimyasal gradyan (proton motif kuvveti) oluşturur. ATP sentaz bu gradyanı kullanarak ADP + Pᵢ → ATP sentezler.'},
+  {topic:'Hücre Enerjisi',term:'Güncel ATP Verimi',def:'NADH: P/O ≈ 2.5 → ~2.5 ATP. FADH₂: P/O ≈ 1.5 → ~1.5 ATP. Tam glikoz: ~30–32 ATP. Eski değer (36–38) tam sayı P/O kabulüne dayanır, güncel ölçümlerle çürütülmüştür.'},
+  {topic:'Proteinler',term:'Chaperone Proteinler',def:'Hsp70, Hsp90, GroEL/GroES: yeni sentezlenen veya stres altındaki proteinlerin hidrofobik bölgelerine bağlanır; doğru katlanmayı yönlendirir; agregasyonu önler. ATP harcayarak çalışır.'},
+  {topic:'Proteinler',term:'Michaelis-Menten Kinetik',def:'v = Vmax[S]/(Km + [S]). Km: ½Vmax\'taki [S]; enzim-substrat affinitesinin tersi. Düşük Km → yüksek affinite. Rekabetçi inhibisyon: Km ↑, Vmax değişmez. Karma inhibisyon: ikisi de etkilenir.'},
+  {topic:'Proteinler',term:'A₂₈₀ Ölçümü',def:'Triptofan (ε ≈ 5500 M⁻¹cm⁻¹) ve tirozin (ε ≈ 1490) 280 nm UV\'yi absorbe eder. Beer-Lambert kanunu: A = εcl. Protein miktarını hızlı ve tahmini olarak ölçmek için kullanılır.'},
+  {topic:'Proteinler',term:'Ubikuitin-Proteazom',def:'Yanlış katlanmış/kullanılmış proteinlere E1-E2-E3 ligaz kaskadıyla K48 ubikuitin zinciri eklenir. 26S proteazom ATP bağımlı olarak proteini parçalar. Hücre döngüsü, apoptoz, kalite kontrolde kritik.'},
+  {topic:'DNA Biyolojisi',term:'Replikasyon Enzimleri',def:'Helikaz → sarmalı açar. Primaz → RNA primer. DNA Pol III → uzama (5\'→3\'). DNA Pol I → primer kaldırma + doldurma. DNA Ligaz → çentik kapatma. Topoizomeraz II → süpersarmal giderme.'},
+  {topic:'DNA Biyolojisi',term:'Transkripsiyon & mRNA İşleme',def:'RNA pol II kalıp zinciri 3\'→5\' okur; mRNA 5\'→3\' sentezlenir (U yerine T). Pre-mRNA: 5\'-7mG cap → splaising (SR proteinleri, spliceosom) → 3\'-polyA kuyruğu → nükleer ihracat (eksport kompleksi).'},
+  {topic:'DNA Biyolojisi',term:'İnsan Genomu',def:'~3.2 Gb; ~20.000–25.000 protein kodlayan gen; egzon oranı ~%1.5–2. Geri kalan: intronlar (~%25), tekrarlı diziler (SINE, LINE, ~%45), psödogenler, uzun düzenleyici ncRNA bölgeleri.'},
+  {topic:'DNA Biyolojisi',term:'Ters Transkriptaz',def:'RNA kalıptan DNA (cDNA) sentezi. HIV replikasyonunda şart. Biyoteknolojide: mRNA → cDNA kitaplıkları; RT-PCR; retrovirüs vektörü üretimi. 3\'→5\' ekzonükleaz (proofreading) yoktur → yüksek mutasyon hızı.'},
+  {topic:'Rekombinant DNA',term:'CRISPR-Cas9',def:'sgRNA (20 nt rehber) + Cas9 nükleaz → PAM (5\'-NGG) tanıma → çift sarmal kırık (DSB). Onarım: NHEJ (çerçeve kayması mutasyonu) veya HDR (şablon ile hassas düzenleme). Restriksiyon enzimlerine kıyasla programlanabilir.'},
+  {topic:'Rekombinant DNA',term:'Prokaryotik Ekspresyon Vektörü',def:'Zorunlu: prokaryotik promotör (T7/lac/tac), Shine-Dalgarno (RBS), MCS, prokaryotik ori, antibiyotik direnç markeri. İsteğe bağlı: His-tag, GST-tag, indüklenebilir sistem (IPTG ile lac operonu).'},
+  {topic:'Rekombinant DNA',term:'PCR Döngüleri',def:'Denatürasyon (~95°C): H-bağları kırılır. Annealing (~50–65°C; Tm≈2°C × AT + 4°C × GC): primerler bağlanır. Uzama (~72°C): Taq polimeraz 5\'→3\' sentez. n döngü → 2ⁿ kopya. Qiagen, NEB Taq örnekleri.'},
+  {topic:'Rekombinant DNA',term:'Transformasyon & Seçim',def:'Rekombinant plazmid ısıl şok (E. coli) veya elektroporasyon ile bakteriye verilir. Antibiyotik plakası: pozitif seçim. mavi-beyaz (lacZ-α): insert içeren beyaz koloniler. Doğrulama: koloni PCR, kısıtlama analizi, Sanger dizi.'},
+  {topic:'Kırmızı Biyoteknoloji',term:'Hibridoma Teknolojisi',def:'Köhler-Milstein 1975 (Nobel 1984). B lenfosit (antijen özgüllüğü) + miyeloma (sonsuz çoğalma) hücre füzyonu. HAT ortamında seçim (hipo + aminopterin + timidin). Monoklonal antikor tek epitopa karşı üretilir.'},
+  {topic:'Kırmızı Biyoteknoloji',term:'Gen Tedavisi Vektörleri',def:'AAV: düşük immünojenisite; Luxturna (göz), Zolgensma (SMA). Lentivirüs: kalıcı integrasyon; CAR-T. Adenovirüs: geçici, yüksek immünojenite. mRNA (LNP): COVID-19 aşıları. Seçim hastalık mekanizmasına göre.'},
+  {topic:'Kırmızı Biyoteknoloji',term:'mAb vs. Küçük Moleküllü İlaç',def:'mAb: yüksek özgüllük, uzun t½ (FcRn), parenteral, CHO üretimi, pahalı, intrasellüler hedef yok. Küçük molekül: oral, BBB geçer, hücre içi hedefler (kinaz), ucuz sentez, düşük özgüllük.'},
+  {topic:'Beyaz Biyoteknoloji',term:'SSF Avantajı',def:'Aynı reaktörde eş zamanlı sakarifikasyon + fermentasyon. Oluşan glikoz anında fermente edilir → ortamda birikmez → seluaz ürün inhibisyonu önlenir → yüksek hidroliz verimi. Dezavantaj: enzim ve maya için ortak sıcaklık gereksinimi.'},
+  {topic:'Beyaz Biyoteknoloji',term:'Lignoselülozik Ön İşlem',def:'Selüloz (%45, β-1,4) + hemiselüloz (%30, ksiloz) + lignin (%25, fenolik, inhibe edici). Ön işlem seçenekleri: seyreltik asit hidroliz, alkali, buharlı patlama, AFEX (amonyak). Lignin uzaklaştırılmazsa seluaz bloke olur.'},
+  {topic:'Mavi-İnşaat Bio',term:'Trabectedin (Yondelis)',def:'Ecteinascidia turbinata\'dan izole. DNA minör oluğuna alkilleyici bağlanma → transkripsiyon bozulması. Yumuşak doku sarkoması ve platin dirençli over Ca için FDA/EMA onaylı. Günümüzde yarı-sentetik üretim.'},
+  {topic:'Mavi-İnşaat Bio',term:'Deniz Kaynaklı FDA/EMA Onaylı İlaçlar',def:'Sitarabin (AML; deniz süngeri). Eribulin/Halaven (meme Ca; mikrotübül). Ziconotide (kronik ağrı; koni salyangoz kanalı bloker). Trabectedin (sarkom). Omega-3 yağ asitleri (kardiyovasküler).'},
+  {topic:'Mavi-İnşaat Bio',term:'MICP Mekanizması',def:'Bacillus pasteurii ureaz: CO(NH₂)₂ + H₂O → 2NH₄⁺ + CO₃²⁻. Ca²⁺ + CO₃²⁻ → CaCO₃↓. Kristaller çatlakları doldurur. Enkapsülasyon (silika jel, poliüretan) yüksek betonpH\'a (>12) karşı koruma sağlar.'}
+];
+
+var fcDeck = [];
+var fcIdx = 0;
+var fcKnownIds = new Set();
+var fcFlipped = false;
+
+function fcInit() {
+  try { fcKnownIds = new Set(JSON.parse(localStorage.getItem('biotech_fc_known') || '[]')); } catch(e){}
+  fcFilter('Tümü', document.querySelector('.fc-filter-btn'));
+}
+
+function fcFilter(topic, btn) {
+  document.querySelectorAll('.fc-filter-btn').forEach(function(b){b.classList.remove('active');});
+  if (btn) btn.classList.add('active');
+  fcDeck = topic === 'Tümü' ? FLASHCARDS.slice() : FLASHCARDS.filter(function(c){return c.topic===topic;});
+  fcDeck = fcDeck.slice().sort(function(){return Math.random()-0.5;});
+  fcIdx = 0;
+  fcFlipped = false;
+  renderFcCard();
+}
+
+function renderFcCard() {
+  var arena = document.getElementById('fc-arena');
+  var actions = document.getElementById('fc-actions');
+  var stats = document.getElementById('fc-stats');
+  var prog = document.getElementById('fc-prog');
+  if (fcIdx >= fcDeck.length) {
+    var known = fcDeck.filter(function(c){return fcKnownIds.has(c.topic+'_'+c.term);}).length;
+    arena.innerHTML = '<div class="fc-done"><div style="font-size:2.5rem;margin-bottom:12px;">🎉</div><div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;color:var(--text);margin-bottom:8px;">Tur Tamamlandı!</div><div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Bu turda <strong>'+known+'/'+fcDeck.length+'</strong> kartı bildiniz.</div><button class="fc-btn-know" onclick="fcFilter(\'Tümü\',null);document.querySelector(\'.fc-filter-btn\').classList.add(\'active\');">↺ Yeniden Başlat</button></div>';
+    actions.style.display = 'none';
+    stats.textContent = fcDeck.length + '/' + fcDeck.length;
+    prog.style.width = '100%';
+    return;
+  }
+  var card = fcDeck[fcIdx];
+  var pct = Math.round((fcIdx / fcDeck.length) * 100);
+  prog.style.width = pct + '%';
+  stats.textContent = (fcIdx + 1) + '/' + fcDeck.length;
+  arena.innerHTML = '<div class="fc-card-wrap" onclick="fcFlipCard()"><div class="fc-card" id="fc-card"><div class="fc-face fc-front"><div class="fc-topic-tag">' + card.topic + '</div><div class="fc-term">' + card.term + '</div><div class="fc-hint">Cevabı görmek için tıklayın</div></div><div class="fc-face fc-back"><div class="fc-topic-tag">' + card.topic + '</div><div class="fc-def">' + card.def + '</div></div></div></div>';
+  actions.style.display = 'flex';
+  fcFlipped = false;
+}
+
+function fcFlipCard() {
+  var cardEl = document.getElementById('fc-card');
+  if (!cardEl) return;
+  fcFlipped = !fcFlipped;
+  cardEl.classList.toggle('flipped', fcFlipped);
+}
+
+function fcNext(knew) {
+  if (knew) {
+    var card = fcDeck[fcIdx];
+    fcKnownIds.add(card.topic + '_' + card.term);
+    try { localStorage.setItem('biotech_fc_known', JSON.stringify(Array.from(fcKnownIds))); } catch(e){}
+  }
+  fcIdx++;
+  fcFlipped = false;
+  renderFcCard();
+}
+
+// ═══════════════════════════════════════════════════════
+// HATA DEFTERİ
+// ═══════════════════════════════════════════════════════
+function saveWrongAnswers(wrongs) {
+  try {
+    var existing = JSON.parse(localStorage.getItem('biotech_wrong_answers') || '[]');
+    existing = existing.concat(wrongs);
+    if (existing.length > 100) existing = existing.slice(-100);
+    localStorage.setItem('biotech_wrong_answers', JSON.stringify(existing));
+  } catch(e){}
+}
+
+function renderHataDef() {
+  var container = document.getElementById('hata-content');
+  var data = [];
+  try { data = JSON.parse(localStorage.getItem('biotech_wrong_answers') || '[]'); } catch(e){}
+  if (data.length === 0) {
+    container.innerHTML = '<div class="hd-empty"><div class="hd-empty-icon">📗</div><div style="font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:6px;">Hata Defteri Boş</div><div style="font-size:0.85rem;">Sınavı tamamladıktan sonra yanlış cevapladığınız sorular burada görünecektir.</div></div>';
+    return;
+  }
+  var html = '<div class="hd-toolbar"><span class="hd-count">'+data.length+' yanlış cevap</span><button class="btn-hd-clear" onclick="clearHataDef()">🗑 Tümünü Temizle</button></div>';
+  data.slice().reverse().forEach(function(item, i) {
+    var idx = data.length - 1 - i;
+    html += '<div class="hd-card"><div class="hd-card-top"><span class="hd-badge">'+item.section+'</span><span class="hd-q-text">'+item.text+'</span><button class="hd-del-btn" onclick="deleteHataItem('+idx+')">✕</button></div>';
+    html += '<div class="hd-ans-row"><span class="hd-ans wrong">✗ ' + item.yourAnswer + '</span><span class="hd-ans correct">✓ ' + item.correct + '</span><span style="font-size:0.72rem;color:var(--text-muted);margin-left:auto;">'+item.date+'</span></div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function deleteHataItem(idx) {
+  try {
+    var data = JSON.parse(localStorage.getItem('biotech_wrong_answers') || '[]');
+    data.splice(idx, 1);
+    localStorage.setItem('biotech_wrong_answers', JSON.stringify(data));
+    renderHataDef();
+  } catch(e){}
+}
+
+function clearHataDef() {
+  if (!confirm('Tüm hata defteri silinsin mi?')) return;
+  localStorage.removeItem('biotech_wrong_answers');
+  renderHataDef();
+}
+
+// ═══════════════════════════════════════════════════════
+// PROGRESS DASHBOARD
+// ═══════════════════════════════════════════════════════
+function saveExamHistory(scoreA, scoreB, scoreC, scoreD, total, elapsed) {
+  try {
+    var history = JSON.parse(localStorage.getItem('biotech_exam_history') || '[]');
+    history.push({
+      date: new Date().toLocaleDateString('tr-TR'),
+      scoreA: scoreA, scoreB: scoreB, scoreC: scoreC, scoreD: scoreD,
+      total: total, time: elapsed
+    });
+    if (history.length > 30) history = history.slice(-30);
+    localStorage.setItem('biotech_exam_history', JSON.stringify(history));
+  } catch(e){}
+}
+
+function renderStats() {
+  var container = document.getElementById('stats-content');
+  var history = [];
+  try { history = JSON.parse(localStorage.getItem('biotech_exam_history') || '[]'); } catch(e){}
+  if (history.length === 0) {
+    container.innerHTML = '<div class="pd-empty"><div style="font-size:2.5rem;margin-bottom:12px;">📈</div><div style="font-size:1rem;font-weight:600;color:var(--text);margin-bottom:6px;">Henüz Sınav Yok</div><div style="font-size:0.85rem;">İlk sınavı tamamladıktan sonra istatistikleriniz burada görünecektir.</div></div>';
+    return;
+  }
+  var totals = history.map(function(h){return h.total;});
+  var avg = Math.round(totals.reduce(function(a,b){return a+b;},0) / totals.length * 10) / 10;
+  var best = Math.max.apply(null, totals);
+  var last = history[history.length-1].total;
+  var avgA = Math.round(history.reduce(function(s,h){return s+h.scoreA;},0)/history.length*10)/10;
+  var avgB = Math.round(history.reduce(function(s,h){return s+h.scoreB;},0)/history.length*10)/10;
+  var avgC = Math.round(history.reduce(function(s,h){return s+h.scoreC;},0)/history.length*10)/10;
+  var avgD = Math.round(history.reduce(function(s,h){return s+h.scoreD;},0)/history.length*10)/10;
+
+  var html = '<div class="pd-grid">';
+  html += '<div class="pd-stat"><div class="pd-val">'+history.length+'</div><div class="pd-lbl">Toplam Sınav</div></div>';
+  html += '<div class="pd-stat"><div class="pd-val">'+avg+'</div><div class="pd-lbl">Ortalama (70\'ten)</div></div>';
+  html += '<div class="pd-stat"><div class="pd-val">'+best+'</div><div class="pd-lbl">En Yüksek</div></div>';
+  html += '<div class="pd-stat"><div class="pd-val">'+last+'</div><div class="pd-lbl">Son Sınav</div></div>';
+  html += '</div>';
+
+  html += '<div class="pd-table-wrap"><div style="padding:14px 20px 10px;"><div class="pd-sec-title">Bölüm Ortalamaları</div>';
+  var secs = [{lbl:'A — MCQ',avg:avgA,max:40},{lbl:'B — D/Y',avg:avgB,max:10},{lbl:'C — Eşleştirme',avg:avgC,max:10},{lbl:'D — Sıralama',avg:avgD,max:10}];
+  secs.forEach(function(s){
+    var pct = Math.round((s.avg/s.max)*100);
+    var col = pct>=80?'var(--emerald)':pct>=60?'var(--amber)':'var(--rose)';
+    html += '<div class="acc-row" style="margin-bottom:9px;"><span class="acc-label">'+s.lbl+'</span><div class="acc-bar-wrap"><div class="acc-bar-fill" style="width:'+pct+'%;background:'+col+';"></div></div><span class="acc-pct" style="color:'+col+';">'+s.avg+'/'+s.max+'</span></div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="pd-table-wrap"><div class="pd-table-header"><span>Sınav Geçmişi</span><button class="btn-pd-clear" onclick="clearStats()">🗑 Temizle</button></div>';
+  history.slice().reverse().forEach(function(h, i) {
+    var pct = Math.round((h.total/70)*100);
+    var col = pct>=80?'var(--emerald)':pct>=60?'var(--amber)':'var(--rose)';
+    html += '<div class="pd-row"><span class="pd-row-n">'+(history.length-i)+'</span><span class="pd-row-score" style="color:'+col+';">'+h.total+'/70</span><div class="pd-row-bar"><div class="pd-row-bar-fill" style="width:'+pct+'%;background:'+col+';"></div></div><span class="pd-row-date">'+h.date+(h.time?' · '+h.time:'')+'</span></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function clearStats() {
+  if (!confirm('Tüm sınav geçmişi silinsin mi?')) return;
+  localStorage.removeItem('biotech_exam_history');
+  renderStats();
+}
 </script>
 </body>
 </html>
